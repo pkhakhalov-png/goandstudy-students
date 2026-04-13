@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GoAndStudy — Обучение</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;color:#1a1a1a}
+.screen{display:none}
+.screen.active{display:block}
+
+/* LOGIN */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.login-card{background:#fff;border:1px solid #e5e5e5;border-radius:16px;padding:2rem;width:100%;max-width:380px;box-shadow:0 4px 24px rgba(0,0,0,0.06)}
+.logo{font-size:22px;font-weight:600;margin-bottom:6px}
+.logo span{color:#B15ECC}
+.login-sub{font-size:13px;color:#888;margin-bottom:1.5rem}
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:13px;color:#666;margin-bottom:6px}
+.field input{width:100%;padding:10px 14px;border:1px solid #e0e0e0;border-radius:10px;font-size:14px;outline:none;transition:border 0.2s}
+.field input:focus{border-color:#B15ECC}
+.btn-primary{width:100%;padding:11px;background:#B15ECC;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;margin-top:6px;transition:background 0.2s}
+.btn-primary:hover{background:#9a4fb5}
+.err{font-size:12px;color:#e53e3e;margin-top:8px;display:none}
+
+/* HEADER */
+.header{background:#fff;border-bottom:1px solid #ebebeb;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:54px;position:sticky;top:0;z-index:10}
+.header-logo{font-size:16px;font-weight:600}
+.header-logo span{color:#B15ECC}
+.user-badge{font-size:13px;color:#888}
+.logout-btn{font-size:12px;color:#888;cursor:pointer;border:1px solid #e5e5e5;padding:5px 12px;border-radius:8px;background:none}
+.logout-btn:hover{background:#f5f5f5}
+
+/* LAYOUT */
+.main-layout{display:grid;grid-template-columns:250px 1fr;min-height:calc(100vh - 54px)}
+.sidebar{background:#fff;border-right:1px solid #ebebeb;padding:1rem 0;position:sticky;top:54px;height:calc(100vh - 54px);overflow-y:auto}
+.sidebar-title{font-size:11px;color:#bbb;padding:0 1rem 8px;text-transform:uppercase;letter-spacing:0.5px}
+.mod-item{display:flex;align-items:center;gap:10px;padding:9px 1rem;cursor:pointer;font-size:13px;color:#666;border-left:2px solid transparent}
+.mod-item:hover{background:#faf5ff}
+.mod-item.active{background:#faf5ff;color:#B15ECC;border-left-color:#B15ECC}
+.mod-item.locked{opacity:0.4;cursor:not-allowed}
+.mod-dot{width:9px;height:9px;border-radius:50%;background:#e5e5e5;border:2px solid #d0d0d0;flex-shrink:0}
+.mod-dot.done{background:#22c55e;border-color:#22c55e}
+.mod-dot.active{background:#B15ECC;border-color:#B15ECC}
+
+/* CONTENT */
+.content{padding:2rem;max-width:780px}
+.mod-title{font-size:22px;font-weight:600;margin-bottom:4px}
+.mod-desc{font-size:14px;color:#888;margin-bottom:1rem}
+.progress-bar{height:5px;background:#f0e6f8;border-radius:3px;margin:12px 0 6px}
+.progress-fill{height:100%;background:#B15ECC;border-radius:3px;transition:width 0.3s}
+.prog-label{font-size:12px;color:#bbb;margin-bottom:1.5rem}
+
+.steps{display:flex;flex-direction:column;gap:12px}
+.step-card{background:#fff;border:1px solid #ebebeb;border-radius:14px;padding:1.25rem}
+.step-card.done{border-color:#22c55e20;background:#f0fdf4}
+.step-top{display:flex;align-items:flex-start;gap:14px}
+.step-num{width:30px;height:30px;border-radius:50%;background:#f5f5f5;border:1px solid #e5e5e5;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#888;flex-shrink:0}
+.step-num.done{background:#22c55e;border-color:#22c55e;color:#fff}
+.step-body{flex:1}
+.step-title{font-size:14px;font-weight:600;margin-bottom:5px}
+.step-text{font-size:13px;color:#666;line-height:1.6}
+.step-code{background:#1e1e2e;color:#cdd6f4;border-radius:10px;padding:12px 16px;font-family:'SF Mono','Fira Code',monospace;font-size:12px;margin-top:10px;white-space:pre-wrap;line-height:1.6}
+.step-link{font-size:12px;color:#B15ECC;display:inline-block;margin-top:8px;text-decoration:none}
+.step-link:hover{text-decoration:underline}
+.step-actions{margin-top:12px}
+.btn-done{padding:7px 18px;background:#B15ECC;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;transition:background 0.2s}
+.btn-done:hover{background:#9a4fb5}
+.btn-undone{padding:7px 18px;background:none;color:#888;border:1px solid #e5e5e5;border-radius:8px;font-size:12px;cursor:pointer}
+.btn-undone:hover{background:#f5f5f5}
+
+.task-card{background:#faf5ff;border:1px solid #e6d4f7;border-radius:14px;padding:1.25rem;margin-bottom:12px}
+.task-label{font-size:11px;color:#B15ECC;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.task-text{font-size:14px;color:#1a1a1a;line-height:1.7}
+.no-task{background:#f9f9f9;border:1px solid #ebebeb;border-radius:14px;padding:1.5rem;text-align:center;color:#aaa;font-size:13px}
+
+.submit-section{background:#fff;border:1px solid #ebebeb;border-radius:14px;padding:1.25rem;margin-top:12px}
+.submit-title{font-size:14px;font-weight:600;margin-bottom:10px}
+.submit-input{width:100%;padding:10px 14px;border:1px solid #e0e0e0;border-radius:10px;font-size:13px;outline:none;margin-bottom:10px}
+.submit-input:focus{border-color:#B15ECC}
+.submit-btn{padding:8px 20px;background:#B15ECC;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer}
+.submit-btn:hover{background:#9a4fb5}
+.submitted-badge{font-size:13px;color:#22c55e;padding:8px 0;display:flex;align-items:center;gap:6px}
+.approved-banner{background:#f0fdf4;border:1px solid #86efac;border-radius:12px;padding:14px;font-size:13px;color:#16a34a;margin-top:12px;text-align:center}
+
+/* ADMIN */
+.admin-wrap{padding:2rem;max-width:900px}
+.admin-title{font-size:22px;font-weight:600;margin-bottom:1.5rem}
+.students-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:1.5rem}
+.student-card{background:#fff;border:1px solid #ebebeb;border-radius:14px;padding:1.25rem}
+.student-name{font-size:16px;font-weight:600;margin-bottom:3px}
+.student-progress-text{font-size:12px;color:#aaa;margin-bottom:8px}
+.mini-bar{height:4px;background:#f0e6f8;border-radius:2px;margin-bottom:12px}
+.mini-fill{height:100%;background:#B15ECC;border-radius:2px}
+.student-actions{display:flex;gap:6px;flex-wrap:wrap}
+.action-btn{font-size:12px;padding:5px 12px;border-radius:8px;border:1px solid #e5e5e5;cursor:pointer;background:#fff;color:#555}
+.action-btn:hover{background:#f5f5f5}
+.action-btn.purple{background:#B15ECC;color:#fff;border-color:#B15ECC}
+.action-btn.purple:hover{background:#9a4fb5}
+.action-btn.green{background:#f0fdf4;color:#16a34a;border-color:#86efac;cursor:default}
+
+.subs-section{background:#fff;border:1px solid #ebebeb;border-radius:14px;padding:1.25rem}
+.subs-title{font-size:15px;font-weight:600;margin-bottom:14px}
+.sub-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:13px}
+.sub-item:last-child{border:none}
+.sub-student{font-weight:600;min-width:70px}
+.sub-link{flex:1;color:#B15ECC;word-break:break-all}
+.sub-approve{padding:5px 14px;background:#22c55e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer}
+.sub-approve:hover{background:#16a34a}
+.no-subs{font-size:13px;color:#bbb;padding:6px 0}
+
+.section-label{font-size:12px;color:#aaa;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;margin:1.5rem 0 0.75rem}
+
+@media(max-width:640px){
+  .main-layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="screen active" id="screen-login">
+<div class="login-wrap">
+<div class="login-card">
+  <div class="logo">Go<span>&</span>Study</div>
+  <div class="login-sub">Платформа обучения веб-разработке</div>
+  <div class="field"><label>Логин</label><input type="text" id="login-input" placeholder="nastya / lera / egor / kiril" autocomplete="username" /></div>
+  <div class="field"><label>Пароль</label><input type="password" id="pass-input" placeholder="••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()" /></div>
+  <button class="btn-primary" onclick="doLogin()">Войти</button>
+  <div class="err" id="login-err">Неверный логин или пароль</div>
+</div>
+</div>
+</div>
+
+<div class="screen" id="screen-student">
+<div class="header">
+  <div class="header-logo">Go<span>&</span>Study <span style="font-size:13px;color:#aaa;font-weight:400">/ обучение</span></div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span class="user-badge" id="student-name-badge"></span>
+    <button class="logout-btn" onclick="doLogout()">Выйти</button>
+  </div>
+</div>
+<div class="main-layout">
+  <div class="sidebar">
+    <div class="sidebar-title">Модули</div>
+    <div id="sidebar-mods"></div>
+  </div>
+  <div class="content" id="student-content"></div>
+</div>
+</div>
+
+<div class="screen" id="screen-admin">
+<div class="header">
+  <div class="header-logo">Go<span>&</span>Study <span style="font-size:13px;color:#aaa;font-weight:400">/ панель куратора</span></div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span class="user-badge">Андрей</span>
+    <button class="logout-btn" onclick="doLogout()">Выйти</button>
+  </div>
+</div>
+<div class="admin-wrap" id="admin-content"></div>
+</div>
+
+<script>
+const USERS = {
+  admin:{pass:'goandstudyadmin2024',role:'admin'},
+  nastya:{pass:'nastya2024',role:'student',name:'Настя'},
+  lera:{pass:'lera2024',role:'student',name:'Лера'},
+  egor:{pass:'egor2024',role:'student',name:'Егор'},
+  kiril:{pass:'kiril2024',role:'student',name:'Кирилл'}
+};
+
+const MODULES = [
+  {id:0,title:'Модуль 0 — Подготовка',desc:'Устанавливаем все инструменты',steps:[
+    {title:'Установи VS Code',text:'Редактор кода — твоя основная рабочая среда. Скачай и установи.',link:'https://code.visualstudio.com',cmd:null},
+    {title:'Установи Node.js',text:'Нужен для запуска JavaScript. Скачай LTS версию.',link:'https://nodejs.org',cmd:null},
+    {title:'Установи Git',text:'Система контроля версий. Скачай для своей системы.',link:'https://git-scm.com',cmd:null},
+    {title:'Проверь установку',text:'Открой терминал (Terminal на Mac, Command Prompt или PowerShell на Windows) и выполни:',cmd:'node -v\nnpm -v\ngit --version'},
+    {title:'Оформи подписку Claude Pro',text:'Переходи на claude.ai и оформляй подписку Pro — она нужна для Claude Code.',link:'https://claude.ai',cmd:null},
+    {title:'Установи Claude Code',text:'В терминале выполни:',cmd:'npm install -g @anthropic-ai/claude-code\nclaude --version'}
+  ]},
+  {id:1,title:'Модуль 1 — GitHub',desc:'Учимся работать с Git и GitHub',steps:[
+    {title:'Создай аккаунт GitHub',text:'GitHub — это где хранится весь твой код. Регистрируйся и сразу пиши Андрею свой username.',link:'https://github.com',cmd:null},
+    {title:'Настрой Git на компьютере',text:'Открой терминал и введи (замени на свои данные):',cmd:'git config --global user.name "Твоё Имя"\ngit config --global user.email "твой@email.com"'},
+    {title:'Получи доступ к репозиторию',text:'Андрей пришлёт приглашение в твой репозиторий на GitHub. Прими его по ссылке в письме.',cmd:null},
+    {title:'Клонируй репозиторий',text:'После принятия приглашения выполни в терминале (замени [имя] на своё):',cmd:'git clone https://github.com/pkhakhalov-png/student-[имя].git\ncd student-[имя]'},
+    {title:'Первый коммит и пуш',text:'Создай файл, закоммить и отправь на GitHub:',cmd:'echo "# Мой проект" > README.md\ngit add .\ngit commit -m "first commit"\ngit push origin main'}
+  ]},
+  {id:2,title:'Модуль 2 — Supabase',desc:'База данных для твоего проекта',steps:[
+    {title:'Получи доступ от куратора',text:'Андрей добавит тебя в Supabase проект и пришлёт credentials. Жди письмо или сообщение.',cmd:null},
+    {title:'Зайди в проект и изучи интерфейс',text:'Открой свой Supabase проект. Посмотри: Table Editor (таблицы), SQL Editor (запросы), Authentication (пользователи).',cmd:null},
+    {title:'Первый SQL запрос',text:'Перейди в SQL Editor и выполни — это покажет все таблицы в базе:',cmd:"SELECT * FROM information_schema.tables\nWHERE table_schema = 'public';"},
+    {title:'Создай свою первую таблицу',text:'Выполни в SQL Editor:',cmd:'CREATE TABLE test (\n  id SERIAL PRIMARY KEY,\n  name TEXT NOT NULL,\n  created_at TIMESTAMPTZ DEFAULT NOW()\n);\n\nINSERT INTO test (name) VALUES (\'Привет, мир!\');\n\nSELECT * FROM test;'}
+  ]},
+  {id:3,title:'Модуль 3 — Vercel',desc:'Деплоим проект в интернет',steps:[
+    {title:'Создай аккаунт Vercel',text:'Заходи на vercel.com и регистрируйся через GitHub — так проще всего.',link:'https://vercel.com',cmd:null},
+    {title:'Установи Vercel CLI',text:'В терминале:',cmd:'npm install -g vercel\nvercel --version'},
+    {title:'Задеплой проект',text:'Перейди в папку своего проекта и запусти деплой:',cmd:'cd student-[твоё-имя]\nvercel'},
+    {title:'Пришли ссылку куратору',text:'Скопируй URL задеплоенного проекта (что-то типа project.vercel.app) и отправь Андрею. Это твоя первая публикация в интернете 🚀',cmd:null}
+  ]},
+  {id:4,title:'Модуль 4 — Твой проект',desc:'Индивидуальное задание от куратора',locked:true,steps:[]}
+];
+
+let state = {
+  user:null,role:null,currentMod:0,
+  progress:{nastya:{},lera:{},egor:{},kiril:{}},
+  unlocked:{nastya:[0,1,2,3],lera:[0,1,2,3],egor:[0,1,2,3],kiril:[0,1,2,3]},
+  tasks:{nastya:'',lera:'',egor:'',kiril:''},
+  submissions:{nastya:[],lera:[],egor:[],kiril:[]},
+  approved:{nastya:false,lera:false,egor:false,kiril:false}
+};
+
+function doLogin(){
+  const login=document.getElementById('login-input').value.trim().toLowerCase();
+  const pass=document.getElementById('pass-input').value;
+  const u=USERS[login];
+  const err=document.getElementById('login-err');
+  if(!u||u.pass!==pass){err.style.display='block';return;}
+  err.style.display='none';
+  state.user=login;state.role=u.role;
+  show(u.role==='admin'?'screen-admin':'screen-student');
+  if(u.role==='student')renderStudent();
+  else renderAdmin();
+}
+
+function doLogout(){
+  state.user=null;state.role=null;
+  document.getElementById('login-input').value='';
+  document.getElementById('pass-input').value='';
+  show('screen-login');
+}
+
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function renderStudent(){
+  const u=state.user;
+  document.getElementById('student-name-badge').textContent=USERS[u].name;
+  renderSidebar();renderModContent(state.currentMod);
+}
+
+function renderSidebar(){
+  const u=state.user;
+  const ul=state.unlocked[u]||[];
+  let html='';
+  MODULES.forEach((m,i)=>{
+    const locked=i>0&&!ul.includes(i);
+    const prog=state.progress[u]||{};
+    const steps=m.steps.length;
+    const done=steps>0?Object.keys(prog).filter(k=>k.startsWith(i+'-')&&prog[k]).length:0;
+    const isDone=steps>0&&done>=steps;
+    const isActive=state.currentMod===i;
+    let dotClass=locked?'':'';
+    if(!locked){dotClass=isDone?'done':isActive?'active':'';}
+    html+=`<div class="mod-item${isActive&&!locked?' active':''}${locked?' locked':''}" onclick="${locked?'':('goMod('+i+')')}">
+      <div class="mod-dot ${dotClass}"></div>
+      <span>${m.title}</span>
+      ${locked?'<span style="margin-left:auto;font-size:11px">🔒</span>':''}
+    </div>`;
+  });
+  document.getElementById('sidebar-mods').innerHTML=html;
+}
+
+function goMod(i){
+  state.currentMod=i;
+  renderSidebar();renderModContent(i);
+}
+
+function renderModContent(i){
+  const m=MODULES[i];
+  const u=state.user;
+  const prog=state.progress[u]||{};
+  const steps=m.steps;
+  const doneCount=steps.length>0?Object.keys(prog).filter(k=>k.startsWith(i+'-')&&prog[k]).length:0;
+  const pct=steps.length>0?Math.round(doneCount/steps.length*100):0;
+
+  let stepsHtml='';
+  if(i===4){
+    const task=state.tasks[u];
+    const subs=state.submissions[u]||[];
+    const approved=state.approved[u];
+    if(!task){
+      stepsHtml=`<div class="no-task">⏳ Куратор ещё не выдал задание.<br>Выполни предыдущие модули и жди — скоро появится.</div>`;
+    } else {
+      stepsHtml=`<div class="task-card"><div class="task-label">Твоё задание</div><div class="task-text">${task}</div></div>`;
+      if(approved){
+        stepsHtml+=`<div class="approved-banner">🎉 Куратор принял твою работу! Поздравляю!</div>`;
+      } else {
+        const lastSub=subs[subs.length-1];
+        stepsHtml+=`<div class="submit-section">
+          <div class="submit-title">Сдать работу на проверку</div>
+          ${lastSub
+            ?`<div class="submitted-badge">✓ Отправлено: <a href="${lastSub}" target="_blank" style="color:#22c55e">${lastSub}</a></div><div style="font-size:12px;color:#aaa;margin-top:4px">Ждёт проверки куратора...</div>`
+            :`<input class="submit-input" id="submit-link" placeholder="Вставь ссылку на GitHub репозиторий или Vercel..." />
+            <button class="submit-btn" onclick="submitWork()">Отправить ↗</button>`
+          }
+        </div>`;
+      }
+    }
+  } else {
+    steps.forEach((s,si)=>{
+      const key=i+'-'+si;
+      const done=!!prog[key];
+      stepsHtml+=`<div class="step-card${done?' done':''}">
+        <div class="step-top">
+          <div class="step-num${done?' done':''}">${done?'✓':(si+1)}</div>
+          <div class="step-body">
+            <div class="step-title">${s.title}</div>
+            <div class="step-text">${s.text}</div>
+            ${s.cmd?`<div class="step-code">${s.cmd}</div>`:''}
+            ${s.link?`<a href="${s.link}" target="_blank" class="step-link">${s.link} ↗</a>`:''}
+          </div>
+        </div>
+        <div class="step-actions">
+          ${done
+            ?`<button class="btn-undone" onclick="toggleStep('${key}')">Отметить как невыполненное</button>`
+            :`<button class="btn-done" onclick="toggleStep('${key}')">Выполнено ✓</button>`
+          }
+        </div>
+      </div>`;
+    });
+  }
+
+  document.getElementById('student-content').innerHTML=`
+    <div>
+      <div class="mod-title">${m.title}</div>
+      <div class="mod-desc">${m.desc}</div>
+      ${steps.length>0?`
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+        <div class="prog-label">${doneCount} из ${steps.length} шагов · ${pct}%</div>`
+      :''}
+    </div>
+    <div class="steps">${stepsHtml}</div>`;
+}
+
+function toggleStep(key){
+  const u=state.user;
+  if(!state.progress[u])state.progress[u]={};
+  state.progress[u][key]=!state.progress[u][key];
+  renderModContent(state.currentMod);
+  renderSidebar();
+}
+
+function submitWork(){
+  const link=document.getElementById('submit-link').value.trim();
+  if(!link)return;
+  state.submissions[state.user].push(link);
+  renderModContent(state.currentMod);
+}
+
+function renderAdmin(){
+  const students=['nastya','lera','egor','kiril'];
+  const names={nastya:'Настя',lera:'Лера',egor:'Егор',kiril:'Кирилл'};
+  const total=MODULES.slice(0,4).reduce((a,m)=>a+m.steps.length,0);
+
+  let cardsHtml='';
+  students.forEach(s=>{
+    const prog=state.progress[s]||{};
+    const done=Object.values(prog).filter(Boolean).length;
+    const pct=total>0?Math.round(done/total*100):0;
+    const mod4open=(state.unlocked[s]||[]).includes(4);
+    const hasTask=!!state.tasks[s];
+    const approved=state.approved[s];
+    const hasSub=(state.submissions[s]||[]).length>0;
+
+    cardsHtml+=`<div class="student-card">
+      <div class="student-name">${names[s]}</div>
+      <div class="student-progress-text">Прогресс: ${done}/${total} шагов · ${pct}%</div>
+      <div class="mini-bar"><div class="mini-fill" style="width:${pct}%"></div></div>
+      <div class="student-actions">
+        ${!mod4open
+          ?`<button class="action-btn purple" onclick="unlockMod4('${s}')">🔓 Открыть модуль 4</button>`
+          :`<span class="action-btn green">Модуль 4 открыт ✓</span>`
+        }
+        <button class="action-btn" onclick="setTask('${s}')">${hasTask?'Изменить задание':'Выдать задание'}</button>
+        ${approved?`<span class="action-btn green">Принято ✓</span>`:''}
+      </div>
+      ${hasTask&&!approved?`<div style="font-size:12px;color:#B15ECC;margin-top:8px">Задание выдано${hasSub?' · Есть сдача':''}</div>`:''}
+    </div>`;
+  });
+
+  let subsHtml='';let hasSubs=false;
+  students.forEach(s=>{
+    const subs=state.submissions[s]||[];
+    if(subs.length>0&&!state.approved[s]){
+      hasSubs=true;
+      subsHtml+=`<div class="sub-item">
+        <div class="sub-student">${names[s]}</div>
+        <a href="${subs[subs.length-1]}" target="_blank" class="sub-link">${subs[subs.length-1]}</a>
+        <button class="sub-approve" onclick="approveWork('${s}')">Принять ✓</button>
+      </div>`;
+    }
+  });
+
+  document.getElementById('admin-content').innerHTML=`
+    <div class="admin-title">Панель куратора</div>
+    <div class="section-label">Студенты</div>
+    <div class="students-grid">${cardsHtml}</div>
+    <div class="subs-section">
+      <div class="subs-title">На проверке</div>
+      ${hasSubs?subsHtml:'<div class="no-subs">Пока никто не сдал работу</div>'}
+    </div>`;
+}
+
+function unlockMod4(student){
+  if(!(state.unlocked[student]||[]).includes(4)){
+    state.unlocked[student].push(4);
+  }
+  renderAdmin();
+}
+
+function setTask(student){
+  const names={nastya:'Насте',lera:'Лере',egor:'Егору',kiril:'Кириллу'};
+  const current=state.tasks[student];
+  const task=prompt(`Задание для ${names[student]}:${current?'\n\nТекущее: '+current:''}`,current||'');
+  if(task!==null&&task.trim()){
+    state.tasks[student]=task.trim();
+    renderAdmin();
+  }
+}
+
+function approveWork(student){
+  state.approved[student]=true;
+  renderAdmin();
+}
+</script>
+</body>
+</html>
