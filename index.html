@@ -412,7 +412,7 @@ async function sbRequest(path, method = 'GET', body = null) {
       'apikey': sb.key,
       'Authorization': 'Bearer ' + sb.key,
       'Content-Type': 'application/json',
-      'Prefer': method === 'POST' ? 'resolution=merge-duplicates,return=representation' : ''
+      'Prefer': method === 'POST' ? 'return=representation,resolution=merge-duplicates' : 'return=representation'
     }
   };
   if (body) opts.body = JSON.stringify(body);
@@ -433,7 +433,7 @@ async function loadProgress(login) {
   return map;
 }
 async function setProgress(login, stepKey, completed) {
-  await sbRequest('student_progress', 'POST', {
+  await sbRequest('student_progress?on_conflict=student_login,step_key', 'POST', {
     student_login: login, step_key: stepKey,
     completed, completed_at: completed ? new Date().toISOString() : null
   });
@@ -447,7 +447,7 @@ async function loadData(login, direction) {
   return map;
 }
 async function saveDataField(login, fieldKey, value, direction) {
-  await sbRequest('student_data', 'POST', {
+  await sbRequest('student_data?on_conflict=student_login,field_key,direction', 'POST', {
     student_login: login, field_key: fieldKey,
     field_value: value, direction,
     updated_at: new Date().toISOString()
