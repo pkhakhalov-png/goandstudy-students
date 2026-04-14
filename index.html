@@ -171,43 +171,42 @@ const USERS = {
 };
 
 const MODULES = [
-  {id:0,title:'Модуль 0 — Подготовка',desc:'Устанавливаем все инструменты',steps:[
-    {title:'Установи VS Code',text:'Редактор кода — твоя основная рабочая среда. Скачай и установи.',link:'https://code.visualstudio.com',cmd:null},
-    {title:'Установи Node.js',text:'Нужен для запуска JavaScript. Скачай LTS версию.',link:'https://nodejs.org',cmd:null},
-    {title:'Установи Git',text:'Система контроля версий. Скачай для своей системы.',link:'https://git-scm.com',cmd:null},
-    {title:'Проверь установку',text:'Открой терминал (Terminal на Mac, Command Prompt или PowerShell на Windows) и выполни:',cmd:'node -v\nnpm -v\ngit --version'},
-    {title:'Оформи подписку Claude Pro',text:'Переходи на claude.ai и оформляй подписку Pro — она нужна для Claude Code.',link:'https://claude.ai',cmd:null},
-    {title:'Установи Claude Code',text:'В терминале выполни:',cmd:'npm install -g @anthropic-ai/claude-code\nclaude --version'}
+  {id:0,title:'Модуль 0 — Подготовка',desc:'Ставим инструменты и Claude Code',steps:[
+    {title:'Установи VS Code',text:'Это твоя основная рабочая среда — редактор кода со встроенным терминалом. Скачай и установи для своей системы.',link:'https://code.visualstudio.com',cmd:null},
+    {title:'Установи Node.js',text:'Нужен чтобы поставить Claude Code. Качай версию LTS и ставь по умолчанию.',link:'https://nodejs.org',cmd:null},
+    {title:'Установи Git',text:'Нужен чтобы VS Code мог работать с GitHub. Скачай и установи, все настройки по умолчанию.',link:'https://git-scm.com',cmd:null},
+    {title:'Проверь установку',text:'Открой обычный терминал системы (Terminal на Mac / PowerShell на Windows) и вставь команды по одной. Должны появиться версии — если нет, значит что-то не установилось.',cmd:'node -v\nnpm -v\ngit --version'},
+    {title:'Оформи Claude Pro',text:'Зайди на claude.ai и оформи подписку Pro — без неё Claude Code не будет работать. Логин запомни — он же будет для Claude Code.',link:'https://claude.ai',cmd:null},
+    {title:'Установи Claude Code в системном терминале',text:'В том же системном терминале выполни команду. Должна появиться версия.',cmd:'npm install -g @anthropic-ai/claude-code\nclaude --version'},
+    {title:'Запусти Claude Code первый раз',text:'В системном терминале напиши claude и нажми Enter. Откроется мастер настройки — войди через аккаунт Claude Pro (тот же, что на claude.ai). Когда появится приглашение — напиши "привет" и убедись что он отвечает. Выйти: /exit',cmd:'claude'},
+    {title:'Открой встроенный терминал VS Code',text:'Запусти VS Code → меню Terminal → New Terminal (или Ctrl+` / Cmd+`). Внизу откроется терминал прямо внутри редактора.',cmd:null},
+    {title:'Запусти Claude Code во встроенном терминале VS Code',text:'В этом терминале тоже выполни claude — убедись что он запускается и отвечает. Дальше вся работа над проектом будет идти именно здесь.',cmd:'claude'}
   ]},
-  {id:1,title:'Модуль 1 — GitHub',desc:'Учимся работать с Git и GitHub',steps:[
-    {title:'Создай аккаунт GitHub',text:'GitHub — это где хранится весь твой код. Регистрируйся и сразу пиши Андрею свой username.',link:'https://github.com',cmd:null},
-    {title:'Настрой Git на компьютере',text:'Открой терминал и введи (замени на свои данные):',cmd:'git config --global user.name "Твоё Имя"\ngit config --global user.email "твой@email.com"'},
-    {title:'Получи доступ к репозиторию',text:'Андрей пришлёт приглашение в твой репозиторий на GitHub. Прими его по ссылке в письме.',cmd:null},
-    {title:'Клонируй репозиторий',text:'После принятия приглашения выполни в терминале (замени [имя] на своё):',cmd:'git clone https://github.com/pkhakhalov-png/student-[имя].git\ncd student-[имя]'},
-    {title:'Первый коммит и пуш',text:'Создай файл, закоммить и отправь на GitHub:',cmd:'echo "# Мой проект" > README.md\ngit add .\ngit commit -m "first commit"\ngit push origin main'}
+  {id:1,title:'Модуль 1 — GitHub',desc:'Подключаемся к репозиторию проекта',steps:[
+    {title:'Создай аккаунт GitHub',text:'GitHub — где живёт весь код. Зарегистрируйся и сразу пришли Андрею свой username, чтобы он добавил тебя в репозиторий проекта.',link:'https://github.com',cmd:null},
+    {title:'Настрой Git',text:'Открой системный терминал и введи свои данные (имя и email — тот же, что на GitHub):',cmd:'git config --global user.name "Твоё Имя"\ngit config --global user.email "твой@email.com"'},
+    {title:'Прими приглашение',text:'Андрей пришлёт инвайт в репозиторий. Открой письмо или github.com/notifications и нажми Accept invitation.',cmd:null},
+    {title:'Склонируй репозиторий через VS Code',text:'В VS Code: Cmd/Ctrl+Shift+P → набери "Git: Clone" → вставь ссылку, которую пришлёт Андрей → выбери папку куда положить. VS Code сам откроет проект.',cmd:null},
+    {title:'Первый коммит через Claude Code',text:'Во встроенном терминале VS Code запусти claude и попроси его: "добавь меня в README и сделай коммит и пуш". Claude Code сам всё сделает — ты только подтвердишь действия.',cmd:'claude'}
   ]},
-  {id:2,title:'Модуль 2 — Supabase',desc:'База данных для твоего проекта',steps:[
-    {title:'Получи доступ от куратора',text:'Андрей добавит тебя в Supabase проект и пришлёт credentials. Жди письмо или сообщение.',cmd:null},
-    {title:'Зайди в проект и изучи интерфейс',text:'Открой свой Supabase проект. Посмотри: Table Editor (таблицы), SQL Editor (запросы), Authentication (пользователи).',cmd:null},
-    {title:'Первый SQL запрос',text:'Перейди в SQL Editor и выполни — это покажет все таблицы в базе:',cmd:"SELECT * FROM information_schema.tables\nWHERE table_schema = 'public';"},
-    {title:'Создай свою первую таблицу',text:'Выполни в SQL Editor:',cmd:'CREATE TABLE test (\n  id SERIAL PRIMARY KEY,\n  name TEXT NOT NULL,\n  created_at TIMESTAMPTZ DEFAULT NOW()\n);\n\nINSERT INTO test (name) VALUES (\'Привет, мир!\');\n\nSELECT * FROM test;'}
+  {id:2,title:'Модуль 2 — Supabase',desc:'База данных проекта',steps:[
+    {title:'Создай аккаунт Supabase',text:'Регистрируйся через GitHub — так проще всего. Пришли Андрею email, которым регистрировался.',link:'https://supabase.com',cmd:null},
+    {title:'Прими приглашение в проект',text:'Андрей добавит тебя в Supabase проект. Проверь почту и нажми Accept в письме.',cmd:null},
+    {title:'Изучи интерфейс',text:'Открой проект и посмотри основные разделы: Table Editor (таблицы), SQL Editor (запросы), Authentication (пользователи), API (ключи и URL).',cmd:null},
+    {title:'Первый SQL запрос',text:'Перейди в SQL Editor и выполни — покажет все таблицы в базе:',cmd:"SELECT * FROM information_schema.tables\nWHERE table_schema = 'public';"}
   ]},
-  {id:3,title:'Модуль 3 — Vercel',desc:'Деплоим проект в интернет',steps:[
-    {title:'Создай аккаунт Vercel',text:'Заходи на vercel.com и регистрируйся через GitHub — так проще всего.',link:'https://vercel.com',cmd:null},
-    {title:'Установи Vercel CLI',text:'В терминале:',cmd:'npm install -g vercel\nvercel --version'},
-    {title:'Задеплой проект',text:'Перейди в папку своего проекта и запусти деплой:',cmd:'cd student-[твоё-имя]\nvercel'},
-    {title:'Пришли ссылку куратору',text:'Скопируй URL задеплоенного проекта (что-то типа project.vercel.app) и отправь Андрею. Это твоя первая публикация в интернете 🚀',cmd:null}
+  {id:3,title:'Модуль 3 — Vercel',desc:'Автодеплой проекта',steps:[
+    {title:'Создай аккаунт Vercel',text:'Регистрируйся через GitHub. Ничего ставить не нужно — Vercel работает полностью в браузере.',link:'https://vercel.com',cmd:null},
+    {title:'Прими приглашение',text:'Андрей пришлёт инвайт в проект на Vercel. Прими его в письме.',cmd:null},
+    {title:'Открой живую ссылку',text:'На дашборде Vercel открой проект и нажми Visit — это URL твоего проекта в интернете. Запомни его, пришли Андрею.',cmd:null},
+    {title:'Проверь автодеплой',text:'Попроси Claude Code во встроенном терминале VS Code сделать любое изменение (например "поменяй заголовок в README") и запушить. Через 30 секунд обнови Vercel — увидишь, что деплой запустился сам.',cmd:'claude'}
   ]},
-  {id:4,title:'Модуль 4 — Твой проект',desc:'Индивидуальное задание от куратора',locked:true,steps:[]}
+  {id:4,title:'Готово — работаем над проектом',desc:'Дальше только живая работа',steps:[]}
 ];
 
 let state = {
   user:null,role:null,currentMod:0,
-  progress:{nastya:{},lera:{},egor:{},kiril:{}},
-  unlocked:{nastya:[0,1,2,3],lera:[0,1,2,3],egor:[0,1,2,3],kiril:[0,1,2,3]},
-  tasks:{nastya:'',lera:'',egor:'',kiril:''},
-  submissions:{nastya:[],lera:[],egor:[],kiril:[]},
-  approved:{nastya:false,lera:false,egor:false,kiril:false}
+  progress:{nastya:{},lera:{},egor:{},kiril:{}}
 };
 
 function doLogin(){
@@ -243,21 +242,17 @@ function renderStudent(){
 
 function renderSidebar(){
   const u=state.user;
-  const ul=state.unlocked[u]||[];
   let html='';
   MODULES.forEach((m,i)=>{
-    const locked=i>0&&!ul.includes(i);
     const prog=state.progress[u]||{};
     const steps=m.steps.length;
     const done=steps>0?Object.keys(prog).filter(k=>k.startsWith(i+'-')&&prog[k]).length:0;
     const isDone=steps>0&&done>=steps;
     const isActive=state.currentMod===i;
-    let dotClass=locked?'':'';
-    if(!locked){dotClass=isDone?'done':isActive?'active':'';}
-    html+=`<div class="mod-item${isActive&&!locked?' active':''}${locked?' locked':''}" onclick="${locked?'':('goMod('+i+')')}">
+    const dotClass=isDone?'done':isActive?'active':'';
+    html+=`<div class="mod-item${isActive?' active':''}" onclick="goMod(${i})">
       <div class="mod-dot ${dotClass}"></div>
       <span>${m.title}</span>
-      ${locked?'<span style="margin-left:auto;font-size:11px">🔒</span>':''}
     </div>`;
   });
   document.getElementById('sidebar-mods').innerHTML=html;
@@ -278,27 +273,7 @@ function renderModContent(i){
 
   let stepsHtml='';
   if(i===4){
-    const task=state.tasks[u];
-    const subs=state.submissions[u]||[];
-    const approved=state.approved[u];
-    if(!task){
-      stepsHtml=`<div class="no-task">⏳ Куратор ещё не выдал задание.<br>Выполни предыдущие модули и жди — скоро появится.</div>`;
-    } else {
-      stepsHtml=`<div class="task-card"><div class="task-label">Твоё задание</div><div class="task-text">${task}</div></div>`;
-      if(approved){
-        stepsHtml+=`<div class="approved-banner">🎉 Куратор принял твою работу! Поздравляю!</div>`;
-      } else {
-        const lastSub=subs[subs.length-1];
-        stepsHtml+=`<div class="submit-section">
-          <div class="submit-title">Сдать работу на проверку</div>
-          ${lastSub
-            ?`<div class="submitted-badge">✓ Отправлено: <a href="${lastSub}" target="_blank" style="color:#22c55e">${lastSub}</a></div><div style="font-size:12px;color:#aaa;margin-top:4px">Ждёт проверки куратора...</div>`
-            :`<input class="submit-input" id="submit-link" placeholder="Вставь ссылку на GitHub репозиторий или Vercel..." />
-            <button class="submit-btn" onclick="submitWork()">Отправить ↗</button>`
-          }
-        </div>`;
-      }
-    }
+    stepsHtml=`<div class="approved-banner" style="padding:24px">🎉 Все инструменты готовы!<br><br>Дальше — работа над реальным проектом вместе с Андреем.<br>Открывай VS Code, запускай <b>claude</b> во встроенном терминале и поехали.</div>`;
   } else {
     steps.forEach((s,si)=>{
       const key=i+'-'+si;
@@ -343,13 +318,6 @@ function toggleStep(key){
   renderSidebar();
 }
 
-function submitWork(){
-  const link=document.getElementById('submit-link').value.trim();
-  if(!link)return;
-  state.submissions[state.user].push(link);
-  renderModContent(state.currentMod);
-}
-
 function renderAdmin(){
   const students=['nastya','lera','egor','kiril'];
   const names={nastya:'Настя',lera:'Лера',egor:'Егор',kiril:'Кирилл'};
@@ -360,70 +328,20 @@ function renderAdmin(){
     const prog=state.progress[s]||{};
     const done=Object.values(prog).filter(Boolean).length;
     const pct=total>0?Math.round(done/total*100):0;
-    const mod4open=(state.unlocked[s]||[]).includes(4);
-    const hasTask=!!state.tasks[s];
-    const approved=state.approved[s];
-    const hasSub=(state.submissions[s]||[]).length>0;
+    const ready=done>=total;
 
     cardsHtml+=`<div class="student-card">
       <div class="student-name">${names[s]}</div>
       <div class="student-progress-text">Прогресс: ${done}/${total} шагов · ${pct}%</div>
       <div class="mini-bar"><div class="mini-fill" style="width:${pct}%"></div></div>
-      <div class="student-actions">
-        ${!mod4open
-          ?`<button class="action-btn purple" onclick="unlockMod4('${s}')">🔓 Открыть модуль 4</button>`
-          :`<span class="action-btn green">Модуль 4 открыт ✓</span>`
-        }
-        <button class="action-btn" onclick="setTask('${s}')">${hasTask?'Изменить задание':'Выдать задание'}</button>
-        ${approved?`<span class="action-btn green">Принято ✓</span>`:''}
-      </div>
-      ${hasTask&&!approved?`<div style="font-size:12px;color:#B15ECC;margin-top:8px">Задание выдано${hasSub?' · Есть сдача':''}</div>`:''}
+      ${ready?`<div style="font-size:12px;color:#16a34a;margin-top:8px">✓ Готов к работе над проектом</div>`:''}
     </div>`;
-  });
-
-  let subsHtml='';let hasSubs=false;
-  students.forEach(s=>{
-    const subs=state.submissions[s]||[];
-    if(subs.length>0&&!state.approved[s]){
-      hasSubs=true;
-      subsHtml+=`<div class="sub-item">
-        <div class="sub-student">${names[s]}</div>
-        <a href="${subs[subs.length-1]}" target="_blank" class="sub-link">${subs[subs.length-1]}</a>
-        <button class="sub-approve" onclick="approveWork('${s}')">Принять ✓</button>
-      </div>`;
-    }
   });
 
   document.getElementById('admin-content').innerHTML=`
     <div class="admin-title">Панель куратора</div>
     <div class="section-label">Студенты</div>
-    <div class="students-grid">${cardsHtml}</div>
-    <div class="subs-section">
-      <div class="subs-title">На проверке</div>
-      ${hasSubs?subsHtml:'<div class="no-subs">Пока никто не сдал работу</div>'}
-    </div>`;
-}
-
-function unlockMod4(student){
-  if(!(state.unlocked[student]||[]).includes(4)){
-    state.unlocked[student].push(4);
-  }
-  renderAdmin();
-}
-
-function setTask(student){
-  const names={nastya:'Насте',lera:'Лере',egor:'Егору',kiril:'Кириллу'};
-  const current=state.tasks[student];
-  const task=prompt(`Задание для ${names[student]}:${current?'\n\nТекущее: '+current:''}`,current||'');
-  if(task!==null&&task.trim()){
-    state.tasks[student]=task.trim();
-    renderAdmin();
-  }
-}
-
-function approveWork(student){
-  state.approved[student]=true;
-  renderAdmin();
+    <div class="students-grid">${cardsHtml}</div>`;
 }
 </script>
 </body>
