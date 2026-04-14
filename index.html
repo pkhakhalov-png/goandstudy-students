@@ -173,8 +173,7 @@ const MODULES = [
   {id:0,title:'Модуль 0 — Подготовка',desc:'Ставим инструменты и Claude Code',steps:[
     {title:'Установи VS Code',text:'Это твоя основная рабочая среда — редактор кода со встроенным терминалом. Скачай и установи для своей системы.',link:'https://code.visualstudio.com',cmd:null},
     {title:'Установи Node.js',text:'Нужен чтобы поставить Claude Code. Качай версию LTS и ставь по умолчанию.',link:'https://nodejs.org',cmd:null},
-    {title:'Установи Git',text:'Нужен чтобы VS Code мог работать с GitHub. Скачай и установи, все настройки по умолчанию.',link:'https://git-scm.com',cmd:null},
-    {title:'Проверь установку',text:'Открой обычный терминал системы (Terminal на Mac / PowerShell на Windows) и вставь команды по одной. Должны появиться версии — если нет, значит что-то не установилось.',cmd:'node -v\nnpm -v\ngit --version'},
+    {title:'Проверь установку',text:'Открой обычный терминал системы (Terminal на Mac / PowerShell на Windows) и вставь команды по одной. Должны появиться версии — если нет, значит что-то не установилось.',cmd:'node -v\nnpm -v'},
     {title:'Оформи Claude Pro',text:'Зайди на claude.ai и оформи подписку Pro — без неё Claude Code не будет работать. Логин запомни — он же будет для Claude Code.',link:'https://claude.ai',cmd:null},
     {title:'Установи Claude Code в системном терминале',text:'В том же системном терминале выполни команду. Должна появиться версия.',cmd:'npm install -g @anthropic-ai/claude-code\nclaude --version'},
     {title:'Запусти Claude Code первый раз',text:'В системном терминале напиши claude и нажми Enter. Откроется мастер настройки — войди через аккаунт Claude Pro (тот же, что на claude.ai). Когда появится приглашение — напиши "привет" и убедись что он отвечает. Выйти: /exit',cmd:'claude'},
@@ -183,10 +182,9 @@ const MODULES = [
   ]},
   {id:1,title:'Модуль 1 — GitHub',desc:'Подключаемся к репозиторию проекта',steps:[
     {title:'Создай аккаунт GitHub',text:'GitHub — где живёт весь код. Зарегистрируйся и сразу пришли Андрею свой username, чтобы он добавил тебя в репозиторий проекта.',link:'https://github.com',cmd:null},
-    {title:'Настрой Git',text:'Открой системный терминал и введи свои данные (имя и email — тот же, что на GitHub):',cmd:'git config --global user.name "Твоё Имя"\ngit config --global user.email "твой@email.com"'},
     {title:'Прими приглашение',text:'Андрей пришлёт инвайт в репозиторий. Открой письмо или github.com/notifications и нажми Accept invitation.',cmd:null},
-    {title:'Склонируй репозиторий через VS Code',text:'В VS Code: Cmd/Ctrl+Shift+P → набери "Git: Clone" → вставь ссылку, которую пришлёт Андрей → выбери папку куда положить. VS Code сам откроет проект.',cmd:null},
-    {title:'Первый коммит через Claude Code',text:'Во встроенном терминале VS Code запусти claude и попроси его: "добавь меня в README и сделай коммит и пуш". Claude Code сам всё сделает — ты только подтвердишь действия.',cmd:'claude'}
+    {title:'Открой репозиторий в VS Code',text:'В VS Code: Cmd/Ctrl+Shift+P → набери "Git: Clone" → вставь ссылку репозитория от Андрея → выбери папку на компе. VS Code попросит войти в GitHub (кнопка Sign in) — разреши в браузере, вернёшься автоматически. Если потребует поставить инструменты разработчика — соглашайся, всё ставится само.',cmd:null},
+    {title:'Первый коммит через Claude Code',text:'Во встроенном терминале VS Code запусти claude и попроси: «добавь меня в README и запушь». Claude Code сам всё сделает — ты только подтверждаешь действия клавишей Enter.',cmd:'claude'}
   ]},
   {id:2,title:'Модуль 2 — Supabase',desc:'База данных проекта',steps:[
     {title:'Создай аккаунт Supabase',text:'Регистрируйся через GitHub — так проще всего. Пришли Андрею email, которым регистрировался.',link:'https://supabase.com',cmd:null},
