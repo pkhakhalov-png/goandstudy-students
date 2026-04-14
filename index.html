@@ -120,7 +120,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </head>
 <body>
 
-<div class="screen active" id="screen-login">
+<div class="screen" id="screen-login">
 <div class="login-wrap">
 <div class="login-card">
   <div class="logo">Go<span>&</span>Study</div>
@@ -133,12 +133,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 </div>
 
-<div class="screen" id="screen-student">
+<div class="screen active" id="screen-student">
 <div class="header">
   <div class="header-logo">Go<span>&</span>Study <span style="font-size:13px;color:#aaa;font-weight:400">/ обучение</span></div>
   <div style="display:flex;align-items:center;gap:12px">
-    <span class="user-badge" id="student-name-badge"></span>
-    <button class="logout-btn" onclick="doLogout()">Выйти</button>
+    <a href="?admin" class="logout-btn" style="text-decoration:none">Куратор</a>
   </div>
 </div>
 <div class="main-layout">
@@ -235,8 +234,6 @@ function show(id){
 }
 
 function renderStudent(){
-  const u=state.user;
-  document.getElementById('student-name-badge').textContent=USERS[u].name;
   renderSidebar();renderModContent(state.currentMod);
 }
 
@@ -343,6 +340,15 @@ function renderAdmin(){
     <div class="section-label">Студенты</div>
     <div class="students-grid">${cardsHtml}</div>`;
 }
+
+(function init(){
+  state.user='nastya';state.role='student';
+  if(location.search.includes('admin')){
+    show('screen-admin');renderAdmin();
+  } else {
+    show('screen-student');renderStudent();
+  }
+})();
 </script>
 </body>
 </html>
