@@ -406,20 +406,18 @@ function getSB() {
 async function sbRequest(path, method = 'GET', body = null) {
   const sb = getSB();
   if (!sb) throw new Error('Supabase не настроен');
-  const opts = {
-    method,
-    headers: {
-      'apikey': sb.key,
-      'Authorization': 'Bearer ' + sb.key,
-      'Content-Type': 'application/json',
-      'Prefer': method === 'POST' ? 'return=representation,resolution=merge-duplicates' : 'return=representation'
-    }
+  const headers = {
+    'apikey': sb.key,
+    'Authorization': 'Bearer ' + sb.key,
+    'Content-Type': 'application/json'
   };
+  if (method === 'POST') headers['Prefer'] = 'return=minimal,resolution=merge-duplicates';
+  const opts = { method, headers };
   if (body) opts.body = JSON.stringify(body);
   const res = await fetch(sb.url + '/rest/v1/' + path, opts);
-  if (!res.ok) {
+  if (!res.ok && res.status !== 204) {
     const err = await res.text();
-    throw new Error(err);
+    throw new Error('HTTP ' + res.status + ': ' + err);
   }
   const text = await res.text();
   return text ? JSON.parse(text) : [];
@@ -433,10 +431,21 @@ async function loadProgress(login) {
   return map;
 }
 async function setProgress(login, stepKey, completed) {
-  await sbRequest('student_progress?on_conflict=student_login,step_key', 'POST', {
-    student_login: login, step_key: stepKey,
-    completed, completed_at: completed ? new Date().toISOString() : null
-  });
+  const sb = getSB();
+  const body = { student_login: login, step_key: stepKey, completed, completed_at: completed ? new Date().toISOString() : null };
+  // Try PATCH first (update existing), if 0 rows then POST (insert)
+  const patchRes = await fetch(
+    sb.url + '/rest/v1/student_progress?student_login=eq.' + login + '&step_key=eq.' + encodeURIComponent(stepKey),
+    { method: 'PATCH', headers: { 'apikey': sb.key, 'Authorization': 'Bearer ' + sb.key, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, body: JSON.stringify({ completed, completed_at: body.completed_at }) }
+  );
+  if (!patchRes.ok) throw new Error('PATCH failed: ' + await patchRes.text());
+  const count = patchRes.headers.get('content-range');
+  if (count === '*/0' || count === null) {
+    const postRes = await fetch(sb.url + '/rest/v1/student_progress',
+      { method: 'POST', headers: { 'apikey': sb.key, 'Authorization': 'Bearer ' + sb.key, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, body: JSON.stringify(body) }
+    );
+    if (!postRes.ok) throw new Error('POST failed: ' + await postRes.text());
+  }
 }
 
 // ── Данные ──
@@ -447,11 +456,19 @@ async function loadData(login, direction) {
   return map;
 }
 async function saveDataField(login, fieldKey, value, direction) {
-  await sbRequest('student_data?on_conflict=student_login,field_key,direction', 'POST', {
-    student_login: login, field_key: fieldKey,
-    field_value: value, direction,
-    updated_at: new Date().toISOString()
-  });
+  const sb = getSB();
+  const patchRes = await fetch(
+    sb.url + '/rest/v1/student_data?student_login=eq.' + login + '&field_key=eq.' + encodeURIComponent(fieldKey) + '&direction=eq.' + direction,
+    { method: 'PATCH', headers: { 'apikey': sb.key, 'Authorization': 'Bearer ' + sb.key, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, body: JSON.stringify({ field_value: value, updated_at: new Date().toISOString() }) }
+  );
+  if (!patchRes.ok) throw new Error('PATCH failed: ' + await patchRes.text());
+  const range = patchRes.headers.get('content-range');
+  if (range === '*/0' || range === null) {
+    const postRes = await fetch(sb.url + '/rest/v1/student_data',
+      { method: 'POST', headers: { 'apikey': sb.key, 'Authorization': 'Bearer ' + sb.key, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, body: JSON.stringify({ student_login: login, field_key: fieldKey, field_value: value, direction, updated_at: new Date().toISOString() }) }
+    );
+    if (!postRes.ok) throw new Error('POST failed: ' + await postRes.text());
+  }
 }
 async function deleteDataField(login, fieldKey, direction) {
   await sbRequest(`student_data?student_login=eq.${login}&field_key=eq.${fieldKey}&direction=eq.${direction}`, 'DELETE');
