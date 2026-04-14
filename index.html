@@ -849,10 +849,10 @@ function renderSidebar() {
     const st = lk ? 'Заблокировано' : done ? 'Выполнено ✓' : cur ? `${p}/${m.steps.length} шагов` : m.steps.length ? `${m.steps.length} шагов` : '';
     const sc = done ? 'done' : cur ? 'cur' : '';
     html += `<div class="mb${cur?' on':''}${lk?' lk':''}" onclick="${lk?'':('goMod('+i+')')}">
-      <div class="mb-icon ${ic}">${done?'✓':m.icon}</div>
-      <div class="mb-meta"><div class="mb-name">${m.title}</div><div class="mb-sub ${sc}">${st}</div></div>
-      ${lk?'<span style="font-size:11px;color:var(--t3)">🔒</span>':''}
-    </div>`;
+      <div class="mb-icon ${ic}">${done?'✓':m.icon}<\/div>
+      <div class="mb-meta"><div class="mb-name">${m.title}<\/div><div class="mb-sub ${sc}">${st}<\/div><\/div>
+      ${lk?'<span style="font-size:11px;color:var(--t3)">🔒<\/span>':''}
+    <\/div>`;
   });
   document.getElementById('sb-nav').innerHTML = html;
   const pct = totalSteps() > 0 ? Math.round(doneCount() / totalSteps() * 100) : 0;
@@ -868,75 +868,75 @@ function goMod(i) { CUR_MOD = i; OPEN = {}; renderSidebar(); renderMain(); windo
 function renderMain() {
   const mi = CUR_MOD, m = MODS[mi], el = document.getElementById('stu-main');
   if (m.locked) {
-    el.innerHTML = `<div class="locked-screen"><div class="locked-icon">🔒</div><div class="locked-h">Модуль заблокирован</div><div class="locked-p">Выполни все предыдущие модули. Павел откроет доступ и выдаст индивидуальное задание.</div></div>`;
+    el.innerHTML = `<div class="locked-screen"><div class="locked-icon">🔒<\/div><div class="locked-h">Модуль заблокирован<\/div><div class="locked-p">Выполни все предыдущие модули. Павел откроет доступ и выдаст индивидуальное задание.<\/div><\/div>`;
     return;
   }
   const p = modProgCount(mi), t = m.steps.length, pct = t > 0 ? Math.round(p / t * 100) : 0;
   let sh = '';
   m.steps.forEach((s, si) => { sh += buildStep(s, si, mi + '-' + si, !!PROG[mi + '-' + si], !!OPEN[mi + '-' + si]); });
-  el.innerHTML = `<div class="mod-hero"><div class="mod-badge">МОДУЛЬ ${mi+1}</div><div class="mod-h1">${m.title}</div><div class="mod-p">${m.desc}</div>${t>0?`<div class="prog-row"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div><div class="prog-lbl">${p} / ${t}</div></div>`:''}</div><div class="steps">${sh}</div>`;
+  el.innerHTML = `<div class="mod-hero"><div class="mod-badge">МОДУЛЬ ${mi+1}<\/div><div class="mod-h1">${m.title}<\/div><div class="mod-p">${m.desc}<\/div>${t>0?`<div class="prog-row"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%"><\/div><\/div><div class="prog-lbl">${p} / ${t}<\/div><\/div>`:''}<\/div><div class="steps">${sh}<\/div>`;
 }
 
 function buildStep(s, si, key, done, open) {
   let b = '';
-  if (s.txt) b += `<div class="step-txt">${s.txt}</div>`;
+  if (s.txt) b += `<div class="step-txt">${s.txt}<\/div>`;
   if (s.os) {
     const e = 'os-' + key;
-    b += `<div class="os-tabs"><div class="os-tab on" onclick="swOs(this,'${e}-m','${e}-w')">Mac</div><div class="os-tab" onclick="swOs(this,'${e}-w','${e}-m')">Windows</div></div><div class="os-cnt on" id="${e}-m">${s.os.mac}</div><div class="os-cnt" id="${e}-w">${s.os.win}</div>`;
+    b += `<div class="os-tabs"><div class="os-tab on" onclick="swOs(this,'${e}-m','${e}-w')">Mac<\/div><div class="os-tab" onclick="swOs(this,'${e}-w','${e}-m')">Windows<\/div><\/div><div class="os-cnt on" id="${e}-m">${s.os.mac}<\/div><div class="os-cnt" id="${e}-w">${s.os.win}<\/div>`;
   }
-  if (s.link) b += `<a href="${s.link.url}" target="_blank" class="link-btn">${s.link.label} ↗</a>`;
-  if (s.link_win) b += `<a href="${s.link_win.url}" target="_blank" class="link-btn" style="margin-left:6px">${s.link_win.label} ↗</a>`;
-  if (s.pills) b += `<div class="pills">${s.pills.map(p=>`<div class="pill"><div class="pill-dot"></div>${p}</div>`).join('')}</div>`;
+  if (s.link) b += `<a href="${s.link.url}" target="_blank" class="link-btn">${s.link.label} ↗<\/a>`;
+  if (s.link_win) b += `<a href="${s.link_win.url}" target="_blank" class="link-btn" style="margin-left:6px">${s.link_win.label} ↗<\/a>`;
+  if (s.pills) b += `<div class="pills">${s.pills.map(p=>`<div class="pill"><div class="pill-dot"><\/div>${p}<\/div>`).join('')}<\/div>`;
   if (s.cmd_mac && s.cmd_win) {
     const c = 'cmd-' + key;
-    b += `<div class="os-tabs" style="margin-top:12px"><div class="os-tab on" onclick="swOs(this,'${c}-m','${c}-w')">Mac / Linux</div><div class="os-tab" onclick="swOs(this,'${c}-w','${c}-m')">Windows</div></div><div class="os-cnt on" id="${c}-m">${mkCode(s.cmd_mac,'cm-'+key)}</div><div class="os-cnt" id="${c}-w">${mkCode(s.cmd_win,'cw-'+key)}</div>`;
+    b += `<div class="os-tabs" style="margin-top:12px"><div class="os-tab on" onclick="swOs(this,'${c}-m','${c}-w')">Mac / Linux<\/div><div class="os-tab" onclick="swOs(this,'${c}-w','${c}-m')">Windows<\/div><\/div><div class="os-cnt on" id="${c}-m">${mkCode(s.cmd_mac,'cm-'+key)}<\/div><div class="os-cnt" id="${c}-w">${mkCode(s.cmd_win,'cw-'+key)}<\/div>`;
   } else if (s.cmd_both) b += mkCode(s.cmd_both, 'cb-' + key);
-  if (s.download) b += `<div style="margin:12px 0"><button class="btn-complete" style="background:var(--gold);color:#18181f" onclick="downloadWelcome()">⬇ Скачать index.html</button></div>`;
-  if (s.info) b += `<div class="info-box">💡 ${s.info}</div>`;
-  if (s.note) b += `<div class="note-box">⚡ ${s.note}</div>`;
+  if (s.download) b += `<div style="margin:12px 0"><button class="btn-complete" style="background:var(--gold);color:#18181f" onclick="downloadWelcome()">⬇ Скачать index.html<\/button><\/div>`;
+  if (s.info) b += `<div class="info-box">💡 ${s.info}<\/div>`;
+  if (s.note) b += `<div class="note-box">⚡ ${s.note}<\/div>`;
 
   // Student input
   if (s.studentInput) {
     const sent = s.studentInput.fields.every(f => FROM_STUDENT[f.key]);
-    b += `<div class="stu-form"><div class="sf-title">📤 Отправь Павлу</div>`;
+    b += `<div class="stu-form"><div class="sf-title">📤 Отправь Павлу<\/div>`;
     s.studentInput.fields.forEach(f => {
-      b += `<label class="sf-label">${f.label}</label><input class="sf-input" id="sfi-${key}-${f.key}" value="${FROM_STUDENT[f.key]||''}" placeholder="${f.placeholder}" ${sent?'disabled':''}/>`;
+      b += `<label class="sf-label">${f.label}<\/label><input class="sf-input" id="sfi-${key}-${f.key}" value="${FROM_STUDENT[f.key]||''}" placeholder="${f.placeholder}" ${sent?'disabled':''}/>`;
     });
     if (sent) {
-      b += `<div class="sf-sent">✓ Отправлено Павлу</div><button class="sf-edit" onclick="clearStuInput('${key}',${JSON.stringify(s.studentInput.fields.map(f=>f.key))})">Изменить</button>`;
+      b += `<div class="sf-sent">✓ Отправлено Павлу<\/div><button class="sf-edit" onclick="clearStuInput('${key}',${JSON.stringify(s.studentInput.fields.map(f=>f.key))})">Изменить<\/button>`;
     } else {
-      b += `<button class="sf-btn" id="sfbtn-${key}" onclick="sendStuInput('${key}',${JSON.stringify(s.studentInput.fields.map(f=>f.key))})">Отправить Павлу →</button>`;
+      b += `<button class="sf-btn" id="sfbtn-${key}" onclick="sendStuInput('${key}',${JSON.stringify(s.studentInput.fields.map(f=>f.key))})">Отправить Павлу →<\/button>`;
     }
-    b += `</div>`;
+    b += `<\/div>`;
   }
 
   // Pavel data
   if (s.pavelData) {
     const has = s.pavelData.fields.some(f => FROM_PAVEL[f.key]);
-    b += `<div class="from-pavel"><div class="fp-title">📩 От Павла</div>`;
+    b += `<div class="from-pavel"><div class="fp-title">📩 От Павла<\/div>`;
     if (has) {
       s.pavelData.fields.forEach(f => {
-        if (FROM_PAVEL[f.key]) b += `<div class="fp-row"><div class="fp-lbl">${f.label}</div><div class="fp-val"><span>${FROM_PAVEL[f.key]}</span><button class="fp-copy" onclick="cpText(this,'${FROM_PAVEL[f.key].replace(/'/g,"\\'")}')">Копировать</button></div></div>`;
+        if (FROM_PAVEL[f.key]) b += `<div class="fp-row"><div class="fp-lbl">${f.label}<\/div><div class="fp-val"><span>${FROM_PAVEL[f.key]}<\/span><button class="fp-copy" onclick="cpText(this,'${FROM_PAVEL[f.key].replace(/'/g,"\\'")}')">Копировать<\/button><\/div><\/div>`;
       });
     } else {
-      b += `<div class="fp-waiting">Ожидай — Павел скоро пришлёт данные...</div>`;
+      b += `<div class="fp-waiting">Ожидай — Павел скоро пришлёт данные...<\/div>`;
     }
-    b += `</div>`;
+    b += `<\/div>`;
   }
 
   b += `<div class="step-acts">${done
-    ? `<div class="done-tag">✓ Выполнено</div><button class="btn-undo" onclick="togProg('${key}',false)">Отменить</button>`
-    : `<button class="btn-complete" id="btn-prog-${key}" onclick="togProg('${key}',true)">✓ Выполнено</button>`
-  }</div>`;
+    ? `<div class="done-tag">✓ Выполнено<\/div><button class="btn-undo" onclick="togProg('${key}',false)">Отменить<\/button>`
+    : `<button class="btn-complete" id="btn-prog-${key}" onclick="togProg('${key}',true)">✓ Выполнено<\/button>`
+  }<\/div>`;
 
   return `<div class="step${done?' done':''}${open?' open':''}" id="st-${key}">
     <div class="step-hd" onclick="togOpen('${key}')">
-      <div class="step-n${done?' done':''}">${done?'✓':(si+1)}</div>
-      <div class="step-hd-meta"><div class="step-hd-title">${s.title}</div><div class="step-hd-sub">${s.sub}</div></div>
-      <div class="step-chev">▼</div>
-    </div>
-    <div class="step-body">${b}</div>
-  </div>`;
+      <div class="step-n${done?' done':''}">${done?'✓':(si+1)}<\/div>
+      <div class="step-hd-meta"><div class="step-hd-title">${s.title}<\/div><div class="step-hd-sub">${s.sub}<\/div><\/div>
+      <div class="step-chev">▼<\/div>
+    <\/div>
+    <div class="step-body">${b}<\/div>
+  <\/div>`;
 }
 
 async function sendStuInput(key, keys) {
@@ -991,12 +991,12 @@ async function togProg(key, val) {
 // ══════════════════════════════════════
 async function renderAdmin() {
   const el = document.getElementById('adm-main');
-  el.innerHTML = `<div class="connecting"><div class="spin" style="font-size:20px">⟳</div><div class="connecting-txt">Загружаем данные студентов...</div></div>`;
+  el.innerHTML = `<div class="connecting"><div class="spin" style="font-size:20px">⟳<\/div><div class="connecting-txt">Загружаем данные студентов...<\/div><\/div>`;
   try {
     const data = await loadAllStudentsData();
     buildAdminUI(data);
   } catch(e) {
-    el.innerHTML = `<div class="connecting"><div style="font-size:13px;color:var(--red)">Ошибка: ${e.message}</div></div>`;
+    el.innerHTML = `<div class="connecting"><div style="font-size:13px;color:var(--red)">Ошибка: ${e.message}<\/div><\/div>`;
   }
 }
 
@@ -1015,51 +1015,51 @@ function buildAdminUI(data) {
     const initial = STU_NAMES[u][0];
 
     const fromRows = STU_FIELDS.map(f => `<div class="ex-row">
-      <div class="ex-lbl"><span class="tag tag-from">ОТ СТУДЕНТА</span>${f.label}</div>
-      <div class="ex-val${fs[f.key]?'':' empty'}">${fs[f.key]||'Ещё не заполнено'}</div>
-    </div>`).join('');
+      <div class="ex-lbl"><span class="tag tag-from">ОТ СТУДЕНТА<\/span>${f.label}<\/div>
+      <div class="ex-val${fs[f.key]?'':' empty'}">${fs[f.key]||'Ещё не заполнено'}<\/div>
+    <\/div>`).join('');
 
     const toRows = PAVEL_FIELDS.map(f => {
       const val = fp[f.key] || '';
       const sid = `pf-${u}-${f.key}`;
       return `<div class="ex-row">
-        <div class="ex-lbl"><span class="tag tag-to">СТУДЕНТУ</span>${f.label}</div>
+        <div class="ex-lbl"><span class="tag tag-to">СТУДЕНТУ<\/span>${f.label}<\/div>
         ${val
-          ? `<div class="ex-val-row"><div class="ex-val" style="flex:1">${val}</div><button class="fp-copy" onclick="cpText(this,${JSON.stringify(val)})">Копировать</button><button class="ex-edit" onclick="delPF(${JSON.stringify(u)},${JSON.stringify(f.key)})">Изменить</button></div>`
-          : `<div class="ex-inp-row"><input class="ex-inp" id="${sid}" placeholder="${f.placeholder}"/><button class="ex-save" onclick="savePF(${JSON.stringify(u)},${JSON.stringify(f.key)},'${sid}')">Сохранить</button></div>`
+          ? `<div class="ex-val-row"><div class="ex-val" style="flex:1">${val}<\/div><button class="fp-copy" onclick="cpText(this,${JSON.stringify(val)})">Копировать<\/button><button class="ex-edit" onclick="delPF(${JSON.stringify(u)},${JSON.stringify(f.key)})">Изменить<\/button><\/div>`
+          : `<div class="ex-inp-row"><input class="ex-inp" id="${sid}" placeholder="${f.placeholder}"/><button class="ex-save" onclick="savePF(${JSON.stringify(u)},${JSON.stringify(f.key)},'${sid}')">Сохранить<\/button><\/div>`
         }
-      </div>`;
+      <\/div>`;
     }).join('');
 
     cards += `<div class="stu-card">
       <div class="stu-card-hd">
         <div class="stu-card-hd-left">
-          <div class="stu-avatar">${initial}</div>
-          <div><div class="stu-name">${STU_NAMES[u]}</div><div class="stu-prog-txt">${done} / ${total} шагов · ${pct}%</div></div>
-        </div>
+          <div class="stu-avatar">${initial}<\/div>
+          <div><div class="stu-name">${STU_NAMES[u]}<\/div><div class="stu-prog-txt">${done} / ${total} шагов · ${pct}%<\/div><\/div>
+        <\/div>
         <div class="stu-card-actions">
           <a href="${vercelUrl||'#'}" target="_blank" class="btn-open-vercel ${vercelUrl?'active':'no-url'}">
             ${vercelUrl ? '▲ Открыть проект' : '▲ Нет URL'}
-          </a>
-        </div>
-      </div>
-      <div class="stu-prog-bar"><div class="stu-prog-fill" style="width:${pct}%"></div></div>
-      <div class="stu-body">${fromRows}<div class="divider"></div>${toRows}</div>
-    </div>`;
+          <\/a>
+        <\/div>
+      <\/div>
+      <div class="stu-prog-bar"><div class="stu-prog-fill" style="width:${pct}%"><\/div><\/div>
+      <div class="stu-body">${fromRows}<div class="divider"><\/div>${toRows}<\/div>
+    <\/div>`;
   });
 
   document.getElementById('adm-main').innerHTML = `
-    <div class="adm-h">Панель куратора</div>
-    <div class="adm-sub">Прогресс студентов и обмен данными</div>
+    <div class="adm-h">Панель куратора<\/div>
+    <div class="adm-sub">Прогресс студентов и обмен данными<\/div>
     <div class="adm-summary">
-      <div class="adm-stat"><div class="adm-stat-n">${STUDENTS.length}</div><div class="adm-stat-l">Студентов</div></div>
-      <div class="adm-stat"><div class="adm-stat-n">${avgPct}%</div><div class="adm-stat-l">Средний прогресс</div></div>
-      <div class="adm-stat"><div class="adm-stat-n">${fullDone}</div><div class="adm-stat-l">Завершили курс</div></div>
-      <div class="adm-stat"><div class="adm-stat-n">${total}</div><div class="adm-stat-l">Шагов в курсе</div></div>
-    </div>
-    <button class="adm-refresh" onclick="renderAdmin()">↻ Обновить данные</button>
-    <div class="sec-h">СТУДЕНТЫ</div>
-    <div class="stu-grid">${cards}</div>`;
+      <div class="adm-stat"><div class="adm-stat-n">${STUDENTS.length}<\/div><div class="adm-stat-l">Студентов<\/div><\/div>
+      <div class="adm-stat"><div class="adm-stat-n">${avgPct}%<\/div><div class="adm-stat-l">Средний прогресс<\/div><\/div>
+      <div class="adm-stat"><div class="adm-stat-n">${fullDone}<\/div><div class="adm-stat-l">Завершили курс<\/div><\/div>
+      <div class="adm-stat"><div class="adm-stat-n">${total}<\/div><div class="adm-stat-l">Шагов в курсе<\/div><\/div>
+    <\/div>
+    <button class="adm-refresh" onclick="renderAdmin()">↻ Обновить данные<\/button>
+    <div class="sec-h">СТУДЕНТЫ<\/div>
+    <div class="stu-grid">${cards}<\/div>`;
 }
 
 async function savePF(user, fk, sid) {
@@ -1089,7 +1089,7 @@ async function delPF(user, fk) {
 // ══════════════════════════════════════
 function togOpen(key) { OPEN[key] = !OPEN[key]; renderMain(); }
 function mkCode(cmd, id) {
-  return `<div class="code-wrap"><div class="code-top"><span class="code-lang">TERMINAL</span><button class="code-copy" onclick="cpCode('${id}')">Копировать</button></div><div class="code-pre" id="cp-${id}">${cmd}</div></div>`;
+  return `<div class="code-wrap"><div class="code-top"><span class="code-lang">TERMINAL<\/span><button class="code-copy" onclick="cpCode('${id}')">Копировать<\/button><\/div><div class="code-pre" id="cp-${id}">${cmd}<\/div><\/div>`;
 }
 function cpCode(id) {
   const el = document.getElementById('cp-' + id); if (!el) return;
