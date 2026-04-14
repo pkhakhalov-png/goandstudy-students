@@ -4,349 +4,897 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GoAndStudy — Обучение</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+:root{
+  --bg:#18181f;--bg2:#1e1e27;--bg3:#252530;--bg4:#2c2c3a;
+  --purple:#B15ECC;--pd:#B15ECC22;--pb:#B15ECC40;
+  --gold:#FFAC02;--gd:#FFAC0215;--gb:#FFAC0235;
+  --green:#22c55e;--grd:#22c55e15;--grb:#22c55e40;
+  --red:#f87171;--redd:#f8717115;--redb:#f8717130;
+  --border:#ffffff0f;--b2:#ffffff1a;--b3:#ffffff28;
+  --text:#eeeef0;--t2:#9898b0;--t3:#55556a;
+  --r:14px;--rs:10px;--rx:7px;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;color:#1a1a1a}
-.screen{display:none}
-.screen.active{display:block}
+html{scroll-behavior:smooth}
+body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--b3);border-radius:2px}
+.hide{display:none!important}
 
-/* LOGIN */
-.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
-.login-card{background:#fff;border:1px solid #e5e5e5;border-radius:16px;padding:2rem;width:100%;max-width:380px;box-shadow:0 4px 24px rgba(0,0,0,0.06)}
-.logo{font-size:22px;font-weight:600;margin-bottom:6px}
-.logo span{color:#B15ECC}
-.login-sub{font-size:13px;color:#888;margin-bottom:1.5rem}
-.field{margin-bottom:1rem}
-.field label{display:block;font-size:13px;color:#666;margin-bottom:6px}
-.field input{width:100%;padding:10px 14px;border:1px solid #e0e0e0;border-radius:10px;font-size:14px;outline:none;transition:border 0.2s}
-.field input:focus{border-color:#B15ECC}
-.btn-primary{width:100%;padding:11px;background:#B15ECC;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;margin-top:6px;transition:background 0.2s}
+/* ── SETUP SCREEN ── */
+.setup-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.setup-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:2rem;width:100%;max-width:560px}
+.setup-logo{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:700;margin-bottom:4px}
+.setup-logo span{color:var(--purple)}
+.setup-sub{font-size:13px;color:var(--t2);margin-bottom:1.5rem;line-height:1.6}
+.setup-step{display:flex;gap:12px;margin-bottom:1.25rem;padding:14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs)}
+.setup-step-n{width:26px;height:26px;border-radius:7px;background:var(--pd);border:1px solid var(--pb);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--purple);font-family:'Unbounded',sans-serif;flex-shrink:0}
+.setup-step-body{flex:1}
+.setup-step-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.setup-step-txt{font-size:12px;color:var(--t2);line-height:1.65}
+.code-wrap{background:#0e0e16;border:1px solid var(--border);border-radius:var(--rs);margin:10px 0;overflow:hidden}
+.code-top{display:flex;align-items:center;justify-content:space-between;padding:7px 14px;border-bottom:1px solid var(--border)}
+.code-lang{font-size:10px;color:var(--t3);font-family:'Unbounded',sans-serif;letter-spacing:.8px}
+.code-copy{font-size:11px;color:var(--t3);cursor:pointer;background:var(--bg3);border:1px solid var(--border);padding:3px 10px;border-radius:5px;transition:all .12s;font-family:'Mulish',sans-serif}
+.code-copy:hover{color:var(--text);border-color:var(--b2)}
+.code-pre{padding:12px 14px;font-family:'SF Mono','Fira Code',monospace;font-size:12px;color:#cdd6f4;line-height:1.75;white-space:pre-wrap;word-break:break-all}
+.setup-divider{height:1px;background:var(--border);margin:1.5rem 0}
+.f-label{display:block;font-size:12px;color:var(--t2);margin-bottom:5px;font-weight:600}
+.f-input{width:100%;padding:9px 13px;border:1px solid var(--b2);border-radius:var(--rs);background:var(--bg3);color:var(--text);font-size:13px;font-family:'Mulish',sans-serif;outline:none;transition:border .15s;margin-bottom:10px}
+.f-input:focus{border-color:var(--pb)}
+.f-input::placeholder{color:var(--t3)}
+.btn-primary{width:100%;padding:10px;background:var(--purple);color:#fff;border:none;border-radius:var(--rs);font-size:13px;font-weight:700;cursor:pointer;font-family:'Mulish',sans-serif;transition:background .15s}
 .btn-primary:hover{background:#9a4fb5}
-.err{font-size:12px;color:#e53e3e;margin-top:8px;display:none}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.setup-err{font-size:12px;color:var(--red);margin-top:8px;display:none}
+.note-box{background:var(--gd);border:1px solid var(--gb);border-radius:var(--rx);padding:10px 14px;margin:10px 0;font-size:12px;color:var(--gold);line-height:1.65}
 
-/* HEADER */
-.header{background:#fff;border-bottom:1px solid #ebebeb;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:54px;position:sticky;top:0;z-index:10}
-.header-logo{font-size:16px;font-weight:600}
-.header-logo span{color:#B15ECC}
-.user-badge{font-size:13px;color:#888}
-.logout-btn{font-size:12px;color:#888;cursor:pointer;border:1px solid #e5e5e5;padding:5px 12px;border-radius:8px;background:none}
-.logout-btn:hover{background:#f5f5f5}
+/* ── HEADER ── */
+.hdr{position:sticky;top:0;z-index:100;background:var(--bg)ee;backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;color:var(--text)}
+.logo span{color:var(--purple)}
+.logo-sq{width:26px;height:26px;border-radius:7px;background:var(--pd);border:1px solid var(--pb);display:flex;align-items:center;justify-content:center;font-size:12px}
+.hdr-right{display:flex;align-items:center;gap:10px}
+.hdr-user{font-size:12px;color:var(--t2)}
+.hdr-btn{font-size:11px;color:var(--t3);background:var(--bg3);border:1px solid var(--border);padding:4px 12px;border-radius:20px;cursor:pointer;font-family:'Mulish',sans-serif;transition:all .15s}
+.hdr-btn:hover{border-color:var(--b2);color:var(--t2)}
 
-/* LAYOUT */
-.main-layout{display:grid;grid-template-columns:250px 1fr;min-height:calc(100vh - 54px)}
-.sidebar{background:#fff;border-right:1px solid #ebebeb;padding:1rem 0;position:sticky;top:54px;height:calc(100vh - 54px);overflow-y:auto}
-.sidebar-title{font-size:11px;color:#bbb;padding:0 1rem 8px;text-transform:uppercase;letter-spacing:0.5px}
-.mod-item{display:flex;align-items:center;gap:10px;padding:9px 1rem;cursor:pointer;font-size:13px;color:#666;border-left:2px solid transparent}
-.mod-item:hover{background:#faf5ff}
-.mod-item.active{background:#faf5ff;color:#B15ECC;border-left-color:#B15ECC}
-.mod-item.locked{opacity:0.4;cursor:not-allowed}
-.mod-dot{width:9px;height:9px;border-radius:50%;background:#e5e5e5;border:2px solid #d0d0d0;flex-shrink:0}
-.mod-dot.done{background:#22c55e;border-color:#22c55e}
-.mod-dot.active{background:#B15ECC;border-color:#B15ECC}
+/* ── LOGIN ── */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 56px);padding:2rem}
+.login-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:2rem;width:100%;max-width:380px}
+.login-logo{font-family:'Unbounded',sans-serif;font-size:18px;font-weight:700;margin-bottom:4px}
+.login-logo span{color:var(--purple)}
+.login-sub{font-size:13px;color:var(--t2);margin-bottom:1.5rem}
+.login-err{font-size:12px;color:var(--red);margin-top:8px;display:none}
 
-/* CONTENT */
-.content{padding:2rem;max-width:780px}
-.mod-title{font-size:22px;font-weight:600;margin-bottom:4px}
-.mod-desc{font-size:14px;color:#888;margin-bottom:1rem}
-.progress-bar{height:5px;background:#f0e6f8;border-radius:3px;margin:12px 0 6px}
-.progress-fill{height:100%;background:#B15ECC;border-radius:3px;transition:width 0.3s}
-.prog-label{font-size:12px;color:#bbb;margin-bottom:1.5rem}
+/* ── LAYOUT ── */
+.layout{display:grid;grid-template-columns:268px 1fr;min-height:calc(100vh - 56px)}
+.sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:1rem 0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;display:flex;flex-direction:column}
+.sb-label{font-size:10px;color:var(--t3);font-family:'Unbounded',sans-serif;letter-spacing:1.2px;padding:0 1.25rem;margin:0 0 6px}
+.sb-mods{padding:0 .75rem;display:flex;flex-direction:column;gap:2px;flex:1}
+.mb{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--rs);cursor:pointer;transition:background .12s;border:1px solid transparent}
+.mb:hover{background:var(--bg3)}
+.mb.on{background:var(--bg3);border-color:var(--b2)}
+.mb.lk{opacity:.3;cursor:not-allowed;pointer-events:none}
+.mb-icon{width:30px;height:30px;border-radius:8px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.mb-icon.done{background:var(--grd);border-color:var(--grb)}
+.mb-icon.cur{background:var(--pd);border-color:var(--pb)}
+.mb-meta{flex:1;min-width:0}
+.mb-name{font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:1px}
+.mb-sub{font-size:11px;color:var(--t3)}
+.mb-sub.done{color:var(--green)}
+.mb-sub.cur{color:var(--purple)}
+.sb-foot{padding:1rem 1.25rem;border-top:1px solid var(--border);margin-top:auto}
+.sb-pl{font-size:11px;color:var(--t3);display:flex;justify-content:space-between;margin-bottom:7px}
+.sb-pl span{color:var(--t2);font-weight:600}
+.sb-bar{height:3px;background:var(--bg4);border-radius:2px;overflow:hidden}
+.sb-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--gold));border-radius:2px;transition:width .5s ease}
 
-.steps{display:flex;flex-direction:column;gap:12px}
-.step-card{background:#fff;border:1px solid #ebebeb;border-radius:14px;padding:1.25rem}
-.step-card.done{border-color:#22c55e20;background:#f0fdf4}
-.step-top{display:flex;align-items:flex-start;gap:14px}
-.step-num{width:30px;height:30px;border-radius:50%;background:#f5f5f5;border:1px solid #e5e5e5;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#888;flex-shrink:0}
-.step-num.done{background:#22c55e;border-color:#22c55e;color:#fff}
-.step-body{flex:1}
-.step-title{font-size:14px;font-weight:600;margin-bottom:5px}
-.step-text{font-size:13px;color:#666;line-height:1.6}
-.step-code{background:#1e1e2e;color:#cdd6f4;border-radius:10px;padding:12px 16px;font-family:'SF Mono','Fira Code',monospace;font-size:12px;margin-top:10px;white-space:pre-wrap;line-height:1.6}
-.step-link{font-size:12px;color:#B15ECC;display:inline-block;margin-top:8px;text-decoration:none}
-.step-link:hover{text-decoration:underline}
-.step-actions{margin-top:12px}
-.btn-done{padding:7px 18px;background:#B15ECC;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;transition:background 0.2s}
-.btn-done:hover{background:#9a4fb5}
-.btn-undone{padding:7px 18px;background:none;color:#888;border:1px solid #e5e5e5;border-radius:8px;font-size:12px;cursor:pointer}
-.btn-undone:hover{background:#f5f5f5}
+/* ── MAIN CONTENT ── */
+.main{padding:2rem 2.5rem;max-width:860px}
+.mod-hero{margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.mod-badge{display:inline-block;font-size:10px;color:var(--purple);background:var(--pd);border:1px solid var(--pb);padding:3px 10px;border-radius:20px;font-family:'Unbounded',sans-serif;letter-spacing:.5px;margin-bottom:10px}
+.mod-h1{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:700;line-height:1.35;margin-bottom:8px}
+.mod-p{font-size:14px;color:var(--t2);line-height:1.7;max-width:560px}
+.prog-row{display:flex;align-items:center;gap:10px;margin-top:1.25rem}
+.prog-bar{flex:1;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--gold));border-radius:3px;transition:width .4s}
+.prog-lbl{font-size:12px;color:var(--t3);white-space:nowrap}
 
-.task-card{background:#faf5ff;border:1px solid #e6d4f7;border-radius:14px;padding:1.25rem;margin-bottom:12px}
-.task-label{font-size:11px;color:#B15ECC;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
-.task-text{font-size:14px;color:#1a1a1a;line-height:1.7}
-.no-task{background:#f9f9f9;border:1px solid #ebebeb;border-radius:14px;padding:1.5rem;text-align:center;color:#aaa;font-size:13px}
+/* ── STEPS ── */
+.steps{display:flex;flex-direction:column;gap:8px}
+.step{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .15s}
+.step:hover{border-color:var(--b2)}
+.step.done{border-color:var(--grb);background:var(--grd)}
+.step.open{border-color:var(--b2)}
+.step-hd{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;user-select:none}
+.step-n{width:30px;height:30px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--t3);flex-shrink:0;font-family:'Unbounded',sans-serif}
+.step-n.done{background:var(--grd);border-color:var(--grb);color:var(--green)}
+.step-hd-meta{flex:1}
+.step-hd-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
+.step-hd-sub{font-size:11px;color:var(--t3)}
+.step-chev{font-size:10px;color:var(--t3);transition:transform .2s}
+.step.open .step-chev{transform:rotate(180deg)}
+.step-body{display:none;padding:0 16px 16px;border-top:1px solid var(--border)}
+.step.open .step-body{display:block}
+.step-txt{font-size:13px;color:var(--t2);line-height:1.75;margin:14px 0 10px}
+.os-tabs{display:flex;gap:4px;margin:10px 0 6px}
+.os-tab{font-size:11px;font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid var(--border);color:var(--t3);cursor:pointer;transition:all .12s;font-family:'Mulish',sans-serif}
+.os-tab:hover{border-color:var(--b2);color:var(--t2)}
+.os-tab.on{background:var(--bg3);color:var(--text);border-color:var(--b2)}
+.os-cnt{display:none;font-size:13px;color:var(--t2);line-height:1.7}
+.os-cnt.on{display:block}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.pill{font-size:11px;color:var(--t2);background:var(--bg3);border:1px solid var(--border);padding:4px 11px;border-radius:20px;display:flex;align-items:center;gap:5px}
+.pill-dot{width:5px;height:5px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.info-box{background:var(--pd);border:1px solid var(--pb);border-radius:var(--rx);padding:10px 14px;margin:10px 0;font-size:12px;color:#c890e0;line-height:1.65}
+.link-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--purple);background:var(--pd);border:1px solid var(--pb);padding:6px 14px;border-radius:8px;transition:all .12s;margin:6px 0}
+.link-btn:hover{background:#B15ECC30}
+.step-acts{display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.btn-complete{display:inline-flex;align-items:center;gap:6px;padding:8px 20px;background:var(--purple);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Mulish',sans-serif;transition:background .12s}
+.btn-complete:hover{background:#9a4fb5}
+.btn-complete:disabled{opacity:.5;cursor:not-allowed}
+.btn-undo{padding:7px 14px;background:none;color:var(--t3);border:1px solid var(--border);border-radius:8px;font-size:11px;cursor:pointer;font-family:'Mulish',sans-serif;transition:all .12s}
+.btn-undo:hover{border-color:var(--b2);color:var(--t2)}
+.done-tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--green);font-weight:600}
 
-.submit-section{background:#fff;border:1px solid #ebebeb;border-radius:14px;padding:1.25rem;margin-top:12px}
-.submit-title{font-size:14px;font-weight:600;margin-bottom:10px}
-.submit-input{width:100%;padding:10px 14px;border:1px solid #e0e0e0;border-radius:10px;font-size:13px;outline:none;margin-bottom:10px}
-.submit-input:focus{border-color:#B15ECC}
-.submit-btn{padding:8px 20px;background:#B15ECC;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer}
-.submit-btn:hover{background:#9a4fb5}
-.submitted-badge{font-size:13px;color:#22c55e;padding:8px 0;display:flex;align-items:center;gap:6px}
-.approved-banner{background:#f0fdf4;border:1px solid #86efac;border-radius:12px;padding:14px;font-size:13px;color:#16a34a;margin-top:12px;text-align:center}
+/* ── STUDENT FORM ── */
+.stu-form{background:var(--bg3);border:1px solid var(--b2);border-radius:var(--rs);padding:14px;margin:12px 0}
+.sf-title{font-size:12px;font-weight:700;color:var(--purple);margin-bottom:10px}
+.sf-label{display:block;font-size:11px;color:var(--t2);margin-bottom:4px}
+.sf-input{width:100%;padding:8px 12px;border:1px solid var(--b2);border-radius:var(--rx);background:var(--bg2);color:var(--text);font-size:12px;font-family:'Mulish',sans-serif;outline:none;transition:border .15s;margin-bottom:8px}
+.sf-input:focus{border-color:var(--pb)}
+.sf-input::placeholder{color:var(--t3)}
+.sf-input:disabled{opacity:.5;cursor:not-allowed}
+.sf-btn{padding:8px 18px;background:var(--purple);color:#fff;border:none;border-radius:var(--rx);font-size:12px;font-weight:700;cursor:pointer;font-family:'Mulish',sans-serif;transition:background .12s}
+.sf-btn:hover:not(:disabled){background:#9a4fb5}
+.sf-btn:disabled{opacity:.5;cursor:not-allowed}
+.sf-sent{font-size:11px;color:var(--green);margin-top:6px}
+.sf-edit{padding:6px 14px;background:none;color:var(--t3);border:1px solid var(--border);border-radius:var(--rx);font-size:11px;cursor:pointer;font-family:'Mulish',sans-serif;margin-left:8px;transition:all .12s}
+.sf-edit:hover{border-color:var(--b2);color:var(--t2)}
 
-/* ADMIN */
-.admin-wrap{padding:2rem;max-width:900px}
-.admin-title{font-size:22px;font-weight:600;margin-bottom:1.5rem}
-.students-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:1.5rem}
-.student-card{background:#fff;border:1px solid #ebebeb;border-radius:14px;padding:1.25rem}
-.student-name{font-size:16px;font-weight:600;margin-bottom:3px}
-.student-progress-text{font-size:12px;color:#aaa;margin-bottom:8px}
-.mini-bar{height:4px;background:#f0e6f8;border-radius:2px;margin-bottom:12px}
-.mini-fill{height:100%;background:#B15ECC;border-radius:2px}
-.student-actions{display:flex;gap:6px;flex-wrap:wrap}
-.action-btn{font-size:12px;padding:5px 12px;border-radius:8px;border:1px solid #e5e5e5;cursor:pointer;background:#fff;color:#555}
-.action-btn:hover{background:#f5f5f5}
-.action-btn.purple{background:#B15ECC;color:#fff;border-color:#B15ECC}
-.action-btn.purple:hover{background:#9a4fb5}
-.action-btn.green{background:#f0fdf4;color:#16a34a;border-color:#86efac;cursor:default}
+/* ── FROM PAVEL ── */
+.from-pavel{background:var(--pd);border:1px solid var(--pb);border-radius:var(--rs);padding:14px;margin:12px 0}
+.fp-title{font-size:11px;color:var(--purple);font-weight:700;margin-bottom:10px}
+.fp-waiting{font-size:12px;color:var(--t3);font-style:italic}
+.fp-row{margin-bottom:8px}
+.fp-row:last-child{margin-bottom:0}
+.fp-lbl{font-size:10px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.fp-val{font-size:12px;color:var(--text);background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:7px 10px;font-family:'SF Mono','Fira Code',monospace;display:flex;align-items:center;gap:8px}
+.fp-val span{flex:1;word-break:break-all}
+.fp-copy{font-size:10px;color:var(--t3);cursor:pointer;padding:2px 8px;border:1px solid var(--border);border-radius:4px;background:var(--bg);white-space:nowrap;flex-shrink:0;transition:all .12s;font-family:'Mulish',sans-serif}
+.fp-copy:hover{color:var(--text);border-color:var(--b2)}
 
-.subs-section{background:#fff;border:1px solid #ebebeb;border-radius:14px;padding:1.25rem}
-.subs-title{font-size:15px;font-weight:600;margin-bottom:14px}
-.sub-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:13px}
-.sub-item:last-child{border:none}
-.sub-student{font-weight:600;min-width:70px}
-.sub-link{flex:1;color:#B15ECC;word-break:break-all}
-.sub-approve{padding:5px 14px;background:#22c55e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer}
-.sub-approve:hover{background:#16a34a}
-.no-subs{font-size:13px;color:#bbb;padding:6px 0}
+/* ── LOCKED ── */
+.locked-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px;text-align:center;gap:14px}
+.locked-icon{width:60px;height:60px;border-radius:16px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:26px}
+.locked-h{font-family:'Unbounded',sans-serif;font-size:17px;font-weight:600}
+.locked-p{font-size:13px;color:var(--t2);max-width:300px;line-height:1.65}
 
-.section-label{font-size:12px;color:#aaa;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;margin:1.5rem 0 0.75rem}
+/* ── ADMIN ── */
+.adm-wrap{padding:2rem;max-width:1100px}
+.adm-h{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:700;margin-bottom:4px}
+.adm-sub{font-size:13px;color:var(--t2);margin-bottom:2rem}
+.sec-h{font-size:10px;color:var(--t3);font-family:'Unbounded',sans-serif;letter-spacing:1px;margin:0 0 12px}
+.stu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(480px,1fr));gap:16px}
+.stu-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.stu-card-hd{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.stu-card-hd-left{display:flex;align-items:center;gap:10px}
+.stu-avatar{width:36px;height:36px;border-radius:10px;background:var(--pd);border:1px solid var(--pb);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;color:var(--purple)}
+.stu-name{font-size:15px;font-weight:700;margin-bottom:2px}
+.stu-prog-txt{font-size:11px;color:var(--t3)}
+.stu-card-actions{display:flex;gap:8px;align-items:center}
+.btn-open-vercel{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;color:var(--text);cursor:pointer;font-family:'Mulish',sans-serif;transition:all .15s;text-decoration:none}
+.btn-open-vercel:hover{border-color:var(--b2);background:var(--bg4)}
+.btn-open-vercel.active{background:var(--grd);border-color:var(--grb);color:var(--green)}
+.btn-open-vercel.no-url{opacity:.3;cursor:not-allowed;pointer-events:none}
+.stu-prog-bar{height:2px;background:var(--bg4)}
+.stu-prog-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--gold));transition:width .4s}
+.stu-body{padding:1rem 1.25rem;display:flex;flex-direction:column;gap:10px}
+.ex-row{display:flex;flex-direction:column;gap:5px}
+.ex-lbl{font-size:10px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:6px}
+.tag{font-size:9px;padding:2px 7px;border-radius:10px;font-weight:700;letter-spacing:.3px}
+.tag-from{background:var(--pd);color:var(--purple);border:1px solid var(--pb)}
+.tag-to{background:var(--gd);color:var(--gold);border:1px solid var(--gb)}
+.ex-val{font-size:12px;color:var(--text);background:var(--bg3);border:1px solid var(--border);border-radius:var(--rx);padding:7px 10px;word-break:break-all}
+.ex-val.empty{color:var(--t3);font-style:italic;font-size:11px}
+.ex-inp-row{display:flex;gap:6px}
+.ex-inp{flex:1;padding:7px 10px;border:1px solid var(--b2);border-radius:var(--rx);background:var(--bg);color:var(--text);font-size:12px;font-family:'Mulish',sans-serif;outline:none;transition:border .15s}
+.ex-inp:focus{border-color:var(--pb)}
+.ex-inp::placeholder{color:var(--t3)}
+.ex-save{padding:7px 14px;background:var(--purple);color:#fff;border:none;border-radius:var(--rx);font-size:11px;font-weight:700;cursor:pointer;font-family:'Mulish',sans-serif;white-space:nowrap;transition:background .12s}
+.ex-save:hover{background:#9a4fb5}
+.ex-save:disabled{opacity:.5;cursor:not-allowed}
+.ex-saved{font-size:11px;color:var(--green);margin-top:2px;display:none}
+.ex-edit{font-size:10px;color:var(--t3);cursor:pointer;padding:2px 8px;border:1px solid var(--border);border-radius:4px;background:var(--bg);white-space:nowrap;flex-shrink:0;transition:all .12s;font-family:'Mulish',sans-serif}
+.ex-edit:hover{color:var(--text);border-color:var(--b2)}
+.divider{height:1px;background:var(--border)}
+.ex-val-row{display:flex;align-items:center;gap:6px}
+.adm-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:2rem}
+.adm-stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:1rem 1.25rem}
+.adm-stat-n{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:700;color:var(--purple);margin-bottom:4px}
+.adm-stat-l{font-size:11px;color:var(--t3)}
+.adm-refresh{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;color:var(--t2);cursor:pointer;font-family:'Mulish',sans-serif;transition:all .15s;margin-bottom:1.5rem}
+.adm-refresh:hover{border-color:var(--b2);color:var(--text)}
+.spin{display:inline-block;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.connecting{display:flex;align-items:center;justify-content:center;min-height:200px;flex-direction:column;gap:12px}
+.connecting-txt{font-size:13px;color:var(--t2)}
 
-@media(max-width:640px){
-  .main-layout{grid-template-columns:1fr}
+@media(max-width:720px){
+  .layout{grid-template-columns:1fr}
   .sidebar{display:none}
+  .main,.adm-wrap{padding:1.25rem}
+  .stu-grid{grid-template-columns:1fr}
+  .adm-summary{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
 <body>
 
-<div class="screen" id="screen-login">
-<div class="login-wrap">
-<div class="login-card">
-  <div class="logo">Go<span>&</span>Study</div>
-  <div class="login-sub">Платформа обучения веб-разработке</div>
-  <div class="field"><label>Логин</label><input type="text" id="login-input" placeholder="nastya / lera / egor / kiril" autocomplete="username" /></div>
-  <div class="field"><label>Пароль</label><input type="password" id="pass-input" placeholder="••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()" /></div>
-  <button class="btn-primary" onclick="doLogin()">Войти</button>
-  <div class="err" id="login-err">Неверный логин или пароль</div>
-</div>
-</div>
+<!-- ══════════════════════════════════════
+     SETUP SCREEN — первый запуск
+══════════════════════════════════════ -->
+<div id="pg-setup" class="hide">
+  <div class="setup-wrap">
+    <div class="setup-card">
+      <div class="setup-logo">Go<span>&</span>Study — Обучение</div>
+      <div class="setup-sub">Платформа использует Supabase для хранения прогресса. Нужно подключить один раз.</div>
+
+      <div class="setup-step">
+        <div class="setup-step-n">1</div>
+        <div class="setup-step-body">
+          <div class="setup-step-title">Создай Supabase проект</div>
+          <div class="setup-step-txt">Зайди на <a href="https://supabase.com" target="_blank" style="color:var(--purple)">supabase.com</a>, создай новый проект. Запомни пароль от БД — он понадобится.</div>
+        </div>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-n">2</div>
+        <div class="setup-step-body">
+          <div class="setup-step-title">Запусти SQL миграцию</div>
+          <div class="setup-step-txt">В Supabase → SQL Editor → вставь и выполни этот код:</div>
+          <div class="code-wrap">
+            <div class="code-top"><span class="code-lang">SQL</span><button class="code-copy" onclick="cpEl('setup-sql')">Копировать</button></div>
+            <div class="code-pre" id="setup-sql">-- Таблица прогресса студентов
+CREATE TABLE IF NOT EXISTS student_progress (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  student_login TEXT NOT NULL,
+  step_key TEXT NOT NULL,
+  completed BOOLEAN DEFAULT false,
+  completed_at TIMESTAMPTZ,
+  UNIQUE(student_login, step_key)
+);
+
+-- Таблица данных (студент → Павел, Павел → студент)
+CREATE TABLE IF NOT EXISTS student_data (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  student_login TEXT NOT NULL,
+  field_key TEXT NOT NULL,
+  field_value TEXT NOT NULL,
+  direction TEXT NOT NULL CHECK (direction IN ('from_student', 'from_pavel')),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(student_login, field_key, direction)
+);
+
+-- RLS: отключаем (используем anon key — доступ через JS)
+ALTER TABLE student_progress DISABLE ROW LEVEL SECURITY;
+ALTER TABLE student_data DISABLE ROW LEVEL SECURITY;</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="setup-step">
+        <div class="setup-step-n">3</div>
+        <div class="setup-step-body">
+          <div class="setup-step-title">Вставь ключи из Supabase</div>
+          <div class="setup-step-txt">Settings → API → Project URL и anon public key.</div>
+        </div>
+      </div>
+
+      <div class="setup-divider"></div>
+      <label class="f-label">Supabase Project URL</label>
+      <input class="f-input" id="setup-url" placeholder="https://xxxxxxxxxxxx.supabase.co"/>
+      <label class="f-label">Supabase Anon Key</label>
+      <input class="f-input" id="setup-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."/>
+      <div class="note-box">⚡ Ключи сохранятся в localStorage этого браузера. Нужно настроить один раз на каждом устройстве.</div>
+      <button class="btn-primary" id="setup-btn" onclick="saveSetup()">Сохранить и продолжить →</button>
+      <div class="setup-err" id="setup-err"></div>
+    </div>
+  </div>
 </div>
 
-<div class="screen active" id="screen-student">
-<div class="header">
-  <div class="header-logo">Go<span>&</span>Study <span style="font-size:13px;color:#aaa;font-weight:400">/ обучение</span></div>
-  <div style="display:flex;align-items:center;gap:12px">
-    <a href="?admin" class="logout-btn" style="text-decoration:none">Куратор</a>
+<!-- ══════════════════════════════════════
+     LOGIN
+══════════════════════════════════════ -->
+<div id="pg-login" class="hide">
+  <div class="hdr"><div class="logo"><div class="logo-sq">🎓</div>Go<span>&</span>Study</div></div>
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-logo">Go<span>&</span>Study</div>
+      <div class="login-sub">Платформа обучения веб-разработке</div>
+      <label class="f-label">Логин</label>
+      <input class="f-input" id="li" placeholder="nastya / lera / egor / kiril" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()"/>
+      <label class="f-label">Пароль</label>
+      <input class="f-input" id="lp" type="password" placeholder="••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+      <button class="btn-primary" id="login-btn" onclick="doLogin()">Войти</button>
+      <div class="login-err" id="lerr"></div>
+      <div style="margin-top:12px;text-align:right"><span onclick="showPage('pg-setup')" style="font-size:11px;color:var(--t3);cursor:pointer">⚙ Настройки Supabase</span></div>
+    </div>
   </div>
-</div>
-<div class="main-layout">
-  <div class="sidebar">
-    <div class="sidebar-title">Модули</div>
-    <div id="sidebar-mods"></div>
-  </div>
-  <div class="content" id="student-content"></div>
-</div>
 </div>
 
-<div class="screen" id="screen-admin">
-<div class="header">
-  <div class="header-logo">Go<span>&</span>Study <span style="font-size:13px;color:#aaa;font-weight:400">/ панель куратора</span></div>
-  <div style="display:flex;align-items:center;gap:12px">
-    <span class="user-badge">Андрей</span>
-    <button class="logout-btn" onclick="doLogout()">Выйти</button>
+<!-- ══════════════════════════════════════
+     STUDENT
+══════════════════════════════════════ -->
+<div id="pg-student" class="hide">
+  <div class="hdr">
+    <div class="logo"><div class="logo-sq">🎓</div>Go<span>&</span>Study</div>
+    <div class="hdr-right">
+      <span class="hdr-user" id="stu-name-hdr"></span>
+      <button class="hdr-btn" onclick="doLogout()">Выйти</button>
+    </div>
+  </div>
+  <div class="layout">
+    <div class="sidebar">
+      <div style="padding:0 .75rem 8px"><div class="sb-label" style="padding:0 .5rem">Программа</div></div>
+      <div class="sb-mods" id="sb-nav"></div>
+      <div class="sb-foot">
+        <div class="sb-pl">Прогресс <span id="sb-pct">0%</span></div>
+        <div class="sb-bar"><div class="sb-fill" id="sb-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="main" id="stu-main"></div>
   </div>
 </div>
-<div class="admin-wrap" id="admin-content"></div>
+
+<!-- ══════════════════════════════════════
+     ADMIN
+══════════════════════════════════════ -->
+<div id="pg-admin" class="hide">
+  <div class="hdr">
+    <div class="logo"><div class="logo-sq">🎓</div>Go<span>&</span>Study</div>
+    <div class="hdr-right">
+      <span class="hdr-user">Павел — куратор</span>
+      <button class="hdr-btn" onclick="doLogout()">Выйти</button>
+    </div>
+  </div>
+  <div class="adm-wrap" id="adm-main">
+    <div class="connecting"><div class="spin" style="font-size:20px">⟳</div><div class="connecting-txt">Загрузка...</div></div>
+  </div>
 </div>
 
 <script>
+// ══════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════
 const USERS = {
-  admin:{pass:'goandstudyadmin2024',role:'admin'},
-  nastya:{pass:'nastya2024',role:'student',name:'Настя'},
-  lera:{pass:'lera2024',role:'student',name:'Лера'},
-  egor:{pass:'egor2024',role:'student',name:'Егор'},
-  kiril:{pass:'kiril2024',role:'student',name:'Кирилл'}
+  nastya: { pass: 'Nastya2024!', role: 'student', name: 'Настя' },
+  lera:   { pass: 'Lera2024!',   role: 'student', name: 'Лера' },
+  egor:   { pass: 'Egor2024!',   role: 'student', name: 'Егор' },
+  kiril:  { pass: 'Kiril2024!',  role: 'student', name: 'Кирилл' },
+  pavel:  { pass: 'PavelAdmin2024!', role: 'admin', name: 'Павел' }
 };
+const STUDENTS = ['nastya', 'lera', 'egor', 'kiril'];
+const STU_NAMES = { nastya: 'Настя', lera: 'Лера', egor: 'Егор', kiril: 'Кирилл' };
 
-const MODULES = [
-  {id:0,title:'Модуль 0 — Подготовка',desc:'Ставим инструменты и Claude Code',steps:[
-    {title:'Установи VS Code',text:'Это твоя основная рабочая среда — редактор кода со встроенным терминалом. Скачай и установи для своей системы.',link:'https://code.visualstudio.com',cmd:null},
-    {title:'Установи Node.js',text:'Нужен чтобы поставить Claude Code. Качай версию LTS и ставь по умолчанию.',link:'https://nodejs.org',cmd:null},
-    {title:'Проверь установку',text:'Открой обычный терминал системы (Terminal на Mac / PowerShell на Windows) и вставь команды по одной. Должны появиться версии — если нет, значит что-то не установилось.',cmd:'node -v\nnpm -v'},
-    {title:'Оформи Claude Pro',text:'Зайди на claude.ai и оформи подписку Pro — без неё Claude Code не будет работать. Логин запомни — он же будет для Claude Code.',link:'https://claude.ai',cmd:null},
-    {title:'Установи Claude Code в системном терминале',text:'В том же системном терминале выполни команду. Должна появиться версия.',cmd:'npm install -g @anthropic-ai/claude-code\nclaude --version'},
-    {title:'Запусти Claude Code первый раз',text:'В системном терминале напиши claude и нажми Enter. Откроется мастер настройки — войди через аккаунт Claude Pro (тот же, что на claude.ai). Когда появится приглашение — напиши "привет" и убедись что он отвечает. Выйти: /exit',cmd:'claude'},
-    {title:'Открой встроенный терминал VS Code',text:'Запусти VS Code → меню Terminal → New Terminal (или Ctrl+` / Cmd+`). Внизу откроется терминал прямо внутри редактора.',cmd:null},
-    {title:'Запусти Claude Code во встроенном терминале VS Code',text:'В этом терминале тоже выполни claude — убедись что он запускается и отвечает. Дальше вся работа над проектом будет идти именно здесь.',cmd:'claude'}
-  ]},
-  {id:1,title:'Модуль 1 — GitHub',desc:'Подключаемся к репозиторию проекта',steps:[
-    {title:'Создай аккаунт GitHub',text:'GitHub — где живёт весь код. Зарегистрируйся и сразу пришли Андрею свой username, чтобы он добавил тебя в репозиторий проекта.',link:'https://github.com',cmd:null},
-    {title:'Прими приглашение',text:'Андрей пришлёт инвайт в репозиторий. Открой письмо или github.com/notifications и нажми Accept invitation.',cmd:null},
-    {title:'Открой репозиторий в VS Code',text:'В VS Code: Cmd/Ctrl+Shift+P → набери "Git: Clone" → вставь ссылку репозитория от Андрея → выбери папку на компе. VS Code попросит войти в GitHub (кнопка Sign in) — разреши в браузере, вернёшься автоматически. Если потребует поставить инструменты разработчика — соглашайся, всё ставится само.',cmd:null},
-    {title:'Первый коммит через Claude Code',text:'Во встроенном терминале VS Code запусти claude и попроси: «добавь меня в README и запушь». Claude Code сам всё сделает — ты только подтверждаешь действия клавишей Enter.',cmd:'claude'}
-  ]},
-  {id:2,title:'Модуль 2 — Supabase',desc:'База данных проекта',steps:[
-    {title:'Создай аккаунт Supabase',text:'Регистрируйся через GitHub — так проще всего. Пришли Андрею email, которым регистрировался.',link:'https://supabase.com',cmd:null},
-    {title:'Прими приглашение в проект',text:'Андрей добавит тебя в Supabase проект. Проверь почту и нажми Accept в письме.',cmd:null},
-    {title:'Изучи интерфейс',text:'Открой проект и посмотри основные разделы: Table Editor (таблицы), SQL Editor (запросы), Authentication (пользователи), API (ключи и URL).',cmd:null},
-    {title:'Первый SQL запрос',text:'Перейди в SQL Editor и выполни — покажет все таблицы в базе:',cmd:"SELECT * FROM information_schema.tables\nWHERE table_schema = 'public';"}
-  ]},
-  {id:3,title:'Модуль 3 — Vercel',desc:'Автодеплой проекта',steps:[
-    {title:'Создай аккаунт Vercel',text:'Регистрируйся через GitHub. Ничего ставить не нужно — Vercel работает полностью в браузере.',link:'https://vercel.com',cmd:null},
-    {title:'Прими приглашение',text:'Андрей пришлёт инвайт в проект на Vercel. Прими его в письме.',cmd:null},
-    {title:'Открой живую ссылку',text:'На дашборде Vercel открой проект и нажми Visit — это URL твоего проекта в интернете. Запомни его, пришли Андрею.',cmd:null},
-    {title:'Проверь автодеплой',text:'Попроси Claude Code во встроенном терминале VS Code сделать любое изменение (например "поменяй заголовок в README") и запушить. Через 30 секунд обнови Vercel — увидишь, что деплой запустился сам.',cmd:'claude'}
-  ]},
-  {id:4,title:'Готово — работаем над проектом',desc:'Дальше только живая работа',steps:[]}
+const PAVEL_FIELDS = [
+  { key: 'github_repo_url',      label: 'GitHub репо',            placeholder: 'git@github.com:pkhakhalov-png/student-...' },
+  { key: 'supabase_url',         label: 'Supabase URL',           placeholder: 'https://xxxx.supabase.co' },
+  { key: 'supabase_anon',        label: 'Supabase Anon Key',      placeholder: 'eyJhbGci...' },
+  { key: 'supabase_project_url', label: 'Ссылка на Supabase',     placeholder: 'https://supabase.com/dashboard/project/xxx' },
+  { key: 'vercel_project_url',   label: 'Vercel проект',          placeholder: 'https://vercel.com/pkhakhalov-png/...' },
+  { key: 'vercel_live_url',      label: 'Живой URL (Vercel)',      placeholder: 'https://student-nastya.vercel.app' },
+];
+const STU_FIELDS = [
+  { key: 'github_username', label: 'GitHub username' },
+  { key: 'supabase_email',  label: 'Email Supabase' },
+  { key: 'vercel_email',    label: 'Email Vercel' },
 ];
 
-let state = {
-  user:null,role:null,currentMod:0,
-  progress:{nastya:{},lera:{},egor:{},kiril:{}}
-};
-
-function doLogin(){
-  const login=document.getElementById('login-input').value.trim().toLowerCase();
-  const pass=document.getElementById('pass-input').value;
-  const u=USERS[login];
-  const err=document.getElementById('login-err');
-  if(!u||u.pass!==pass){err.style.display='block';return;}
-  err.style.display='none';
-  state.user=login;state.role=u.role;
-  show(u.role==='admin'?'screen-admin':'screen-student');
-  if(u.role==='student')renderStudent();
-  else renderAdmin();
+// ══════════════════════════════════════
+// SUPABASE CLIENT
+// ══════════════════════════════════════
+function getSB() {
+  const url = localStorage.getItem('sb_url');
+  const key = localStorage.getItem('sb_key');
+  if (!url || !key) return null;
+  return { url, key };
 }
 
-function doLogout(){
-  state.user=null;state.role=null;
-  document.getElementById('login-input').value='';
-  document.getElementById('pass-input').value='';
-  show('screen-login');
+async function sbRequest(path, method = 'GET', body = null) {
+  const sb = getSB();
+  if (!sb) throw new Error('Supabase не настроен');
+  const opts = {
+    method,
+    headers: {
+      'apikey': sb.key,
+      'Authorization': 'Bearer ' + sb.key,
+      'Content-Type': 'application/json',
+      'Prefer': method === 'POST' ? 'resolution=merge-duplicates,return=representation' : ''
+    }
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(sb.url + '/rest/v1/' + path, opts);
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(err);
+  }
+  const text = await res.text();
+  return text ? JSON.parse(text) : [];
 }
 
-function show(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+// ── Прогресс ──
+async function loadProgress(login) {
+  const rows = await sbRequest(`student_progress?student_login=eq.${login}&select=step_key,completed`);
+  const map = {};
+  rows.forEach(r => { map[r.step_key] = r.completed; });
+  return map;
 }
-
-function renderStudent(){
-  renderSidebar();renderModContent(state.currentMod);
-}
-
-function renderSidebar(){
-  const u=state.user;
-  let html='';
-  MODULES.forEach((m,i)=>{
-    const prog=state.progress[u]||{};
-    const steps=m.steps.length;
-    const done=steps>0?Object.keys(prog).filter(k=>k.startsWith(i+'-')&&prog[k]).length:0;
-    const isDone=steps>0&&done>=steps;
-    const isActive=state.currentMod===i;
-    const dotClass=isDone?'done':isActive?'active':'';
-    html+=`<div class="mod-item${isActive?' active':''}" onclick="goMod(${i})">
-      <div class="mod-dot ${dotClass}"></div>
-      <span>${m.title}</span>
-    </div>`;
+async function setProgress(login, stepKey, completed) {
+  await sbRequest('student_progress', 'POST', {
+    student_login: login, step_key: stepKey,
+    completed, completed_at: completed ? new Date().toISOString() : null
   });
-  document.getElementById('sidebar-mods').innerHTML=html;
 }
 
-function goMod(i){
-  state.currentMod=i;
-  renderSidebar();renderModContent(i);
+// ── Данные ──
+async function loadData(login, direction) {
+  const rows = await sbRequest(`student_data?student_login=eq.${login}&direction=eq.${direction}&select=field_key,field_value`);
+  const map = {};
+  rows.forEach(r => { map[r.field_key] = r.field_value; });
+  return map;
+}
+async function saveDataField(login, fieldKey, value, direction) {
+  await sbRequest('student_data', 'POST', {
+    student_login: login, field_key: fieldKey,
+    field_value: value, direction,
+    updated_at: new Date().toISOString()
+  });
+}
+async function deleteDataField(login, fieldKey, direction) {
+  await sbRequest(`student_data?student_login=eq.${login}&field_key=eq.${fieldKey}&direction=eq.${direction}`, 'DELETE');
 }
 
-function renderModContent(i){
-  const m=MODULES[i];
-  const u=state.user;
-  const prog=state.progress[u]||{};
-  const steps=m.steps;
-  const doneCount=steps.length>0?Object.keys(prog).filter(k=>k.startsWith(i+'-')&&prog[k]).length:0;
-  const pct=steps.length>0?Math.round(doneCount/steps.length*100):0;
+// ── Все данные всех студентов для адмнки ──
+async function loadAllStudentsData() {
+  const [progressAll, dataAll] = await Promise.all([
+    sbRequest('student_progress?select=student_login,step_key,completed'),
+    sbRequest('student_data?select=student_login,field_key,field_value,direction')
+  ]);
+  const result = {};
+  STUDENTS.forEach(u => { result[u] = { progress: {}, from_student: {}, from_pavel: {} }; });
+  progressAll.forEach(r => {
+    if (result[r.student_login]) result[r.student_login].progress[r.step_key] = r.completed;
+  });
+  dataAll.forEach(r => {
+    if (result[r.student_login] && result[r.student_login][r.direction] !== undefined)
+      result[r.student_login][r.direction][r.field_key] = r.field_value;
+  });
+  return result;
+}
 
-  let stepsHtml='';
-  if(i===4){
-    stepsHtml=`<div class="approved-banner" style="padding:24px">🎉 Все инструменты готовы!<br><br>Дальше — работа над реальным проектом вместе с Андреем.<br>Открывай VS Code, запускай <b>claude</b> во встроенном терминале и поехали.</div>`;
-  } else {
-    steps.forEach((s,si)=>{
-      const key=i+'-'+si;
-      const done=!!prog[key];
-      stepsHtml+=`<div class="step-card${done?' done':''}">
-        <div class="step-top">
-          <div class="step-num${done?' done':''}">${done?'✓':(si+1)}</div>
-          <div class="step-body">
-            <div class="step-title">${s.title}</div>
-            <div class="step-text">${s.text}</div>
-            ${s.cmd?`<div class="step-code">${s.cmd}</div>`:''}
-            ${s.link?`<a href="${s.link}" target="_blank" class="step-link">${s.link} ↗</a>`:''}
-          </div>
-        </div>
-        <div class="step-actions">
-          ${done
-            ?`<button class="btn-undone" onclick="toggleStep('${key}')">Отметить как невыполненное</button>`
-            :`<button class="btn-done" onclick="toggleStep('${key}')">Выполнено ✓</button>`
-          }
-        </div>
-      </div>`;
+// ══════════════════════════════════════
+// STATE
+// ══════════════════════════════════════
+let CUR = '', CUR_MOD = 0, OPEN = {};
+let PROG = {}, FROM_STUDENT = {}, FROM_PAVEL = {};
+
+// ══════════════════════════════════════
+// MODULES
+// ══════════════════════════════════════
+const MODS = [
+  { id:0, icon:'⚙️', title:'Настройка окружения', short:'Подготовка', desc:'Устанавливаем все инструменты. Делается один раз — потом просто работаешь.', steps:[
+    { title:'VS Code — редактор кода', sub:'Скачать, установить расширения', txt:'VS Code — это где ты будешь писать весь код. Бесплатный, самый популярный редактор в мире.', link:{ url:'https://code.visualstudio.com', label:'code.visualstudio.com' }, pills:['Prettier — Code formatter','ESLint','GitLens','Tailwind CSS IntelliSense','ES7+ React snippets'], info:'Нажми Ctrl+Shift+X (Win) или Cmd+Shift+X (Mac) и установи эти расширения.', note:'Включи "Format on Save" — Prettier будет форматировать код автоматически.' },
+    { title:'Node.js — движок JavaScript', sub:'Версия LTS, проверка через терминал', txt:'Node.js нужен чтобы запускать JavaScript и устанавливать пакеты.', link:{ url:'https://nodejs.org', label:'nodejs.org — скачай LTS' }, cmd_mac:'node -v\n# → v20.x.x или выше\nnpm -v\n# → 10.x.x или выше', cmd_win:'node -v\n# → v20.x.x или выше\nnpm -v\n# → 10.x.x или выше', note:'Только LTS — не "Current".' },
+    { title:'Git — контроль версий', sub:'Установка, первичная настройка', txt:'Git следит за изменениями в коде. Можно откатиться, работать в команде, видеть историю.', os:{ mac:'Git уже встроен в Mac. Открой терминал и напиши git --version.', win:'Скачай Git for Windows и установи с настройками по умолчанию.' }, link_win:{ url:'https://git-scm.com/download/win', label:'git-scm.com' }, cmd_both:'git config --global user.name "Твоё Имя"\ngit config --global user.email "твой@email.com"\ngit config --global --list', note:'Email должен совпадать с тем что укажешь при регистрации на GitHub.' },
+    { title:'Claude Pro + Claude Code', sub:'Оформи подписку, установи CLI', txt:'Claude Code — ИИ-помощник прямо в терминале. Пишет код, объясняет ошибки, делает задачи вместе с тобой.', link:{ url:'https://claude.ai', label:'claude.ai — оформи подписку Pro ($20/мес)' }, cmd_both:'npm install -g @anthropic-ai/claude-code\nclaude --version\nclaude', note:'При первом запуске откроется браузер — войди через свой аккаунт claude.ai.' },
+    { title:'Встроенный терминал VS Code', sub:'Cmd+` или Ctrl+` — вся работа здесь', txt:'Открой VS Code и нажми Cmd+` (Mac) или Ctrl+` (Windows). Вся дальнейшая работа — здесь.', cmd_both:'node -v\ngit --version\nclaude --version\n# Все три должны показать версии' }
+  ]},
+  { id:1, icon:'🐙', title:'GitHub', short:'GitHub', desc:'GitHub — хранилище кода. Весь твой код живёт здесь. Павел создаст репо — для этого ему нужен твой username.', steps:[
+    { title:'Создай аккаунт GitHub', sub:'Регистрация и отправка username Павлу', txt:'Зарегистрируйся на GitHub. После — отправь свой username Павлу через форму ниже.', link:{ url:'https://github.com', label:'github.com — зарегистрируйся' }, info:'Username выбирай нормальный — он виден везде.', studentInput:{ fields:[{ key:'github_username', label:'Твой GitHub username', placeholder:'например: nastya-dev' }] } },
+    { title:'Настрой SSH ключ', sub:'Чтобы не вводить пароль при каждом push', txt:'SSH ключ — постоянный пропуск твоего компьютера на GitHub.', cmd_mac:'ssh-keygen -t ed25519 -C "твой@email.com"\n# Жми Enter на все вопросы\ncat ~/.ssh/id_ed25519.pub\n# Скопируй вывод', cmd_win:'ssh-keygen -t ed25519 -C "твой@email.com"\n# Жми Enter на все вопросы\ntype $env:USERPROFILE\\.ssh\\id_ed25519.pub\n# Скопируй вывод', os:{ mac:'Вставь ключ на GitHub: Settings → SSH and GPG keys → New SSH key → вставь → Save.', win:'Вставь ключ на GitHub: Settings → SSH and GPG keys → New SSH key → вставь → Save.' }, note:'После этого git push/pull работают без пароля навсегда.' },
+    { title:'Получи ссылку на репо от Павла', sub:'Павел создаст репо и пришлёт ссылку', txt:'Как только Павел добавит тебя — ниже появится ссылка для клонирования.', pavelData:{ fields:[{ key:'github_repo_url', label:'Ссылка на репозиторий', placeholder:'git@github.com:pkhakhalov-png/student-...' }] } },
+    { title:'Клонируй репо на компьютер', sub:'git clone → открой в VS Code', txt:'Когда получишь ссылку от Павла — клонируй репо.', cmd_both:'cd ~\nmkdir projects && cd projects\ngit clone [ссылка_от_Павла]\ncd student-[имя]\ncode .', note:'Команда "code ." открывает папку в VS Code.' },
+    { title:'Первый коммит', sub:'git add → commit → push', txt:'Сделай любое изменение, закоммить и запушь. Павел увидит что всё работает.', cmd_both:'git add .\ngit commit -m "feat: initial setup"\ngit push origin main', note:'Пиши коммиты по-английски кратко: "feat: add page", "fix: bug"' }
+  ]},
+  { id:2, icon:'⚡', title:'Next.js', short:'Next.js', desc:'Next.js — фреймворк на котором сделана CRM GoAndStudy. Здесь только установка и запуск проекта от Павла.', steps:[
+    { title:'Что такое Next.js', sub:'Зачем нужен, как используется', txt:'Next.js — фреймворк на основе React. Стек проекта: Next.js 14 + TypeScript + Supabase + Vercel. Учиться будешь сразу на реальном проекте через Claude Code.', info:'Твоя задача — клонировать проект от Павла и запустить его локально.' },
+    { title:'Установи зависимости', sub:'npm install', txt:'В папке проекта выполни — установит все библиотеки.', cmd_both:'npm install\n# Должно появиться:\n# added XXX packages in Xs', note:'Папка node_modules не попадает на GitHub — создаётся заново через npm install.' },
+    { title:'Получи .env.local от Павла', sub:'Supabase ключи для подключения к базе', txt:'Создай файл .env.local в корне проекта с данными от Павла.', pavelData:{ fields:[{ key:'supabase_url', label:'NEXT_PUBLIC_SUPABASE_URL', placeholder:'https://xxxx.supabase.co' }, { key:'supabase_anon', label:'NEXT_PUBLIC_SUPABASE_ANON_KEY', placeholder:'eyJhbGci...' }] }, cmd_both:'# Создай .env.local в корне проекта:\nNEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co\nNEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGci...', note:'Файл .env.local уже в .gitignore — никогда не попадёт на GitHub.' },
+    { title:'Запусти проект локально', sub:'npm run dev → localhost:3000', txt:'Запусти dev-сервер и открой в браузере на http://localhost:3000.', cmd_both:'npm run dev\n# → ▲ Next.js 14.x.x\n# → Local: http://localhost:3000', note:'Если ошибка про переменные — проверь .env.local.' },
+    { title:'Открой VS Code + запусти Claude Code', sub:'code . → claude', txt:'Открой проект в VS Code и запусти Claude Code во встроенном терминале.', cmd_both:'code .\n# Во встроенном терминале (Ctrl+` / Cmd+`):\nclaude', info:'Теперь dev-сервер запущен и Claude Code готов. Можно работать!' }
+  ]},
+  { id:3, icon:'🗄️', title:'Supabase', short:'Supabase', desc:'Supabase — база данных в облаке. Павел добавит тебя в проект — нужен твой email.', steps:[
+    { title:'Создай аккаунт Supabase', sub:'Регистрация через GitHub, email Павлу', txt:'Зарегистрируйся через GitHub. Потом отправь email Павлу.', link:{ url:'https://supabase.com', label:'supabase.com — регистрируйся через GitHub' }, studentInput:{ fields:[{ key:'supabase_email', label:'Email от Supabase аккаунта', placeholder:'твой@email.com' }] } },
+    { title:'Получи доступ к проекту', sub:'Павел добавит тебя в Supabase', txt:'После того как пришлёшь email — Павел добавит тебя в проект. Прими инвайт в письме.', pavelData:{ fields:[{ key:'supabase_project_url', label:'Ссылка на Supabase проект', placeholder:'https://supabase.com/dashboard/project/xxx' }] } },
+    { title:'Изучи интерфейс', sub:'Table Editor, SQL Editor, Auth, API', txt:'Потрать 10 минут и покликай по разделам. Table Editor — таблицы. SQL Editor — запросы. Auth — пользователи. Settings → API — ключи.', note:'Большинство времени будешь работать в Table Editor и SQL Editor.' },
+    { title:'Первые SQL запросы', sub:'SELECT, INSERT, CREATE TABLE', txt:'Перейди в SQL Editor и выполни — Ctrl+Enter (Cmd+Enter на Mac).', cmd_both:"SELECT table_name FROM information_schema.tables\nWHERE table_schema = 'public';\n\nCREATE TABLE test (\n  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,\n  name TEXT NOT NULL,\n  created_at TIMESTAMPTZ DEFAULT NOW()\n);\n\nINSERT INTO test (name) VALUES ('Привет!');\nSELECT * FROM test;" }
+  ]},
+  { id:4, icon:'▲', title:'Vercel', short:'Vercel', desc:'Vercel — хостинг. Каждый push на GitHub = автоматический деплой. Нужен твой email.', steps:[
+    { title:'Создай аккаунт Vercel', sub:'Регистрация через GitHub, email Павлу', txt:'Регистрируйся через GitHub. Потом отправь email Павлу.', link:{ url:'https://vercel.com', label:'vercel.com → Sign Up → Continue with GitHub' }, studentInput:{ fields:[{ key:'vercel_email', label:'Email от Vercel аккаунта', placeholder:'твой@email.com' }] }, info:'Бесплатный план позволяет деплоить неограниченное количество проектов.' },
+    { title:'Получи доступ к проекту', sub:'Павел добавит тебя в команду', txt:'После того как пришлёшь email — прими инвайт в письме.', pavelData:{ fields:[{ key:'vercel_project_url', label:'Ссылка на Vercel проект', placeholder:'https://vercel.com/pkhakhalov-png/student-...' }, { key:'vercel_live_url', label:'Живой URL проекта', placeholder:'https://student-nastya.vercel.app' }] } },
+    { title:'Проверь автодеплой', sub:'Push → 30 секунд → живой сайт', txt:'Сделай любое изменение и запушь — Vercel задеплоит сам.', cmd_both:'git add .\ngit commit -m "test: check auto deploy"\ngit push origin main', note:'Открой vercel.com/dashboard — увидишь что деплой запустился автоматически.' }
+  ]},
+  { id:5, icon:'🤖', title:'Claude Code', short:'Claude Code', desc:'Claude Code — ИИ-инструмент разработки. Видит весь проект, пишет файлы, выполняет команды.', steps:[
+    { title:'Как запускать', sub:'Всегда из папки проекта', txt:'Запускай claude из папки проекта — тогда он видит весь код.', cmd_both:'cd ~/projects/student-[имя]\nclaude', note:'Никогда не запускай claude из домашней папки ~ — не будет знать о твоём проекте.' },
+    { title:'Основные команды', sub:'/help, /exit, /clear, /compact', txt:'Специальные команды начинаются с /.', cmd_both:'/help     # список команд\n/exit     # выйти\n/clear    # очистить экран\n/compact  # сжать контекст\n/cost     # потрачено токенов\n\nCtrl+C    # остановить\nCtrl+D    # выйти' },
+    { title:'Как правильно ставить задачи', sub:'Конкретно, с контекстом', txt:'Качество ответа = качество вопроса.', os:{ mac:'❌ "сделай страницу"\n\n✅ "создай страницу /clients которая показывает список клиентов из таблицы clients в Supabase. Каждый клиент — карточка с именем и email."\n\n❌ "не работает"\n\n✅ "при открытии /clients ошибка: TypeError: Cannot read properties of undefined reading map. Вот код: [код]"', win:'❌ "сделай страницу"\n\n✅ "создай страницу /clients которая показывает список клиентов из таблицы clients в Supabase. Каждый клиент — карточка с именем и email."\n\n❌ "не работает"\n\n✅ "при открытии /clients ошибка: TypeError: Cannot read properties of undefined reading map. Вот код: [код]"' }, note:'Чем точнее описываешь — тем точнее результат.' },
+    { title:'Работа с файлами', sub:'Claude Code сам читает, пишет, редактирует', txt:'Не надо копировать код вручную.', cmd_both:'"прочитай app/clients/page.tsx и объясни"\n"добавь поле телефон в ClientCard"\n"найди все места где импортируется supabase"', info:'Каждое изменение показывается перед применением — можно принять (y) или отклонить (n).' },
+    { title:'Отладка ошибок', sub:'Вставь ошибку → Claude найдёт причину', txt:'Скопируй полный текст ошибки и вставь в Claude Code.', cmd_both:'TypeError: Cannot read properties of null\n(reading \'map\')\nat ClientList (app/clients/page.tsx:24)\n\nОшибка при загрузке /clients', info:'Если не помогло — скажи "не помогло, вот новая ошибка: [ошибка]"' }
+  ]},
+  { id:6, icon:'🚀', title:'Твой проект', short:'Проект', desc:'Индивидуальное задание от Павла', locked:true, steps:[] }
+];
+
+// ══════════════════════════════════════
+// SETUP
+// ══════════════════════════════════════
+async function saveSetup() {
+  const url = document.getElementById('setup-url').value.trim().replace(/\/$/, '');
+  const key = document.getElementById('setup-key').value.trim();
+  const err = document.getElementById('setup-err');
+  const btn = document.getElementById('setup-btn');
+  if (!url || !key) { err.textContent = 'Заполни оба поля'; err.style.display = 'block'; return; }
+  btn.disabled = true; btn.textContent = 'Проверяем...';
+  try {
+    const res = await fetch(url + '/rest/v1/student_progress?limit=1', {
+      headers: { 'apikey': key, 'Authorization': 'Bearer ' + key }
     });
+    if (!res.ok) throw new Error('Ошибка ' + res.status + '. Проверь ключи.');
+    localStorage.setItem('sb_url', url);
+    localStorage.setItem('sb_key', key);
+    err.style.display = 'none';
+    showPage('pg-login');
+  } catch(e) {
+    err.textContent = e.message || 'Не удалось подключиться к Supabase';
+    err.style.display = 'block';
+  }
+  btn.disabled = false; btn.textContent = 'Сохранить и продолжить →';
+}
+
+// ══════════════════════════════════════
+// AUTH
+// ══════════════════════════════════════
+async function doLogin() {
+  const login = document.getElementById('li').value.trim().toLowerCase();
+  const pass = document.getElementById('lp').value;
+  const u = USERS[login];
+  const err = document.getElementById('lerr');
+  const btn = document.getElementById('login-btn');
+  if (!u || u.pass !== pass) { err.textContent = 'Неверный логин или пароль'; err.style.display = 'block'; return; }
+  err.style.display = 'none';
+  btn.disabled = true; btn.textContent = 'Входим...';
+  CUR = login;
+  try {
+    if (u.role === 'admin') {
+      showPage('pg-admin');
+      await renderAdmin();
+    } else {
+      PROG = await loadProgress(login);
+      FROM_STUDENT = await loadData(login, 'from_student');
+      FROM_PAVEL = await loadData(login, 'from_pavel');
+      showPage('pg-student');
+      document.getElementById('stu-name-hdr').textContent = u.name;
+      renderSidebar();
+      renderMain();
+    }
+  } catch(e) {
+    err.textContent = 'Ошибка подключения: ' + e.message;
+    err.style.display = 'block';
+    CUR = '';
+  }
+  btn.disabled = false; btn.textContent = 'Войти';
+}
+
+function doLogout() {
+  CUR = ''; CUR_MOD = 0; OPEN = {};
+  PROG = {}; FROM_STUDENT = {}; FROM_PAVEL = {};
+  showPage('pg-login');
+  document.getElementById('li').value = '';
+  document.getElementById('lp').value = '';
+}
+
+function showPage(id) {
+  ['pg-setup','pg-login','pg-student','pg-admin'].forEach(p => document.getElementById(p).classList.add('hide'));
+  document.getElementById(id).classList.remove('hide');
+}
+
+// ══════════════════════════════════════
+// SIDEBAR
+// ══════════════════════════════════════
+function totalSteps() { return MODS.filter(m => !m.locked).reduce((a, m) => a + m.steps.length, 0); }
+function doneCount() { return Object.values(PROG).filter(Boolean).length; }
+function modDone(i) { const m = MODS[i]; return m.steps.length > 0 && m.steps.every((_, si) => PROG[i + '-' + si]); }
+function modProgCount(i) { return MODS[i].steps.filter((_, si) => PROG[i + '-' + si]).length; }
+
+function renderSidebar() {
+  let html = '';
+  MODS.forEach((m, i) => {
+    const lk = m.locked, done = modDone(i), cur = CUR_MOD === i, p = modProgCount(i);
+    const ic = done ? 'done' : cur ? 'cur' : '';
+    const st = lk ? 'Заблокировано' : done ? 'Выполнено ✓' : cur ? `${p}/${m.steps.length} шагов` : m.steps.length ? `${m.steps.length} шагов` : '';
+    const sc = done ? 'done' : cur ? 'cur' : '';
+    html += `<div class="mb${cur?' on':''}${lk?' lk':''}" onclick="${lk?'':('goMod('+i+')')}">
+      <div class="mb-icon ${ic}">${done?'✓':m.icon}</div>
+      <div class="mb-meta"><div class="mb-name">${m.title}</div><div class="mb-sub ${sc}">${st}</div></div>
+      ${lk?'<span style="font-size:11px;color:var(--t3)">🔒</span>':''}
+    </div>`;
+  });
+  document.getElementById('sb-nav').innerHTML = html;
+  const pct = totalSteps() > 0 ? Math.round(doneCount() / totalSteps() * 100) : 0;
+  document.getElementById('sb-fill').style.width = pct + '%';
+  document.getElementById('sb-pct').textContent = pct + '%';
+}
+
+function goMod(i) { CUR_MOD = i; OPEN = {}; renderSidebar(); renderMain(); window.scrollTo(0, 0); }
+
+// ══════════════════════════════════════
+// STUDENT MAIN
+// ══════════════════════════════════════
+function renderMain() {
+  const mi = CUR_MOD, m = MODS[mi], el = document.getElementById('stu-main');
+  if (m.locked) {
+    el.innerHTML = `<div class="locked-screen"><div class="locked-icon">🔒</div><div class="locked-h">Модуль заблокирован</div><div class="locked-p">Выполни все предыдущие модули. Павел откроет доступ и выдаст индивидуальное задание.</div></div>`;
+    return;
+  }
+  const p = modProgCount(mi), t = m.steps.length, pct = t > 0 ? Math.round(p / t * 100) : 0;
+  let sh = '';
+  m.steps.forEach((s, si) => { sh += buildStep(s, si, mi + '-' + si, !!PROG[mi + '-' + si], !!OPEN[mi + '-' + si]); });
+  el.innerHTML = `<div class="mod-hero"><div class="mod-badge">МОДУЛЬ ${mi+1}</div><div class="mod-h1">${m.title}</div><div class="mod-p">${m.desc}</div>${t>0?`<div class="prog-row"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div><div class="prog-lbl">${p} / ${t}</div></div>`:''}</div><div class="steps">${sh}</div>`;
+}
+
+function buildStep(s, si, key, done, open) {
+  let b = '';
+  if (s.txt) b += `<div class="step-txt">${s.txt}</div>`;
+  if (s.os) {
+    const e = 'os-' + key;
+    b += `<div class="os-tabs"><div class="os-tab on" onclick="swOs(this,'${e}-m','${e}-w')">Mac</div><div class="os-tab" onclick="swOs(this,'${e}-w','${e}-m')">Windows</div></div><div class="os-cnt on" id="${e}-m">${s.os.mac}</div><div class="os-cnt" id="${e}-w">${s.os.win}</div>`;
+  }
+  if (s.link) b += `<a href="${s.link.url}" target="_blank" class="link-btn">${s.link.label} ↗</a>`;
+  if (s.link_win) b += `<a href="${s.link_win.url}" target="_blank" class="link-btn" style="margin-left:6px">${s.link_win.label} ↗</a>`;
+  if (s.pills) b += `<div class="pills">${s.pills.map(p=>`<div class="pill"><div class="pill-dot"></div>${p}</div>`).join('')}</div>`;
+  if (s.cmd_mac && s.cmd_win) {
+    const c = 'cmd-' + key;
+    b += `<div class="os-tabs" style="margin-top:12px"><div class="os-tab on" onclick="swOs(this,'${c}-m','${c}-w')">Mac / Linux</div><div class="os-tab" onclick="swOs(this,'${c}-w','${c}-m')">Windows</div></div><div class="os-cnt on" id="${c}-m">${mkCode(s.cmd_mac,'cm-'+key)}</div><div class="os-cnt" id="${c}-w">${mkCode(s.cmd_win,'cw-'+key)}</div>`;
+  } else if (s.cmd_both) b += mkCode(s.cmd_both, 'cb-' + key);
+  if (s.info) b += `<div class="info-box">💡 ${s.info}</div>`;
+  if (s.note) b += `<div class="note-box">⚡ ${s.note}</div>`;
+
+  // Student input
+  if (s.studentInput) {
+    const sent = s.studentInput.fields.every(f => FROM_STUDENT[f.key]);
+    b += `<div class="stu-form"><div class="sf-title">📤 Отправь Павлу</div>`;
+    s.studentInput.fields.forEach(f => {
+      b += `<label class="sf-label">${f.label}</label><input class="sf-input" id="sfi-${key}-${f.key}" value="${FROM_STUDENT[f.key]||''}" placeholder="${f.placeholder}" ${sent?'disabled':''}/>`;
+    });
+    if (sent) {
+      b += `<div class="sf-sent">✓ Отправлено Павлу</div><button class="sf-edit" onclick="clearStuInput('${key}',${JSON.stringify(s.studentInput.fields.map(f=>f.key))})">Изменить</button>`;
+    } else {
+      b += `<button class="sf-btn" id="sfbtn-${key}" onclick="sendStuInput('${key}',${JSON.stringify(s.studentInput.fields.map(f=>f.key))})">Отправить Павлу →</button>`;
+    }
+    b += `</div>`;
   }
 
-  document.getElementById('student-content').innerHTML=`
-    <div>
-      <div class="mod-title">${m.title}</div>
-      <div class="mod-desc">${m.desc}</div>
-      ${steps.length>0?`
-        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-        <div class="prog-label">${doneCount} из ${steps.length} шагов · ${pct}%</div>`
-      :''}
+  // Pavel data
+  if (s.pavelData) {
+    const has = s.pavelData.fields.some(f => FROM_PAVEL[f.key]);
+    b += `<div class="from-pavel"><div class="fp-title">📩 От Павла</div>`;
+    if (has) {
+      s.pavelData.fields.forEach(f => {
+        if (FROM_PAVEL[f.key]) b += `<div class="fp-row"><div class="fp-lbl">${f.label}</div><div class="fp-val"><span>${FROM_PAVEL[f.key]}</span><button class="fp-copy" onclick="cpText(this,'${FROM_PAVEL[f.key].replace(/'/g,"\\'")}')">Копировать</button></div></div>`;
+      });
+    } else {
+      b += `<div class="fp-waiting">Ожидай — Павел скоро пришлёт данные...</div>`;
+    }
+    b += `</div>`;
+  }
+
+  b += `<div class="step-acts">${done
+    ? `<div class="done-tag">✓ Выполнено</div><button class="btn-undo" onclick="togProg('${key}',false)">Отменить</button>`
+    : `<button class="btn-complete" id="btn-prog-${key}" onclick="togProg('${key}',true)">✓ Выполнено</button>`
+  }</div>`;
+
+  return `<div class="step${done?' done':''}${open?' open':''}" id="st-${key}">
+    <div class="step-hd" onclick="togOpen('${key}')">
+      <div class="step-n${done?' done':''}">${done?'✓':(si+1)}</div>
+      <div class="step-hd-meta"><div class="step-hd-title">${s.title}</div><div class="step-hd-sub">${s.sub}</div></div>
+      <div class="step-chev">▼</div>
     </div>
-    <div class="steps">${stepsHtml}</div>`;
+    <div class="step-body">${b}</div>
+  </div>`;
 }
 
-function toggleStep(key){
-  const u=state.user;
-  if(!state.progress[u])state.progress[u]={};
-  state.progress[u][key]=!state.progress[u][key];
-  renderModContent(state.currentMod);
-  renderSidebar();
+async function sendStuInput(key, keys) {
+  const btn = document.getElementById('sfbtn-' + key);
+  const vals = {};
+  let ok = true;
+  keys.forEach(k => {
+    const el = document.getElementById('sfi-' + key + '-' + k);
+    if (el && el.value.trim()) vals[k] = el.value.trim();
+    else ok = false;
+  });
+  if (!ok) { alert('Заполни все поля'); return; }
+  if (btn) { btn.disabled = true; btn.textContent = 'Отправляем...'; }
+  try {
+    for (const [k, v] of Object.entries(vals)) {
+      await saveDataField(CUR, k, v, 'from_student');
+      FROM_STUDENT[k] = v;
+    }
+    renderMain();
+  } catch(e) {
+    alert('Ошибка: ' + e.message);
+    if (btn) { btn.disabled = false; btn.textContent = 'Отправить Павлу →'; }
+  }
 }
 
-function renderAdmin(){
-  const students=['nastya','lera','egor','kiril'];
-  const names={nastya:'Настя',lera:'Лера',egor:'Егор',kiril:'Кирилл'};
-  const total=MODULES.slice(0,4).reduce((a,m)=>a+m.steps.length,0);
+async function clearStuInput(key, keys) {
+  try {
+    for (const k of keys) {
+      await deleteDataField(CUR, k, 'from_student');
+      delete FROM_STUDENT[k];
+    }
+    renderMain();
+  } catch(e) { alert('Ошибка: ' + e.message); }
+}
 
-  let cardsHtml='';
-  students.forEach(s=>{
-    const prog=state.progress[s]||{};
-    const done=Object.values(prog).filter(Boolean).length;
-    const pct=total>0?Math.round(done/total*100):0;
-    const ready=done>=total;
+async function togProg(key, val) {
+  const btn = document.getElementById(val ? 'btn-prog-' + key : null);
+  if (btn) { btn.disabled = true; btn.textContent = '...'; }
+  try {
+    await setProgress(CUR, key, val);
+    PROG[key] = val;
+    renderSidebar();
+    renderMain();
+  } catch(e) {
+    alert('Ошибка: ' + e.message);
+    if (btn) { btn.disabled = false; btn.textContent = '✓ Выполнено'; }
+  }
+}
 
-    cardsHtml+=`<div class="student-card">
-      <div class="student-name">${names[s]}</div>
-      <div class="student-progress-text">Прогресс: ${done}/${total} шагов · ${pct}%</div>
-      <div class="mini-bar"><div class="mini-fill" style="width:${pct}%"></div></div>
-      ${ready?`<div style="font-size:12px;color:#16a34a;margin-top:8px">✓ Готов к работе над проектом</div>`:''}
+// ══════════════════════════════════════
+// ADMIN
+// ══════════════════════════════════════
+async function renderAdmin() {
+  const el = document.getElementById('adm-main');
+  el.innerHTML = `<div class="connecting"><div class="spin" style="font-size:20px">⟳</div><div class="connecting-txt">Загружаем данные студентов...</div></div>`;
+  try {
+    const data = await loadAllStudentsData();
+    buildAdminUI(data);
+  } catch(e) {
+    el.innerHTML = `<div class="connecting"><div style="font-size:13px;color:var(--red)">Ошибка: ${e.message}</div></div>`;
+  }
+}
+
+function buildAdminUI(data) {
+  const total = MODS.filter(m => !m.locked).reduce((a, m) => a + m.steps.length, 0);
+  const totalDone = STUDENTS.reduce((a, u) => a + Object.values(data[u].progress).filter(Boolean).length, 0);
+  const avgPct = STUDENTS.length > 0 ? Math.round(totalDone / (STUDENTS.length * total) * 100) : 0;
+  const fullDone = STUDENTS.filter(u => Object.values(data[u].progress).filter(Boolean).length === total).length;
+
+  let cards = '';
+  STUDENTS.forEach(u => {
+    const done = Object.values(data[u].progress).filter(Boolean).length;
+    const pct = total > 0 ? Math.round(done / total * 100) : 0;
+    const fs = data[u].from_student, fp = data[u].from_pavel;
+    const vercelUrl = fp['vercel_live_url'] || '';
+    const initial = STU_NAMES[u][0];
+
+    const fromRows = STU_FIELDS.map(f => `<div class="ex-row">
+      <div class="ex-lbl"><span class="tag tag-from">ОТ СТУДЕНТА</span>${f.label}</div>
+      <div class="ex-val${fs[f.key]?'':' empty'}">${fs[f.key]||'Ещё не заполнено'}</div>
+    </div>`).join('');
+
+    const toRows = PAVEL_FIELDS.map(f => {
+      const val = fp[f.key] || '';
+      const sid = `pf-${u}-${f.key}`;
+      return `<div class="ex-row">
+        <div class="ex-lbl"><span class="tag tag-to">СТУДЕНТУ</span>${f.label}</div>
+        ${val
+          ? `<div class="ex-val-row"><div class="ex-val" style="flex:1">${val}</div><button class="fp-copy" onclick="cpText(this,${JSON.stringify(val)})">Копировать</button><button class="ex-edit" onclick="delPF(${JSON.stringify(u)},${JSON.stringify(f.key)})">Изменить</button></div>`
+          : `<div class="ex-inp-row"><input class="ex-inp" id="${sid}" placeholder="${f.placeholder}"/><button class="ex-save" onclick="savePF(${JSON.stringify(u)},${JSON.stringify(f.key)},'${sid}')">Сохранить</button></div>`
+        }
+      </div>`;
+    }).join('');
+
+    cards += `<div class="stu-card">
+      <div class="stu-card-hd">
+        <div class="stu-card-hd-left">
+          <div class="stu-avatar">${initial}</div>
+          <div><div class="stu-name">${STU_NAMES[u]}</div><div class="stu-prog-txt">${done} / ${total} шагов · ${pct}%</div></div>
+        </div>
+        <div class="stu-card-actions">
+          <a href="${vercelUrl||'#'}" target="_blank" class="btn-open-vercel ${vercelUrl?'active':'no-url'}">
+            ${vercelUrl ? '▲ Открыть проект' : '▲ Нет URL'}
+          </a>
+        </div>
+      </div>
+      <div class="stu-prog-bar"><div class="stu-prog-fill" style="width:${pct}%"></div></div>
+      <div class="stu-body">${fromRows}<div class="divider"></div>${toRows}</div>
     </div>`;
   });
 
-  document.getElementById('admin-content').innerHTML=`
-    <div class="admin-title">Панель куратора</div>
-    <div class="section-label">Студенты</div>
-    <div class="students-grid">${cardsHtml}</div>`;
+  document.getElementById('adm-main').innerHTML = `
+    <div class="adm-h">Панель куратора</div>
+    <div class="adm-sub">Прогресс студентов и обмен данными</div>
+    <div class="adm-summary">
+      <div class="adm-stat"><div class="adm-stat-n">${STUDENTS.length}</div><div class="adm-stat-l">Студентов</div></div>
+      <div class="adm-stat"><div class="adm-stat-n">${avgPct}%</div><div class="adm-stat-l">Средний прогресс</div></div>
+      <div class="adm-stat"><div class="adm-stat-n">${fullDone}</div><div class="adm-stat-l">Завершили курс</div></div>
+      <div class="adm-stat"><div class="adm-stat-n">${total}</div><div class="adm-stat-l">Шагов в курсе</div></div>
+    </div>
+    <button class="adm-refresh" onclick="renderAdmin()">↻ Обновить данные</button>
+    <div class="sec-h">СТУДЕНТЫ</div>
+    <div class="stu-grid">${cards}</div>`;
 }
 
-(function init(){
-  state.user='nastya';state.role='student';
-  if(location.search.includes('admin')){
-    show('screen-admin');renderAdmin();
-  } else {
-    show('screen-student');renderStudent();
+async function savePF(user, fk, sid) {
+  const inp = document.getElementById(sid);
+  const val = inp?.value.trim();
+  if (!val) { alert('Введи значение'); return; }
+  const btn = inp.nextElementSibling;
+  if (btn) { btn.disabled = true; btn.textContent = '...'; }
+  try {
+    await saveDataField(user, fk, val, 'from_pavel');
+    await renderAdmin();
+  } catch(e) {
+    alert('Ошибка: ' + e.message);
+    if (btn) { btn.disabled = false; btn.textContent = 'Сохранить'; }
   }
-})();
+}
+
+async function delPF(user, fk) {
+  try {
+    await deleteDataField(user, fk, 'from_pavel');
+    await renderAdmin();
+  } catch(e) { alert('Ошибка: ' + e.message); }
+}
+
+// ══════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════
+function togOpen(key) { OPEN[key] = !OPEN[key]; renderMain(); }
+function mkCode(cmd, id) {
+  return `<div class="code-wrap"><div class="code-top"><span class="code-lang">TERMINAL</span><button class="code-copy" onclick="cpCode('${id}')">Копировать</button></div><div class="code-pre" id="cp-${id}">${cmd}</div></div>`;
+}
+function cpCode(id) {
+  const el = document.getElementById('cp-' + id); if (!el) return;
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    const b = el.closest('.code-wrap').querySelector('.code-copy');
+    b.textContent = 'Скопировано ✓'; b.style.color = 'var(--green)';
+    setTimeout(() => { b.textContent = 'Копировать'; b.style.color = ''; }, 2000);
+  });
+}
+function cpEl(id) {
+  const el = document.getElementById(id); if (!el) return;
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    const b = el.closest('.code-wrap').querySelector('.code-copy');
+    b.textContent = 'Скопировано ✓'; b.style.color = 'var(--green)';
+    setTimeout(() => { b.textContent = 'Копировать'; b.style.color = ''; }, 2000);
+  });
+}
+function cpText(btn, val) {
+  navigator.clipboard.writeText(val).then(() => {
+    const o = btn.textContent; btn.textContent = '✓'; btn.style.color = 'var(--green)';
+    setTimeout(() => { btn.textContent = o; btn.style.color = ''; }, 2000);
+  });
+}
+function swOs(btn, showId, hideId) {
+  btn.parentElement.querySelectorAll('.os-tab').forEach(t => t.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById(showId)?.classList.add('on');
+  document.getElementById(hideId)?.classList.remove('on');
+}
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+if (!getSB()) {
+  showPage('pg-setup');
+} else {
+  showPage('pg-login');
+}
 </script>
 </body>
 </html>
