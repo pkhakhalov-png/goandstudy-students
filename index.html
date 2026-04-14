@@ -321,7 +321,6 @@ ALTER TABLE student_data DISABLE ROW LEVEL SECURITY;</div>
       <input class="f-input" id="lp" type="password" placeholder="••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
       <button class="btn-primary" id="login-btn" onclick="doLogin()">Войти</button>
       <div class="login-err" id="lerr"></div>
-      <div style="margin-top:12px;text-align:right"><span onclick="showPage('pg-setup')" style="font-size:11px;color:var(--t3);cursor:pointer">⚙ Настройки Supabase</span></div>
     </div>
   </div>
 </div>
@@ -398,10 +397,10 @@ const STU_FIELDS = [
 // SUPABASE CLIENT
 // ══════════════════════════════════════
 function getSB() {
-  const url = localStorage.getItem('sb_url');
-  const key = localStorage.getItem('sb_key');
-  if (!url || !key) return null;
-  return { url, key };
+  return {
+    url: 'https://ufhsmwsbwntxcebfbsgv.supabase.co',
+    key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmaHNtd3Nid250eGNlYmZic2d2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwOTgwMzQsImV4cCI6MjA5MTY3NDAzNH0.mj1Ebia6SmHY4WdbhG-SLm6ZW-2i0eZCqneSHTYrv50'
+  };
 }
 
 async function sbRequest(path, method = 'GET', body = null) {
@@ -597,7 +596,7 @@ function doLogout() {
 }
 
 function showPage(id) {
-  ['pg-setup','pg-login','pg-student','pg-admin'].forEach(p => document.getElementById(p).classList.add('hide'));
+  ['pg-login','pg-student','pg-admin'].forEach(p => document.getElementById(p).classList.add('hide'));
   document.getElementById(id).classList.remove('hide');
 }
 
@@ -890,11 +889,7 @@ function swOs(btn, showId, hideId) {
 // ══════════════════════════════════════
 // INIT
 // ══════════════════════════════════════
-if (!getSB()) {
-  showPage('pg-setup');
-} else {
-  showPage('pg-login');
-}
+showPage('pg-login');
 </script>
 </body>
 </html>
