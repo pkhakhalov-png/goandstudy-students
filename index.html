@@ -380,12 +380,11 @@ const STUDENTS = ['nastya', 'lera', 'egor', 'kiril'];
 const STU_NAMES = { nastya: 'Настя', lera: 'Лера', egor: 'Егор', kiril: 'Кирилл' };
 
 const PAVEL_FIELDS = [
-  { key: 'github_repo_url',      label: 'GitHub репо',            placeholder: 'git@github.com:pkhakhalov-png/student-...' },
-  { key: 'supabase_url',         label: 'Supabase URL',           placeholder: 'https://xxxx.supabase.co' },
-  { key: 'supabase_anon',        label: 'Supabase Anon Key',      placeholder: 'eyJhbGci...' },
-  { key: 'supabase_project_url', label: 'Ссылка на Supabase',     placeholder: 'https://supabase.com/dashboard/project/xxx' },
-  { key: 'vercel_project_url',   label: 'Vercel проект',          placeholder: 'https://vercel.com/pkhakhalov-png/...' },
-  { key: 'vercel_live_url',      label: 'Живой URL (Vercel)',      placeholder: 'https://student-nastya.vercel.app' },
+  { key: 'github_repo_url',      label: 'SSH ссылка на репозиторий', placeholder: 'git@github.com:username/project-name.git' },
+  { key: 'supabase_project_url', label: 'Ссылка на Supabase проект', placeholder: 'https://supabase.com/dashboard/project/xxx' },
+  { key: 'vercel_project_url',   label: 'Ссылка на Vercel проект',   placeholder: 'https://vercel.com/team/project-name' },
+  { key: 'vercel_live_url',      label: 'Живой URL проекта',         placeholder: 'https://project-name.vercel.app' },
+  { key: 'first_task',           label: 'Первое задание',            placeholder: 'Описание задачи для студента...' },
 ];
 const STU_FIELDS = [
   { key: 'github_username', label: 'GitHub username' },
@@ -485,46 +484,260 @@ let PROG = {}, FROM_STUDENT = {}, FROM_PAVEL = {};
 // MODULES
 // ══════════════════════════════════════
 const MODS = [
-  { id:0, icon:'⚙️', title:'Настройка окружения', short:'Подготовка', desc:'Устанавливаем все инструменты. Делается один раз — потом просто работаешь.', steps:[
-    { title:'VS Code — редактор кода', sub:'Скачать, установить расширения', txt:'VS Code — это где ты будешь писать весь код. Бесплатный, самый популярный редактор в мире.', link:{ url:'https://code.visualstudio.com', label:'code.visualstudio.com' }, pills:['Prettier — Code formatter','ESLint','GitLens','Tailwind CSS IntelliSense','ES7+ React snippets'], info:'Нажми Ctrl+Shift+X (Win) или Cmd+Shift+X (Mac) и установи эти расширения.', note:'Включи "Format on Save" — Prettier будет форматировать код автоматически.' },
-    { title:'Node.js — движок JavaScript', sub:'Версия LTS, проверка через терминал', txt:'Node.js нужен чтобы запускать JavaScript и устанавливать пакеты.', link:{ url:'https://nodejs.org', label:'nodejs.org — скачай LTS' }, cmd_mac:'node -v\n# → v20.x.x или выше\nnpm -v\n# → 10.x.x или выше', cmd_win:'node -v\n# → v20.x.x или выше\nnpm -v\n# → 10.x.x или выше', note:'Только LTS — не "Current".' },
-    { title:'Git — контроль версий', sub:'Установка, первичная настройка', txt:'Git следит за изменениями в коде. Можно откатиться, работать в команде, видеть историю.', os:{ mac:'Git уже встроен в Mac. Открой терминал и напиши git --version.', win:'Скачай Git for Windows и установи с настройками по умолчанию.' }, link_win:{ url:'https://git-scm.com/download/win', label:'git-scm.com' }, cmd_both:'git config --global user.name "Твоё Имя"\ngit config --global user.email "твой@email.com"\ngit config --global --list', note:'Email должен совпадать с тем что укажешь при регистрации на GitHub.' },
-    { title:'Claude Pro + Claude Code', sub:'Оформи подписку, установи CLI', txt:'Claude Code — ИИ-помощник прямо в терминале. Пишет код, объясняет ошибки, делает задачи вместе с тобой.', link:{ url:'https://claude.ai', label:'claude.ai — оформи подписку Pro ($20/мес)' }, cmd_both:'npm install -g @anthropic-ai/claude-code\nclaude --version\nclaude', note:'При первом запуске откроется браузер — войди через свой аккаунт claude.ai.' },
-    { title:'Встроенный терминал VS Code', sub:'Cmd+` или Ctrl+` — вся работа здесь', txt:'Открой VS Code и нажми Cmd+` (Mac) или Ctrl+` (Windows). Вся дальнейшая работа — здесь.', cmd_both:'node -v\ngit --version\nclaude --version\n# Все три должны показать версии' }
-  ]},
-  { id:1, icon:'🐙', title:'GitHub', short:'GitHub', desc:'GitHub — хранилище кода. Весь твой код живёт здесь. Павел создаст репо — для этого ему нужен твой username.', steps:[
-    { title:'Создай аккаунт GitHub', sub:'Регистрация и отправка username Павлу', txt:'Зарегистрируйся на GitHub. После — отправь свой username Павлу через форму ниже.', link:{ url:'https://github.com', label:'github.com — зарегистрируйся' }, info:'Username выбирай нормальный — он виден везде.', studentInput:{ fields:[{ key:'github_username', label:'Твой GitHub username', placeholder:'например: nastya-dev' }] } },
-    { title:'Настрой SSH ключ', sub:'Чтобы не вводить пароль при каждом push', txt:'SSH ключ — постоянный пропуск твоего компьютера на GitHub.', cmd_mac:'ssh-keygen -t ed25519 -C "твой@email.com"\n# Жми Enter на все вопросы\ncat ~/.ssh/id_ed25519.pub\n# Скопируй вывод', cmd_win:'ssh-keygen -t ed25519 -C "твой@email.com"\n# Жми Enter на все вопросы\ntype $env:USERPROFILE\\.ssh\\id_ed25519.pub\n# Скопируй вывод', os:{ mac:'Вставь ключ на GitHub: Settings → SSH and GPG keys → New SSH key → вставь → Save.', win:'Вставь ключ на GitHub: Settings → SSH and GPG keys → New SSH key → вставь → Save.' }, note:'После этого git push/pull работают без пароля навсегда.' },
-    { title:'Получи ссылку на репо от Павла', sub:'Павел создаст репо и пришлёт ссылку', txt:'Как только Павел добавит тебя — ниже появится ссылка для клонирования.', pavelData:{ fields:[{ key:'github_repo_url', label:'Ссылка на репозиторий', placeholder:'git@github.com:pkhakhalov-png/student-...' }] } },
-    { title:'Клонируй репо на компьютер', sub:'git clone → открой в VS Code', txt:'Когда получишь ссылку от Павла — клонируй репо.', cmd_both:'cd ~\nmkdir projects && cd projects\ngit clone [ссылка_от_Павла]\ncd student-[имя]\ncode .', note:'Команда "code ." открывает папку в VS Code.' },
-    { title:'Первый коммит', sub:'git add → commit → push', txt:'Сделай любое изменение, закоммить и запушь. Павел увидит что всё работает.', cmd_both:'git add .\ngit commit -m "feat: initial setup"\ngit push origin main', note:'Пиши коммиты по-английски кратко: "feat: add page", "fix: bug"' }
-  ]},
-  { id:2, icon:'⚡', title:'Next.js', short:'Next.js', desc:'Next.js — фреймворк на котором сделана CRM GoAndStudy. Здесь только установка и запуск проекта от Павла.', steps:[
-    { title:'Что такое Next.js', sub:'Зачем нужен, как используется', txt:'Next.js — фреймворк на основе React. Стек проекта: Next.js 14 + TypeScript + Supabase + Vercel. Учиться будешь сразу на реальном проекте через Claude Code.', info:'Твоя задача — клонировать проект от Павла и запустить его локально.' },
-    { title:'Установи зависимости', sub:'npm install', txt:'В папке проекта выполни — установит все библиотеки.', cmd_both:'npm install\n# Должно появиться:\n# added XXX packages in Xs', note:'Папка node_modules не попадает на GitHub — создаётся заново через npm install.' },
-    { title:'Получи .env.local от Павла', sub:'Supabase ключи для подключения к базе', txt:'Создай файл .env.local в корне проекта с данными от Павла.', pavelData:{ fields:[{ key:'supabase_url', label:'NEXT_PUBLIC_SUPABASE_URL', placeholder:'https://xxxx.supabase.co' }, { key:'supabase_anon', label:'NEXT_PUBLIC_SUPABASE_ANON_KEY', placeholder:'eyJhbGci...' }] }, cmd_both:'# Создай .env.local в корне проекта:\nNEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co\nNEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGci...', note:'Файл .env.local уже в .gitignore — никогда не попадёт на GitHub.' },
-    { title:'Запусти проект локально', sub:'npm run dev → localhost:3000', txt:'Запусти dev-сервер и открой в браузере на http://localhost:3000.', cmd_both:'npm run dev\n# → ▲ Next.js 14.x.x\n# → Local: http://localhost:3000', note:'Если ошибка про переменные — проверь .env.local.' },
-    { title:'Открой VS Code + запусти Claude Code', sub:'code . → claude', txt:'Открой проект в VS Code и запусти Claude Code во встроенном терминале.', cmd_both:'code .\n# Во встроенном терминале (Ctrl+` / Cmd+`):\nclaude', info:'Теперь dev-сервер запущен и Claude Code готов. Можно работать!' }
-  ]},
-  { id:3, icon:'🗄️', title:'Supabase', short:'Supabase', desc:'Supabase — база данных в облаке. Павел добавит тебя в проект — нужен твой email.', steps:[
-    { title:'Создай аккаунт Supabase', sub:'Регистрация через GitHub, email Павлу', txt:'Зарегистрируйся через GitHub. Потом отправь email Павлу.', link:{ url:'https://supabase.com', label:'supabase.com — регистрируйся через GitHub' }, studentInput:{ fields:[{ key:'supabase_email', label:'Email от Supabase аккаунта', placeholder:'твой@email.com' }] } },
-    { title:'Получи доступ к проекту', sub:'Павел добавит тебя в Supabase', txt:'После того как пришлёшь email — Павел добавит тебя в проект. Прими инвайт в письме.', pavelData:{ fields:[{ key:'supabase_project_url', label:'Ссылка на Supabase проект', placeholder:'https://supabase.com/dashboard/project/xxx' }] } },
-    { title:'Изучи интерфейс', sub:'Table Editor, SQL Editor, Auth, API', txt:'Потрать 10 минут и покликай по разделам. Table Editor — таблицы. SQL Editor — запросы. Auth — пользователи. Settings → API — ключи.', note:'Большинство времени будешь работать в Table Editor и SQL Editor.' },
-    { title:'Первые SQL запросы', sub:'SELECT, INSERT, CREATE TABLE', txt:'Перейди в SQL Editor и выполни — Ctrl+Enter (Cmd+Enter на Mac).', cmd_both:"SELECT table_name FROM information_schema.tables\nWHERE table_schema = 'public';\n\nCREATE TABLE test (\n  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,\n  name TEXT NOT NULL,\n  created_at TIMESTAMPTZ DEFAULT NOW()\n);\n\nINSERT INTO test (name) VALUES ('Привет!');\nSELECT * FROM test;" }
-  ]},
-  { id:4, icon:'▲', title:'Vercel', short:'Vercel', desc:'Vercel — хостинг. Каждый push на GitHub = автоматический деплой. Нужен твой email.', steps:[
-    { title:'Создай аккаунт Vercel', sub:'Регистрация через GitHub, email Павлу', txt:'Регистрируйся через GitHub. Потом отправь email Павлу.', link:{ url:'https://vercel.com', label:'vercel.com → Sign Up → Continue with GitHub' }, studentInput:{ fields:[{ key:'vercel_email', label:'Email от Vercel аккаунта', placeholder:'твой@email.com' }] }, info:'Бесплатный план позволяет деплоить неограниченное количество проектов.' },
-    { title:'Получи доступ к проекту', sub:'Павел добавит тебя в команду', txt:'После того как пришлёшь email — прими инвайт в письме.', pavelData:{ fields:[{ key:'vercel_project_url', label:'Ссылка на Vercel проект', placeholder:'https://vercel.com/pkhakhalov-png/student-...' }, { key:'vercel_live_url', label:'Живой URL проекта', placeholder:'https://student-nastya.vercel.app' }] } },
-    { title:'Проверь автодеплой', sub:'Push → 30 секунд → живой сайт', txt:'Сделай любое изменение и запушь — Vercel задеплоит сам.', cmd_both:'git add .\ngit commit -m "test: check auto deploy"\ngit push origin main', note:'Открой vercel.com/dashboard — увидишь что деплой запустился автоматически.' }
-  ]},
-  { id:5, icon:'🤖', title:'Claude Code', short:'Claude Code', desc:'Claude Code — ИИ-инструмент разработки. Видит весь проект, пишет файлы, выполняет команды.', steps:[
-    { title:'Как запускать', sub:'Всегда из папки проекта', txt:'Запускай claude из папки проекта — тогда он видит весь код.', cmd_both:'cd ~/projects/student-[имя]\nclaude', note:'Никогда не запускай claude из домашней папки ~ — не будет знать о твоём проекте.' },
-    { title:'Основные команды', sub:'/help, /exit, /clear, /compact', txt:'Специальные команды начинаются с /.', cmd_both:'/help     # список команд\n/exit     # выйти\n/clear    # очистить экран\n/compact  # сжать контекст\n/cost     # потрачено токенов\n\nCtrl+C    # остановить\nCtrl+D    # выйти' },
-    { title:'Как правильно ставить задачи', sub:'Конкретно, с контекстом', txt:'Качество ответа = качество вопроса.', os:{ mac:'❌ "сделай страницу"\n\n✅ "создай страницу /clients которая показывает список клиентов из таблицы clients в Supabase. Каждый клиент — карточка с именем и email."\n\n❌ "не работает"\n\n✅ "при открытии /clients ошибка: TypeError: Cannot read properties of undefined reading map. Вот код: [код]"', win:'❌ "сделай страницу"\n\n✅ "создай страницу /clients которая показывает список клиентов из таблицы clients в Supabase. Каждый клиент — карточка с именем и email."\n\n❌ "не работает"\n\n✅ "при открытии /clients ошибка: TypeError: Cannot read properties of undefined reading map. Вот код: [код]"' }, note:'Чем точнее описываешь — тем точнее результат.' },
-    { title:'Работа с файлами', sub:'Claude Code сам читает, пишет, редактирует', txt:'Не надо копировать код вручную.', cmd_both:'"прочитай app/clients/page.tsx и объясни"\n"добавь поле телефон в ClientCard"\n"найди все места где импортируется supabase"', info:'Каждое изменение показывается перед применением — можно принять (y) или отклонить (n).' },
-    { title:'Отладка ошибок', sub:'Вставь ошибку → Claude найдёт причину', txt:'Скопируй полный текст ошибки и вставь в Claude Code.', cmd_both:'TypeError: Cannot read properties of null\n(reading \'map\')\nat ClientList (app/clients/page.tsx:24)\n\nОшибка при загрузке /clients', info:'Если не помогло — скажи "не помогло, вот новая ошибка: [ошибка]"' }
-  ]},
-  { id:6, icon:'🚀', title:'Твой проект', short:'Проект', desc:'Индивидуальное задание от Павла', locked:true, steps:[] }
+  {
+    id:0, icon:'⚙️', title:'Инструменты', short:'Инструменты',
+    desc:'Устанавливаем всё что нужно для работы. Делается один раз на твоём компьютере.',
+    steps:[
+      {
+        title:'VS Code — редактор кода',
+        sub:'Скачать и установить расширения',
+        txt:'VS Code — здесь ты будешь писать весь код. Бесплатный, самый популярный редактор в мире.',
+        link:{ url:'https://code.visualstudio.com', label:'code.visualstudio.com — скачай' },
+        pills:['Prettier — Code formatter','ESLint','GitLens','Tailwind CSS IntelliSense','ES7+ React snippets'],
+        info:'Ctrl+Shift+X (Win) или Cmd+Shift+X (Mac) — открывает магазин расширений. Установи все пять.',
+        note:'Включи "Format on Save" в настройках — код будет форматироваться автоматически.'
+      },
+      {
+        title:'Node.js',
+        sub:'Установить LTS версию',
+        txt:'Node.js нужен чтобы запускать JavaScript локально и устанавливать пакеты через npm.',
+        link:{ url:'https://nodejs.org', label:'nodejs.org — скачай LTS (не Current!)' },
+        cmd_mac:'node -v\n# должно показать v20.x.x или выше\nnpm -v\n# должно показать 10.x.x или выше',
+        cmd_win:'node -v\n# должно показать v20.x.x или выше\nnpm -v\n# должно показать 10.x.x или выше',
+        note:'Только LTS — стабильная версия для работы.'
+      },
+      {
+        title:'Git',
+        sub:'Установить и настроить имя/email',
+        txt:'Git следит за всеми изменениями в коде. Через него код попадает на GitHub и дальше на сервер.',
+        os:{
+          mac:'Git уже встроен в Mac. Проверь: открой терминал и напиши git --version',
+          win:'Скачай и установи Git for Windows с настройками по умолчанию.'
+        },
+        link_win:{ url:'https://git-scm.com/download/win', label:'git-scm.com — скачай для Windows' },
+        cmd_both:'# После установки настрой своё имя и email:\ngit config --global user.name "Твоё Имя"\ngit config --global user.email "твой@email.com"\n\n# Проверь что сохранилось:\ngit config --global --list',
+        note:'Email должен совпадать с тем что укажешь при регистрации на GitHub.'
+      },
+      {
+        title:'Claude Pro + Claude Code',
+        sub:'Подписка $20/мес + установка CLI',
+        txt:'Claude Code — это ИИ прямо в твоём терминале. Он видит весь проект, пишет код, объясняет ошибки. Это главный инструмент работы.',
+        link:{ url:'https://claude.ai', label:'claude.ai — оформи подписку Pro' },
+        cmd_both:'# Установи Claude Code глобально:\nnpm install -g @anthropic-ai/claude-code\n\n# Проверь версию:\nclaude --version',
+        info:'При первом запуске команды claude откроется браузер — войди через свой аккаунт claude.ai.',
+        note:'Без подписки Pro Claude Code работает с лимитами. Лучше сразу оформить.'
+      },
+      {
+        title:'Проверка — всё установлено',
+        sub:'Открой терминал VS Code и проверь',
+        txt:'Открой VS Code, нажми Ctrl+` (Win) или Cmd+` (Mac) — это встроенный терминал. Выполни проверку:',
+        cmd_both:'node -v\ngit --version\nclaude --version\n\n# Все три команды должны показать версии.\n# Если хоть одна выдаёт ошибку — вернись к соответствующему шагу.',
+        note:'Отсюда будет идти вся работа — терминал VS Code никогда не закрывай во время работы.'
+      }
+    ]
+  },
+  {
+    id:1, icon:'🐙', title:'GitHub', short:'GitHub',
+    desc:'GitHub — хранилище твоего кода. Каждый push сохраняет изменения. Андрей даст тебе доступ к репозиторию проекта.',
+    steps:[
+      {
+        title:'Создай аккаунт GitHub',
+        sub:'Регистрация + отправить username Андрею',
+        txt:'Зарегистрируйся на GitHub. Username будет виден везде — выбирай нормальный, типа nastya-dev или настоящее имя латиницей.',
+        link:{ url:'https://github.com', label:'github.com — зарегистрируйся' },
+        studentInput:{ fields:[{ key:'github_username', label:'Твой GitHub username', placeholder:'например: nastya-dev' }] }
+      },
+      {
+        title:'Настрой SSH ключ',
+        sub:'Чтобы не вводить пароль при каждом push',
+        txt:'SSH ключ — это постоянный пропуск твоего компьютера на GitHub. Генерируется один раз.',
+        cmd_mac:'# Генерируй ключ:\nssh-keygen -t ed25519 -C "твой@email.com"\n# На все вопросы жми Enter\n\n# Скопируй публичный ключ:\ncat ~/.ssh/id_ed25519.pub',
+        cmd_win:'# Генерируй ключ (в терминале VS Code):\nssh-keygen -t ed25519 -C "твой@email.com"\n# На все вопросы жми Enter\n\n# Скопируй публичный ключ:\ntype $env:USERPROFILE\\.ssh\\id_ed25519.pub',
+        os:{
+          mac:'Скопированный ключ добавь на GitHub:\nSettings → SSH and GPG keys → New SSH key → вставь → Save',
+          win:'Скопированный ключ добавь на GitHub:\nSettings → SSH and GPG keys → New SSH key → вставь → Save'
+        },
+        note:'После этого git push/pull работают без пароля навсегда на этом компьютере.'
+      },
+      {
+        title:'Получи доступ к репозиторию',
+        sub:'Андрей добавит тебя — жди инвайт на email',
+        txt:'После того как отправишь username — Андрей добавит тебя в репозиторий проекта. Прими приглашение в письме на почту.',
+        pavelData:{ fields:[{ key:'github_repo_url', label:'SSH ссылка на репозиторий', placeholder:'git@github.com:username/project-name.git' }] }
+      },
+      {
+        title:'Клонируй репозиторий на свой компьютер',
+        sub:'Создать папку проекта через терминал',
+        txt:'Когда получишь ссылку от Андрея — создай папку для проектов и клонируй репо. Это и есть твоя рабочая папка.',
+        cmd_both:'# Создай папку для всех проектов в домашней директории:\ncd ~\nmkdir projects\ncd projects\n\n# Клонируй репозиторий (вставь свою ссылку от Андрея):\ngit clone [ссылка_от_Андрея]\n\n# Зайди в папку проекта:\ncd [название_папки]\n\n# Открой в VS Code:\ncode .',
+        info:'Команда "code ." открывает текущую папку в VS Code. После этого работай только из этой папки.',
+        note:'Папка ~/projects/[название] — это твой проект. Весь код живёт здесь.'
+      },
+      {
+        title:'Проверь что push работает',
+        sub:'Сделай тестовый коммит',
+        txt:'Открой любой файл в проекте, добавь пробел, сохрани. Потом запушь — Андрей увидит что подключение работает.',
+        cmd_both:'git add .\ngit commit -m "test: connection check"\ngit push origin main\n\n# Если прошло без ошибок — всё работает ✓',
+        note:'Формат коммитов: "feat: добавил страницу", "fix: исправил баг", "test: проверка"'
+      }
+    ]
+  },
+  {
+    id:2, icon:'🗄️', title:'Supabase', short:'Supabase',
+    desc:'Supabase — база данных проекта. Живёт в облаке. Андрей добавит тебя в проект — нужен твой email.',
+    steps:[
+      {
+        title:'Создай аккаунт Supabase',
+        sub:'Регистрация через GitHub + email Андрею',
+        txt:'Зарегистрируйся через GitHub — это быстрее. Потом отправь email от аккаунта Андрею.',
+        link:{ url:'https://supabase.com', label:'supabase.com — Sign Up with GitHub' },
+        studentInput:{ fields:[{ key:'supabase_email', label:'Email аккаунта Supabase', placeholder:'твой@email.com' }] }
+      },
+      {
+        title:'Получи доступ к проекту',
+        sub:'Прими инвайт от Андрея',
+        txt:'После того как пришлёшь email — Андрей добавит тебя в Supabase проект. Прими инвайт в письме. Ниже появится ссылка на проект.',
+        pavelData:{ fields:[{ key:'supabase_project_url', label:'Ссылка на Supabase проект', placeholder:'https://supabase.com/dashboard/project/xxx' }] }
+      },
+      {
+        title:'Получи ключи для .env.local',
+        sub:'Settings → API → скопировать ключи',
+        txt:'В Supabase проекте зайди в Settings → API. Там два ключа которые нужны для подключения из кода.',
+        cmd_both:'# Создай файл .env.local в корне проекта:\n# (в терминале VS Code, находясь в папке проекта)\n\ntouch .env.local\n# Windows: ni .env.local\n\n# Открой файл и вставь:\nNEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co\nNEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGci...',
+        info:'Project URL и anon public key — оба нужны. Service role key НЕ копируй никуда — он секретный.',
+        note:'.env.local уже прописан в .gitignore — он никогда не попадёт на GitHub. Это правильно.'
+      },
+      {
+        title:'Изучи интерфейс Supabase',
+        sub:'Table Editor, SQL Editor — это твоя база',
+        txt:'Потрать 10 минут и посмотри что где. Здесь живут все данные проекта.',
+        pills:['Table Editor — смотреть и редактировать таблицы','SQL Editor — писать запросы','Authentication — пользователи','Settings → API — ключи подключения'],
+        cmd_both:"-- Зайди в SQL Editor и выполни (Ctrl+Enter):\nSELECT table_name\nFROM information_schema.tables\nWHERE table_schema = 'public';\n\n-- Должен увидеть список таблиц проекта",
+        note:'SQL Editor — самое важное место. Большинство времени будешь работать здесь и в Table Editor.'
+      }
+    ]
+  },
+  {
+    id:3, icon:'⚡', title:'Next.js', short:'Next.js',
+    desc:'Next.js — фреймворк на котором написан проект. Запускаем локально и проверяем что всё работает.',
+    steps:[
+      {
+        title:'Установи зависимости',
+        sub:'npm install в папке проекта',
+        txt:'В папке проекта есть файл package.json со списком всех библиотек. npm install скачает их все.',
+        cmd_both:'# Убедись что ты в папке проекта:\npwd\n# должно показать ~/projects/[название]\n\n# Установи зависимости:\nnpm install\n\n# Займёт 1-2 минуты. В конце:\n# added XXX packages in Xs',
+        note:'Папка node_modules (где живут библиотеки) не попадает на GitHub — она пересоздаётся через npm install.'
+      },
+      {
+        title:'Запусти проект локально',
+        sub:'npm run dev → открой localhost:3000',
+        txt:'Dev-сервер запустит проект на твоём компьютере. Можно открыть в браузере и смотреть как выглядит.',
+        cmd_both:'npm run dev\n\n# Должно появиться:\n# ▲ Next.js 14.x.x\n# - Local: http://localhost:3000\n# - Ready in XXXms',
+        info:'Открой браузер и зайди на http://localhost:3000 — увидишь живой проект локально.',
+        note:'Если ошибка про переменные окружения — проверь что .env.local создан правильно (шаг 3 Supabase).'
+      },
+      {
+        title:'Разберись со структурой проекта',
+        sub:'Где что лежит',
+        txt:'Открой проект в VS Code и посмотри на структуру папок.',
+        pills:['app/ — все страницы и API роуты','components/ — переиспользуемые компоненты','lib/ — подключение к Supabase и утилиты','public/ — статичные файлы (картинки и т.д.)','package.json — список зависимостей','.env.local — секретные ключи (не на GitHub!)'],
+        note:'app/page.tsx — это главная страница. Именно его ты видишь на localhost:3000.'
+      }
+    ]
+  },
+  {
+    id:4, icon:'▲', title:'Vercel', short:'Vercel',
+    desc:'Vercel — хостинг проекта. Каждый push на GitHub автоматически деплоит новую версию. Нужен твой email.',
+    steps:[
+      {
+        title:'Создай аккаунт Vercel',
+        sub:'Sign up через GitHub + email Андрею',
+        txt:'Регистрируйся через GitHub — Vercel автоматически подключится к твоим репозиториям.',
+        link:{ url:'https://vercel.com', label:'vercel.com → Sign Up → Continue with GitHub' },
+        studentInput:{ fields:[{ key:'vercel_email', label:'Email аккаунта Vercel', placeholder:'твой@email.com' }] },
+        info:'Бесплатный план Vercel позволяет деплоить неограниченное количество проектов.'
+      },
+      {
+        title:'Получи доступ к проекту на Vercel',
+        sub:'Андрей добавит тебя — прими инвайт',
+        txt:'После того как пришлёшь email — Андрей добавит тебя в Vercel проект. Прими инвайт в письме. Ниже появятся ссылки.',
+        pavelData:{ fields:[
+          { key:'vercel_project_url', label:'Ссылка на Vercel проект', placeholder:'https://vercel.com/team/project-name' },
+          { key:'vercel_live_url', label:'Живой URL проекта', placeholder:'https://project-name.vercel.app' }
+        ]}
+      },
+      {
+        title:'Добавь переменные окружения в Vercel',
+        sub:'Settings → Environment Variables',
+        txt:'На сервере нет твоего .env.local — нужно добавить те же переменные в настройках Vercel.',
+        cmd_both:'# Зайди в Vercel проект:\n# Settings → Environment Variables\n\n# Добавь две переменные:\n# NEXT_PUBLIC_SUPABASE_URL = [твой URL]\n# NEXT_PUBLIC_SUPABASE_ANON_KEY = [твой ключ]\n\n# После добавления — сделай Redeploy',
+        note:'Без этого деплой будет успешным но проект не сможет подключиться к базе данных.'
+      },
+      {
+        title:'Проверь автодеплой',
+        sub:'Push → 30 секунд → живой сайт обновился',
+        txt:'Сделай любое небольшое изменение в коде, запушь — и через полминуты увидишь обновление на живом сайте.',
+        cmd_both:'git add .\ngit commit -m "feat: vercel deploy check"\ngit push origin main\n\n# Зайди на vercel.com/dashboard\n# Увидишь что деплой запустился автоматически',
+        note:'Каждый push = новый деплой. Это и есть магия Vercel.'
+      },
+      {
+        title:'Открой свой живой проект 🎉',
+        sub:'Вводи URL в браузер — это твой проект',
+        txt:'Зайди на свой Vercel URL (получил от Андрея выше). Увидишь живой проект доступный всему интернету. Это твоя работа — она работает на реальном сервере.',
+        info:'Поздравляем — рабочее пространство настроено полностью! Инструменты установлены, код на GitHub, проект деплоится автоматически, база данных подключена.',
+        note:'Отсюда начинается настоящая работа. Следующий модуль — Claude Code, твой главный инструмент разработки.'
+      }
+    ]
+  },
+  {
+    id:5, icon:'🤖', title:'Claude Code', short:'Claude Code',
+    desc:'Claude Code — ИИ прямо в терминале. Видит весь проект, пишет код, исправляет ошибки. Это твой главный инструмент.',
+    steps:[
+      {
+        title:'Как запускать Claude Code',
+        sub:'Всегда из папки проекта',
+        txt:'Запускай claude только когда находишься в папке проекта — тогда он видит все файлы и понимает контекст.',
+        cmd_both:'# Зайди в папку проекта:\ncd ~/projects/[название]\n\n# Запусти Claude Code:\nclaude',
+        note:'Никогда не запускай claude из домашней папки ~ — он не будет знать о твоём проекте и будет давать общие ответы.'
+      },
+      {
+        title:'Основные команды',
+        sub:'/help, /exit, /clear, /compact',
+        txt:'Команды начинаются с /. Самые важные:',
+        cmd_both:'/help      # список всех команд\n/clear     # очистить экран\n/compact   # сжать историю (если стало медленно)\n/cost      # сколько токенов потрачено\n/exit      # выйти\n\nCtrl+C     # остановить текущее действие\nCtrl+D     # выйти из Claude Code'
+      },
+      {
+        title:'Как правильно ставить задачи',
+        sub:'Конкретно + контекст = хороший результат',
+        txt:'Качество ответа напрямую зависит от качества задачи. Вот разница:',
+        os:{
+          mac:'❌  Плохо: "сделай страницу"\n\n✅  Хорошо: "создай страницу /clients которая показывает список клиентов из таблицы clients в Supabase. Каждая запись — карточка с полями: имя, email, дата создания. Добавь кнопку удалить."\n\n---\n\n❌  Плохо: "не работает"\n\n✅  Хорошо: "при открытии /clients ошибка в консоли браузера:\nTypeError: Cannot read properties of undefined (reading \'map\')\nat ClientList (app/clients/page.tsx:24)\nВот код этого файла: [вставь код]"',
+          win:'❌  Плохо: "сделай страницу"\n\n✅  Хорошо: "создай страницу /clients которая показывает список клиентов из таблицы clients в Supabase. Каждая запись — карточка с полями: имя, email, дата создания. Добавь кнопку удалить."\n\n---\n\n❌  Плохо: "не работает"\n\n✅  Хорошо: "при открытии /clients ошибка в консоли браузера:\nTypeError: Cannot read properties of undefined (reading \'map\')\nat ClientList (app/clients/page.tsx:24)\nВот код этого файла: [вставь код]"'
+        },
+        note:'Чем точнее описываешь задачу — тем точнее результат. Не бойся писать много деталей.'
+      },
+      {
+        title:'Как Claude Code работает с файлами',
+        sub:'Читает, пишет, редактирует — сам',
+        txt:'Не нужно копировать код вручную. Claude Code сам читает нужные файлы и вносит изменения.',
+        cmd_both:'"прочитай файл app/clients/page.tsx и объясни что он делает"\n\n"добавь поле \'телефон\' в компонент ClientCard"\n\n"найди все места в проекте где используется supabase клиент"\n\n"посмотри на ошибку в терминале и исправь"',
+        info:'Каждое изменение файла показывается тебе перед применением. Нажми y — принять, n — отклонить.',
+        note:'Если что-то пошло не так — git позволяет откатить любые изменения. Не бойся экспериментировать.'
+      },
+      {
+        title:'Первое задание',
+        sub:'Получи задачу от Андрея',
+        txt:'Рабочее пространство готово, инструменты настроены. Теперь Андрей выдаст первое реальное задание по проекту.',
+        pavelData:{ fields:[{ key:'first_task', label:'Первое задание', placeholder:'Описание задачи появится здесь...' }] },
+        note:'Используй Claude Code для выполнения задания. Если застрял — опиши проблему максимально подробно.'
+      }
+    ]
+  },
+  {
+    id:6, icon:'🚀', title:'Мой проект', short:'Проект',
+    desc:'Твоё индивидуальное задание от Андрея',
+    locked:true, steps:[]
+  }
 ];
 
 // ══════════════════════════════════════
