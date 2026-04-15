@@ -358,18 +358,9 @@ async function doLogin() {
   if (!u || u.pass !== pass) { err.textContent = 'Неверный логин или пароль'; err.style.display = 'block'; return; }
   err.style.display = 'none';
   btn.disabled = true; btn.textContent = 'Входим...';
-  CUR = login;
   try {
-    if (u.role === 'admin') {
-      showPage('pg-admin');
-      await renderAdmin();
-    } else {
-      await loadStudentData(login);
-      showPage('pg-student');
-      document.getElementById('stu-name-hdr').textContent = login;
-      renderSidebar();
-      renderMain();
-    }
+    await enterAs(login);
+    localStorage.setItem('gas_session', login);
   } catch(e) {
     err.textContent = 'Ошибка: ' + e.message;
     err.style.display = 'block';
@@ -378,9 +369,26 @@ async function doLogin() {
   btn.disabled = false; btn.textContent = 'Войти';
 }
 
+async function enterAs(login) {
+  var u = USERS[login];
+  if (!u) throw new Error('Пользователь не найден');
+  CUR = login;
+  if (u.role === 'admin') {
+    showPage('pg-admin');
+    await renderAdmin();
+  } else {
+    await loadStudentData(login);
+    showPage('pg-student');
+    document.getElementById('stu-name-hdr').textContent = login;
+    renderSidebar();
+    renderMain();
+  }
+}
+
 function doLogout() {
   CUR = ''; CUR_MOD = 0; OPEN = {};
   PROG = {}; FROM_STU = {}; FROM_PAV = {};
+  localStorage.removeItem('gas_session');
   showPage('pg-login');
   document.getElementById('li').value = '';
   document.getElementById('lp').value = '';
@@ -800,7 +808,17 @@ function downloadWelcome() {
 // ── INIT ──
 document.getElementById('li').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
 document.getElementById('lp').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
-showPage('pg-login');
+(function(){
+  var saved = localStorage.getItem('gas_session');
+  if (saved && USERS[saved]) {
+    enterAs(saved).catch(function(){
+      localStorage.removeItem('gas_session');
+      showPage('pg-login');
+    });
+  } else {
+    showPage('pg-login');
+  }
+})();
 
 </script>
 </body>
