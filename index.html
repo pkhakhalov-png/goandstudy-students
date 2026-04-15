@@ -23,7 +23,7 @@ body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-
 a{color:inherit;text-decoration:none}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--b3);border-radius:2px}
 .hide{display:none!important}
-.hdr{position:sticky;top:0;z-index:100;background:rgba(24,24,31,.93);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:56px}
+.hdr{position:sticky;top:0;z-index:100;background:rgba(24,24,31,.93);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:76px}
 .logo{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
 .logo span{color:var(--purple)}
 .logo-sq{width:26px;height:26px;border-radius:7px;background:var(--pd);border:1px solid var(--pb);display:flex;align-items:center;justify-content:center;font-size:12px}
@@ -31,7 +31,7 @@ a{color:inherit;text-decoration:none}
 .hdr-user{font-size:12px;color:var(--t2)}
 .hdr-btn{font-size:11px;color:var(--t3);background:var(--bg3);border:1px solid var(--border);padding:4px 12px;border-radius:20px;cursor:pointer;font-family:'Mulish',sans-serif;transition:all .15s}
 .hdr-btn:hover{border-color:var(--b2);color:var(--t2)}
-.login-wrap{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 56px);padding:2rem}
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 76px);padding:2rem}
 .login-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:2rem;width:100%;max-width:380px}
 .login-logo{font-family:'Unbounded',sans-serif;font-size:18px;font-weight:700;margin-bottom:4px}
 .login-logo span{color:var(--purple)}
@@ -44,8 +44,8 @@ a{color:inherit;text-decoration:none}
 .btn-primary:hover{background:#9a4fb5}
 .btn-primary:disabled{opacity:.5;cursor:not-allowed}
 .login-err{font-size:12px;color:var(--red);margin-top:8px;display:none}
-.layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 56px)}
-.sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:1rem 0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;display:flex;flex-direction:column}
+.layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 76px)}
+.sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:1rem 0;position:sticky;top:76px;height:calc(100vh - 76px);overflow-y:auto;display:flex;flex-direction:column}
 .sb-mods{padding:0 .75rem;display:flex;flex-direction:column;gap:2px;flex:1}
 .mb{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--rs);cursor:pointer;transition:background .12s;border:1px solid transparent}
 .mb:hover{background:var(--bg3)}
@@ -175,11 +175,11 @@ a{color:inherit;text-decoration:none}
 
 <div id="pg-login" class="hide">
   <div class="hdr">
-    <div class="logo"><img src="https://i.ibb.co/MxpZjKFG/GAS-logo-03.png" alt="Go&amp;Study" style="height:32px;width:auto"/></div>
+    <div class="logo"><img src="https://i.ibb.co/MxpZjKFG/GAS-logo-03.png" alt="Go&amp;Study" style="height:56px;width:auto"/></div>
   </div>
   <div class="login-wrap">
     <div class="login-card">
-      <div class="login-logo"><img src="https://i.ibb.co/MxpZjKFG/GAS-logo-03.png" alt="Go&amp;Study" style="height:48px;width:auto;display:block;margin-bottom:10px"/></div>
+      <div class="login-logo" style="text-align:center"><img src="https://i.ibb.co/MxpZjKFG/GAS-logo-03.png" alt="Go&amp;Study" style="height:260px;width:auto;display:block;margin:0 auto 18px"/></div>
       <div class="login-sub">&#1054;&#1073;&#1091;&#1095;&#1077;&#1085;&#1080;&#1077; &#1074;&#1077;&#1073;-&#1088;&#1072;&#1079;&#1088;&#1072;&#1073;&#1086;&#1090;&#1082;&#1077;</div>
       <label class="f-label">&#1051;&#1086;&#1075;&#1080;&#1085;</label>
       <input class="f-input" id="li" placeholder="&#1051;&#1086;&#1075;&#1080;&#1085;" autocomplete="username">
@@ -193,7 +193,7 @@ a{color:inherit;text-decoration:none}
 
 <div id="pg-student" class="hide">
   <div class="hdr">
-    <div class="logo"><img src="https://i.ibb.co/MxpZjKFG/GAS-logo-03.png" alt="Go&amp;Study" style="height:32px;width:auto"/></div>
+    <div class="logo"><img src="https://i.ibb.co/MxpZjKFG/GAS-logo-03.png" alt="Go&amp;Study" style="height:56px;width:auto"/></div>
     <div class="hdr-right">
       <span class="hdr-user" id="stu-name-hdr"></span>
       <button class="hdr-btn" onclick="doLogout()">&#1042;&#1099;&#1081;&#1090;&#1080;</button>
@@ -213,7 +213,7 @@ a{color:inherit;text-decoration:none}
 
 <div id="pg-admin" class="hide">
   <div class="hdr">
-    <div class="logo"><img src="https://i.ibb.co/MxpZjKFG/GAS-logo-03.png" alt="Go&amp;Study" style="height:32px;width:auto"/></div>
+    <div class="logo"><img src="https://i.ibb.co/MxpZjKFG/GAS-logo-03.png" alt="Go&amp;Study" style="height:56px;width:auto"/></div>
     <div class="hdr-right">
       <span class="hdr-user">&#1055;&#1072;&#1074;&#1077;&#1083; &mdash; &#1072;&#1076;&#1084;&#1080;&#1085;</span>
       <button class="hdr-btn" onclick="doLogout()">&#1042;&#1099;&#1081;&#1090;&#1080;</button>
