@@ -3,8 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GoAndStudy — Обучение</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -14,7 +12,7 @@
   --purple:#B15ECC;--pd:#B15ECC22;--pb:#B15ECC40;
   --gold:#FFAC02;--gd:#FFAC0215;--gb:#FFAC0235;
   --green:#22c55e;--grd:#22c55e15;--grb:#22c55e40;
-  --red:#f87171;--redd:#f8717115;--redb:#f8717130;
+  --red:#f87171;
   --border:#ffffff0f;--b2:#ffffff1a;--b3:#ffffff28;
   --text:#eeeef0;--t2:#9898b0;--t3:#55556a;
   --r:14px;--rs:10px;--rx:7px;
@@ -25,25 +23,19 @@ body{font-family:'Mulish',sans-serif;background:var(--bg);color:var(--text);min-
 a{color:inherit;text-decoration:none}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--b3);border-radius:2px}
 .hide{display:none!important}
-
-/* ── SETUP SCREEN ── */
-.setup-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
-.setup-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:2rem;width:100%;max-width:560px}
-.setup-logo{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:700;margin-bottom:4px}
-.setup-logo span{color:var(--purple)}
-.setup-sub{font-size:13px;color:var(--t2);margin-bottom:1.5rem;line-height:1.6}
-.setup-step{display:flex;gap:12px;margin-bottom:1.25rem;padding:14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs)}
-.setup-step-n{width:26px;height:26px;border-radius:7px;background:var(--pd);border:1px solid var(--pb);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--purple);font-family:'Unbounded',sans-serif;flex-shrink:0}
-.setup-step-body{flex:1}
-.setup-step-title{font-size:13px;font-weight:700;margin-bottom:4px}
-.setup-step-txt{font-size:12px;color:var(--t2);line-height:1.65}
-.code-wrap{background:#0e0e16;border:1px solid var(--border);border-radius:var(--rs);margin:10px 0;overflow:hidden}
-.code-top{display:flex;align-items:center;justify-content:space-between;padding:7px 14px;border-bottom:1px solid var(--border)}
-.code-lang{font-size:10px;color:var(--t3);font-family:'Unbounded',sans-serif;letter-spacing:.8px}
-.code-copy{font-size:11px;color:var(--t3);cursor:pointer;background:var(--bg3);border:1px solid var(--border);padding:3px 10px;border-radius:5px;transition:all .12s;font-family:'Mulish',sans-serif}
-.code-copy:hover{color:var(--text);border-color:var(--b2)}
-.code-pre{padding:12px 14px;font-family:'SF Mono','Fira Code',monospace;font-size:12px;color:#cdd6f4;line-height:1.75;white-space:pre-wrap;word-break:break-all}
-.setup-divider{height:1px;background:var(--border);margin:1.5rem 0}
+.hdr{position:sticky;top:0;z-index:100;background:rgba(24,24,31,.93);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.logo span{color:var(--purple)}
+.logo-sq{width:26px;height:26px;border-radius:7px;background:var(--pd);border:1px solid var(--pb);display:flex;align-items:center;justify-content:center;font-size:12px}
+.hdr-right{display:flex;align-items:center;gap:10px}
+.hdr-user{font-size:12px;color:var(--t2)}
+.hdr-btn{font-size:11px;color:var(--t3);background:var(--bg3);border:1px solid var(--border);padding:4px 12px;border-radius:20px;cursor:pointer;font-family:'Mulish',sans-serif;transition:all .15s}
+.hdr-btn:hover{border-color:var(--b2);color:var(--t2)}
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 56px);padding:2rem}
+.login-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:2rem;width:100%;max-width:380px}
+.login-logo{font-family:'Unbounded',sans-serif;font-size:18px;font-weight:700;margin-bottom:4px}
+.login-logo span{color:var(--purple)}
+.login-sub{font-size:13px;color:var(--t2);margin-bottom:1.5rem}
 .f-label{display:block;font-size:12px;color:var(--t2);margin-bottom:5px;font-weight:600}
 .f-input{width:100%;padding:9px 13px;border:1px solid var(--b2);border-radius:var(--rs);background:var(--bg3);color:var(--text);font-size:13px;font-family:'Mulish',sans-serif;outline:none;transition:border .15s;margin-bottom:10px}
 .f-input:focus{border-color:var(--pb)}
@@ -51,31 +43,9 @@ a{color:inherit;text-decoration:none}
 .btn-primary{width:100%;padding:10px;background:var(--purple);color:#fff;border:none;border-radius:var(--rs);font-size:13px;font-weight:700;cursor:pointer;font-family:'Mulish',sans-serif;transition:background .15s}
 .btn-primary:hover{background:#9a4fb5}
 .btn-primary:disabled{opacity:.5;cursor:not-allowed}
-.setup-err{font-size:12px;color:var(--red);margin-top:8px;display:none}
-.note-box{background:var(--gd);border:1px solid var(--gb);border-radius:var(--rx);padding:10px 14px;margin:10px 0;font-size:12px;color:var(--gold);line-height:1.65}
-
-/* ── HEADER ── */
-.hdr{position:sticky;top:0;z-index:100;background:var(--bg)ee;backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:56px}
-.logo{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;color:var(--text)}
-.logo span{color:var(--purple)}
-.logo-sq{width:26px;height:26px;border-radius:7px;background:var(--pd);border:1px solid var(--pb);display:flex;align-items:center;justify-content:center;font-size:12px}
-.hdr-right{display:flex;align-items:center;gap:10px}
-.hdr-user{font-size:12px;color:var(--t2)}
-.hdr-btn{font-size:11px;color:var(--t3);background:var(--bg3);border:1px solid var(--border);padding:4px 12px;border-radius:20px;cursor:pointer;font-family:'Mulish',sans-serif;transition:all .15s}
-.hdr-btn:hover{border-color:var(--b2);color:var(--t2)}
-
-/* ── LOGIN ── */
-.login-wrap{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 56px);padding:2rem}
-.login-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:2rem;width:100%;max-width:380px}
-.login-logo{font-family:'Unbounded',sans-serif;font-size:18px;font-weight:700;margin-bottom:4px}
-.login-logo span{color:var(--purple)}
-.login-sub{font-size:13px;color:var(--t2);margin-bottom:1.5rem}
 .login-err{font-size:12px;color:var(--red);margin-top:8px;display:none}
-
-/* ── LAYOUT ── */
-.layout{display:grid;grid-template-columns:268px 1fr;min-height:calc(100vh - 56px)}
+.layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 56px)}
 .sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:1rem 0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;display:flex;flex-direction:column}
-.sb-label{font-size:10px;color:var(--t3);font-family:'Unbounded',sans-serif;letter-spacing:1.2px;padding:0 1.25rem;margin:0 0 6px}
 .sb-mods{padding:0 .75rem;display:flex;flex-direction:column;gap:2px;flex:1}
 .mb{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--rs);cursor:pointer;transition:background .12s;border:1px solid transparent}
 .mb:hover{background:var(--bg3)}
@@ -85,7 +55,7 @@ a{color:inherit;text-decoration:none}
 .mb-icon.done{background:var(--grd);border-color:var(--grb)}
 .mb-icon.cur{background:var(--pd);border-color:var(--pb)}
 .mb-meta{flex:1;min-width:0}
-.mb-name{font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:1px}
+.mb-name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:1px}
 .mb-sub{font-size:11px;color:var(--t3)}
 .mb-sub.done{color:var(--green)}
 .mb-sub.cur{color:var(--purple)}
@@ -93,9 +63,7 @@ a{color:inherit;text-decoration:none}
 .sb-pl{font-size:11px;color:var(--t3);display:flex;justify-content:space-between;margin-bottom:7px}
 .sb-pl span{color:var(--t2);font-weight:600}
 .sb-bar{height:3px;background:var(--bg4);border-radius:2px;overflow:hidden}
-.sb-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--gold));border-radius:2px;transition:width .5s ease}
-
-/* ── MAIN CONTENT ── */
+.sb-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--gold));border-radius:2px;transition:width .5s}
 .main{padding:2rem 2.5rem;max-width:860px}
 .mod-hero{margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
 .mod-badge{display:inline-block;font-size:10px;color:var(--purple);background:var(--pd);border:1px solid var(--pb);padding:3px 10px;border-radius:20px;font-family:'Unbounded',sans-serif;letter-spacing:.5px;margin-bottom:10px}
@@ -105,18 +73,15 @@ a{color:inherit;text-decoration:none}
 .prog-bar{flex:1;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden}
 .prog-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--gold));border-radius:3px;transition:width .4s}
 .prog-lbl{font-size:12px;color:var(--t3);white-space:nowrap}
-
-/* ── STEPS ── */
 .steps{display:flex;flex-direction:column;gap:8px}
-.step{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .15s}
-.step:hover{border-color:var(--b2)}
+.step{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
 .step.done{border-color:var(--grb);background:var(--grd)}
 .step.open{border-color:var(--b2)}
 .step-hd{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;user-select:none}
 .step-n{width:30px;height:30px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--t3);flex-shrink:0;font-family:'Unbounded',sans-serif}
 .step-n.done{background:var(--grd);border-color:var(--grb);color:var(--green)}
 .step-hd-meta{flex:1}
-.step-hd-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
+.step-hd-title{font-size:13px;font-weight:700;margin-bottom:2px}
 .step-hd-sub{font-size:11px;color:var(--t3)}
 .step-chev{font-size:10px;color:var(--t3);transition:transform .2s}
 .step.open .step-chev{transform:rotate(180deg)}
@@ -124,227 +89,121 @@ a{color:inherit;text-decoration:none}
 .step.open .step-body{display:block}
 .step-txt{font-size:13px;color:var(--t2);line-height:1.75;margin:14px 0 10px}
 .os-tabs{display:flex;gap:4px;margin:10px 0 6px}
-.os-tab{font-size:11px;font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid var(--border);color:var(--t3);cursor:pointer;transition:all .12s;font-family:'Mulish',sans-serif}
-.os-tab:hover{border-color:var(--b2);color:var(--t2)}
+.os-tab{font-size:11px;font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid var(--border);color:var(--t3);cursor:pointer;font-family:'Mulish',sans-serif}
 .os-tab.on{background:var(--bg3);color:var(--text);border-color:var(--b2)}
-.os-cnt{display:none;font-size:13px;color:var(--t2);line-height:1.7}
+.os-cnt{display:none}
 .os-cnt.on{display:block}
+.code-wrap{background:#0e0e16;border:1px solid var(--border);border-radius:var(--rs);margin:10px 0;overflow:hidden}
+.code-top{display:flex;align-items:center;justify-content:space-between;padding:7px 14px;border-bottom:1px solid var(--border)}
+.code-lang{font-size:10px;color:var(--t3);font-family:'Unbounded',sans-serif;letter-spacing:.8px}
+.code-copy{font-size:11px;color:var(--t3);cursor:pointer;background:var(--bg3);border:1px solid var(--border);padding:3px 10px;border-radius:5px;font-family:'Mulish',sans-serif}
+.code-pre{padding:12px 14px;font-family:'SF Mono','Fira Code',monospace;font-size:12px;color:#cdd6f4;line-height:1.75;white-space:pre-wrap;word-break:break-all}
 .pills{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
 .pill{font-size:11px;color:var(--t2);background:var(--bg3);border:1px solid var(--border);padding:4px 11px;border-radius:20px;display:flex;align-items:center;gap:5px}
 .pill-dot{width:5px;height:5px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.note-box{background:var(--gd);border:1px solid var(--gb);border-radius:var(--rx);padding:10px 14px;margin:10px 0;font-size:12px;color:var(--gold);line-height:1.65}
 .info-box{background:var(--pd);border:1px solid var(--pb);border-radius:var(--rx);padding:10px 14px;margin:10px 0;font-size:12px;color:#c890e0;line-height:1.65}
-.link-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--purple);background:var(--pd);border:1px solid var(--pb);padding:6px 14px;border-radius:8px;transition:all .12s;margin:6px 0}
-.link-btn:hover{background:#B15ECC30}
+.link-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--purple);background:var(--pd);border:1px solid var(--pb);padding:6px 14px;border-radius:8px;margin:6px 0}
 .step-acts{display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
-.btn-complete{display:inline-flex;align-items:center;gap:6px;padding:8px 20px;background:var(--purple);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Mulish',sans-serif;transition:background .12s}
-.btn-complete:hover{background:#9a4fb5}
-.btn-complete:disabled{opacity:.5;cursor:not-allowed}
-.btn-undo{padding:7px 14px;background:none;color:var(--t3);border:1px solid var(--border);border-radius:8px;font-size:11px;cursor:pointer;font-family:'Mulish',sans-serif;transition:all .12s}
-.btn-undo:hover{border-color:var(--b2);color:var(--t2)}
+.btn-done{display:inline-flex;align-items:center;gap:6px;padding:8px 20px;background:var(--purple);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Mulish',sans-serif}
+.btn-done:hover{background:#9a4fb5}
+.btn-done:disabled{opacity:.5;cursor:not-allowed}
+.btn-undo{padding:7px 14px;background:none;color:var(--t3);border:1px solid var(--border);border-radius:8px;font-size:11px;cursor:pointer;font-family:'Mulish',sans-serif}
 .done-tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--green);font-weight:600}
-
-/* ── STUDENT FORM ── */
 .stu-form{background:var(--bg3);border:1px solid var(--b2);border-radius:var(--rs);padding:14px;margin:12px 0}
 .sf-title{font-size:12px;font-weight:700;color:var(--purple);margin-bottom:10px}
 .sf-label{display:block;font-size:11px;color:var(--t2);margin-bottom:4px}
-.sf-input{width:100%;padding:8px 12px;border:1px solid var(--b2);border-radius:var(--rx);background:var(--bg2);color:var(--text);font-size:12px;font-family:'Mulish',sans-serif;outline:none;transition:border .15s;margin-bottom:8px}
-.sf-input:focus{border-color:var(--pb)}
-.sf-input::placeholder{color:var(--t3)}
-.sf-input:disabled{opacity:.5;cursor:not-allowed}
-.sf-btn{padding:8px 18px;background:var(--purple);color:#fff;border:none;border-radius:var(--rx);font-size:12px;font-weight:700;cursor:pointer;font-family:'Mulish',sans-serif;transition:background .12s}
-.sf-btn:hover:not(:disabled){background:#9a4fb5}
+.sf-input{width:100%;padding:8px 12px;border:1px solid var(--b2);border-radius:var(--rx);background:var(--bg2);color:var(--text);font-size:12px;font-family:'Mulish',sans-serif;outline:none;margin-bottom:8px}
+.sf-input:disabled{opacity:.5}
+.sf-btn{padding:8px 18px;background:var(--purple);color:#fff;border:none;border-radius:var(--rx);font-size:12px;font-weight:700;cursor:pointer;font-family:'Mulish',sans-serif}
 .sf-btn:disabled{opacity:.5;cursor:not-allowed}
 .sf-sent{font-size:11px;color:var(--green);margin-top:6px}
-.sf-edit{padding:6px 14px;background:none;color:var(--t3);border:1px solid var(--border);border-radius:var(--rx);font-size:11px;cursor:pointer;font-family:'Mulish',sans-serif;margin-left:8px;transition:all .12s}
-.sf-edit:hover{border-color:var(--b2);color:var(--t2)}
-
-/* ── FROM PAVEL ── */
-.from-pavel{background:var(--pd);border:1px solid var(--pb);border-radius:var(--rs);padding:14px;margin:12px 0}
+.sf-edit{padding:6px 14px;background:none;color:var(--t3);border:1px solid var(--border);border-radius:var(--rx);font-size:11px;cursor:pointer;font-family:'Mulish',sans-serif;margin-left:8px}
+.fp-box{background:var(--pd);border:1px solid var(--pb);border-radius:var(--rs);padding:14px;margin:12px 0}
 .fp-title{font-size:11px;color:var(--purple);font-weight:700;margin-bottom:10px}
-.fp-waiting{font-size:12px;color:var(--t3);font-style:italic}
+.fp-wait{font-size:12px;color:var(--t3);font-style:italic}
 .fp-row{margin-bottom:8px}
-.fp-row:last-child{margin-bottom:0}
 .fp-lbl{font-size:10px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
 .fp-val{font-size:12px;color:var(--text);background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:7px 10px;font-family:'SF Mono','Fira Code',monospace;display:flex;align-items:center;gap:8px}
 .fp-val span{flex:1;word-break:break-all}
-.fp-copy{font-size:10px;color:var(--t3);cursor:pointer;padding:2px 8px;border:1px solid var(--border);border-radius:4px;background:var(--bg);white-space:nowrap;flex-shrink:0;transition:all .12s;font-family:'Mulish',sans-serif}
-.fp-copy:hover{color:var(--text);border-color:var(--b2)}
-
-/* ── LOCKED ── */
+.fp-copy{font-size:10px;color:var(--t3);cursor:pointer;padding:2px 8px;border:1px solid var(--border);border-radius:4px;background:var(--bg);white-space:nowrap;font-family:'Mulish',sans-serif}
 .locked-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px;text-align:center;gap:14px}
 .locked-icon{width:60px;height:60px;border-radius:16px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:26px}
 .locked-h{font-family:'Unbounded',sans-serif;font-size:17px;font-weight:600}
 .locked-p{font-size:13px;color:var(--t2);max-width:300px;line-height:1.65}
-
-/* ── ADMIN ── */
 .adm-wrap{padding:2rem;max-width:1100px}
 .adm-h{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:700;margin-bottom:4px}
-.adm-sub{font-size:13px;color:var(--t2);margin-bottom:2rem}
-.sec-h{font-size:10px;color:var(--t3);font-family:'Unbounded',sans-serif;letter-spacing:1px;margin:0 0 12px}
-.stu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(480px,1fr));gap:16px}
-.stu-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
-.stu-card-hd{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
-.stu-card-hd-left{display:flex;align-items:center;gap:10px}
-.stu-avatar{width:36px;height:36px;border-radius:10px;background:var(--pd);border:1px solid var(--pb);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;color:var(--purple)}
-.stu-name{font-size:15px;font-weight:700;margin-bottom:2px}
-.stu-prog-txt{font-size:11px;color:var(--t3)}
-.stu-card-actions{display:flex;gap:8px;align-items:center}
-.btn-open-vercel{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;color:var(--text);cursor:pointer;font-family:'Mulish',sans-serif;transition:all .15s;text-decoration:none}
-.btn-open-vercel:hover{border-color:var(--b2);background:var(--bg4)}
-.btn-open-vercel.active{background:var(--grd);border-color:var(--grb);color:var(--green)}
-.btn-open-vercel.no-url{opacity:.3;cursor:not-allowed;pointer-events:none}
-.stu-prog-bar{height:2px;background:var(--bg4)}
-.stu-prog-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--gold));transition:width .4s}
-.stu-body{padding:1rem 1.25rem;display:flex;flex-direction:column;gap:10px}
-.ex-row{display:flex;flex-direction:column;gap:5px}
-.ex-lbl{font-size:10px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:6px}
-.tag{font-size:9px;padding:2px 7px;border-radius:10px;font-weight:700;letter-spacing:.3px}
-.tag-from{background:var(--pd);color:var(--purple);border:1px solid var(--pb)}
-.tag-to{background:var(--gd);color:var(--gold);border:1px solid var(--gb)}
-.ex-val{font-size:12px;color:var(--text);background:var(--bg3);border:1px solid var(--border);border-radius:var(--rx);padding:7px 10px;word-break:break-all}
-.ex-val.empty{color:var(--t3);font-style:italic;font-size:11px}
-.ex-inp-row{display:flex;gap:6px}
-.ex-inp{flex:1;padding:7px 10px;border:1px solid var(--b2);border-radius:var(--rx);background:var(--bg);color:var(--text);font-size:12px;font-family:'Mulish',sans-serif;outline:none;transition:border .15s}
-.ex-inp:focus{border-color:var(--pb)}
-.ex-inp::placeholder{color:var(--t3)}
-.ex-save{padding:7px 14px;background:var(--purple);color:#fff;border:none;border-radius:var(--rx);font-size:11px;font-weight:700;cursor:pointer;font-family:'Mulish',sans-serif;white-space:nowrap;transition:background .12s}
-.ex-save:hover{background:#9a4fb5}
-.ex-save:disabled{opacity:.5;cursor:not-allowed}
-.ex-saved{font-size:11px;color:var(--green);margin-top:2px;display:none}
-.ex-edit{font-size:10px;color:var(--t3);cursor:pointer;padding:2px 8px;border:1px solid var(--border);border-radius:4px;background:var(--bg);white-space:nowrap;flex-shrink:0;transition:all .12s;font-family:'Mulish',sans-serif}
-.ex-edit:hover{color:var(--text);border-color:var(--b2)}
-.divider{height:1px;background:var(--border)}
-.ex-val-row{display:flex;align-items:center;gap:6px}
-.adm-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:2rem}
+.adm-sub{font-size:13px;color:var(--t2);margin-bottom:1.5rem}
+.adm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:2rem}
 .adm-stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:1rem 1.25rem}
 .adm-stat-n{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:700;color:var(--purple);margin-bottom:4px}
 .adm-stat-l{font-size:11px;color:var(--t3)}
-.adm-refresh{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;color:var(--t2);cursor:pointer;font-family:'Mulish',sans-serif;transition:all .15s;margin-bottom:1.5rem}
-.adm-refresh:hover{border-color:var(--b2);color:var(--text)}
-.spin{display:inline-block;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.connecting{display:flex;align-items:center;justify-content:center;min-height:200px;flex-direction:column;gap:12px}
-.connecting-txt{font-size:13px;color:var(--t2)}
-
-@media(max-width:720px){
-  .layout{grid-template-columns:1fr}
-  .sidebar{display:none}
-  .main,.adm-wrap{padding:1.25rem}
-  .stu-grid{grid-template-columns:1fr}
-  .adm-summary{grid-template-columns:repeat(2,1fr)}
-}
+.adm-refresh{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;color:var(--t2);cursor:pointer;font-family:'Mulish',sans-serif;margin-bottom:1.5rem}
+.sec-h{font-size:10px;color:var(--t3);font-family:'Unbounded',sans-serif;letter-spacing:1px;margin:0 0 12px}
+.stu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(460px,1fr));gap:16px}
+.stu-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.stu-card-hd{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.stu-avatar{width:36px;height:36px;border-radius:10px;background:var(--pd);border:1px solid var(--pb);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;color:var(--purple)}
+.stu-name{font-size:15px;font-weight:700;margin-bottom:2px}
+.stu-prog-txt{font-size:11px;color:var(--t3)}
+.stu-prog-bar{height:2px;background:var(--bg4)}
+.stu-prog-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--gold))}
+.stu-body{padding:1rem 1.25rem;display:flex;flex-direction:column;gap:10px}
+.ex-row{display:flex;flex-direction:column;gap:5px}
+.ex-lbl{font-size:10px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:6px}
+.tag{font-size:9px;padding:2px 7px;border-radius:10px;font-weight:700}
+.tag-from{background:var(--pd);color:var(--purple);border:1px solid var(--pb)}
+.tag-to{background:var(--gd);color:var(--gold);border:1px solid var(--gb)}
+.ex-val{font-size:12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rx);padding:7px 10px;word-break:break-all}
+.ex-val.empty{color:var(--t3);font-style:italic;font-size:11px}
+.ex-inp-row{display:flex;gap:6px}
+.ex-inp{flex:1;padding:7px 10px;border:1px solid var(--b2);border-radius:var(--rx);background:var(--bg);color:var(--text);font-size:12px;font-family:'Mulish',sans-serif;outline:none}
+.ex-save{padding:7px 14px;background:var(--purple);color:#fff;border:none;border-radius:var(--rx);font-size:11px;font-weight:700;cursor:pointer;font-family:'Mulish',sans-serif;white-space:nowrap}
+.ex-save:disabled{opacity:.5;cursor:not-allowed}
+.ex-edit{font-size:10px;color:var(--t3);cursor:pointer;padding:2px 8px;border:1px solid var(--border);border-radius:4px;background:var(--bg);font-family:'Mulish',sans-serif}
+.ex-val-row{display:flex;align-items:center;gap:6px}
+.divider{height:1px;background:var(--border)}
+.open-url{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Mulish',sans-serif;text-decoration:none}
+.open-url.has-url{background:var(--grd);border-color:var(--grb);color:var(--green)}
+.open-url.no-url{opacity:.3;pointer-events:none}
+.connecting{display:flex;align-items:center;justify-content:center;min-height:300px;flex-direction:column;gap:12px}
+.connecting span{font-size:13px;color:var(--t2)}
+@media(max-width:720px){.layout{grid-template-columns:1fr}.sidebar{display:none}.main,.adm-wrap{padding:1.25rem}.stu-grid{grid-template-columns:1fr}.adm-stats{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
-     SETUP SCREEN — первый запуск
-══════════════════════════════════════ -->
-<div id="pg-setup" class="hide">
-  <div class="setup-wrap">
-    <div class="setup-card">
-      <div class="setup-logo">Go<span>&</span>Study — Обучение</div>
-      <div class="setup-sub">Платформа использует Supabase для хранения прогресса. Нужно подключить один раз.</div>
-
-      <div class="setup-step">
-        <div class="setup-step-n">1</div>
-        <div class="setup-step-body">
-          <div class="setup-step-title">Создай Supabase проект</div>
-          <div class="setup-step-txt">Зайди на <a href="https://supabase.com" target="_blank" style="color:var(--purple)">supabase.com</a>, создай новый проект. Запомни пароль от БД — он понадобится.</div>
-        </div>
-      </div>
-
-      <div class="setup-step">
-        <div class="setup-step-n">2</div>
-        <div class="setup-step-body">
-          <div class="setup-step-title">Запусти SQL миграцию</div>
-          <div class="setup-step-txt">В Supabase → SQL Editor → вставь и выполни этот код:</div>
-          <div class="code-wrap">
-            <div class="code-top"><span class="code-lang">SQL</span><button class="code-copy" onclick="cpEl('setup-sql')">Копировать</button></div>
-            <div class="code-pre" id="setup-sql">-- Таблица прогресса студентов
-CREATE TABLE IF NOT EXISTS student_progress (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  student_login TEXT NOT NULL,
-  step_key TEXT NOT NULL,
-  completed BOOLEAN DEFAULT false,
-  completed_at TIMESTAMPTZ,
-  UNIQUE(student_login, step_key)
-);
-
--- Таблица данных (студент → Павел, Павел → студент)
-CREATE TABLE IF NOT EXISTS student_data (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  student_login TEXT NOT NULL,
-  field_key TEXT NOT NULL,
-  field_value TEXT NOT NULL,
-  direction TEXT NOT NULL CHECK (direction IN ('from_student', 'from_pavel')),
-  updated_at TIMESTAMPTZ DEFAULT NOW(),
-  UNIQUE(student_login, field_key, direction)
-);
-
--- RLS: отключаем (используем anon key — доступ через JS)
-ALTER TABLE student_progress DISABLE ROW LEVEL SECURITY;
-ALTER TABLE student_data DISABLE ROW LEVEL SECURITY;</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="setup-step">
-        <div class="setup-step-n">3</div>
-        <div class="setup-step-body">
-          <div class="setup-step-title">Вставь ключи из Supabase</div>
-          <div class="setup-step-txt">Settings → API → Project URL и anon public key.</div>
-        </div>
-      </div>
-
-      <div class="setup-divider"></div>
-      <label class="f-label">Supabase Project URL</label>
-      <input class="f-input" id="setup-url" placeholder="https://xxxxxxxxxxxx.supabase.co"/>
-      <label class="f-label">Supabase Anon Key</label>
-      <input class="f-input" id="setup-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."/>
-      <div class="note-box">⚡ Ключи сохранятся в localStorage этого браузера. Нужно настроить один раз на каждом устройстве.</div>
-      <button class="btn-primary" id="setup-btn" onclick="saveSetup()">Сохранить и продолжить →</button>
-      <div class="setup-err" id="setup-err"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════
-     LOGIN
-══════════════════════════════════════ -->
 <div id="pg-login" class="hide">
-  <div class="hdr"><div class="logo"><div class="logo-sq">🎓</div>Go<span>&</span>Study</div></div>
+  <div class="hdr">
+    <div class="logo"><div class="logo-sq">&#127979;</div>Go<span>&amp;</span>Study</div>
+  </div>
   <div class="login-wrap">
     <div class="login-card">
-      <div class="login-logo">Go<span>&</span>Study</div>
-      <div class="login-sub">Платформа обучения веб-разработке</div>
-      <label class="f-label">Логин</label>
-      <input class="f-input" id="li" placeholder="Логин" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()"/>
-      <label class="f-label">Пароль</label>
-      <input class="f-input" id="lp" type="password" placeholder="••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
-      <button class="btn-primary" id="login-btn" onclick="doLogin()">Войти</button>
+      <div class="login-logo">Go<span>&amp;</span>Study</div>
+      <div class="login-sub">&#1054;&#1073;&#1091;&#1095;&#1077;&#1085;&#1080;&#1077; &#1074;&#1077;&#1073;-&#1088;&#1072;&#1079;&#1088;&#1072;&#1073;&#1086;&#1090;&#1082;&#1077;</div>
+      <label class="f-label">&#1051;&#1086;&#1075;&#1080;&#1085;</label>
+      <input class="f-input" id="li" placeholder="&#1051;&#1086;&#1075;&#1080;&#1085;" autocomplete="username">
+      <label class="f-label">&#1055;&#1072;&#1088;&#1086;&#1083;&#1100;</label>
+      <input class="f-input" id="lp" type="password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" autocomplete="current-password">
+      <button class="btn-primary" id="login-btn" onclick="doLogin()">&#1042;&#1086;&#1081;&#1090;&#1080;</button>
       <div class="login-err" id="lerr"></div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     STUDENT
-══════════════════════════════════════ -->
 <div id="pg-student" class="hide">
   <div class="hdr">
-    <div class="logo"><div class="logo-sq">🎓</div>Go<span>&</span>Study</div>
+    <div class="logo"><div class="logo-sq">&#127979;</div>Go<span>&amp;</span>Study</div>
     <div class="hdr-right">
       <span class="hdr-user" id="stu-name-hdr"></span>
-      <button class="hdr-btn" onclick="doLogout()">Выйти</button>
+      <button class="hdr-btn" onclick="doLogout()">&#1042;&#1099;&#1081;&#1090;&#1080;</button>
     </div>
   </div>
   <div class="layout">
     <div class="sidebar">
-      <div style="padding:0 .75rem 8px"><div class="sb-label" style="padding:0 .5rem">Программа</div></div>
       <div class="sb-mods" id="sb-nav"></div>
       <div class="sb-foot">
-        <div class="sb-pl">Прогресс <span id="sb-pct">0%</span></div>
+        <div class="sb-pl">&#1055;&#1088;&#1086;&#1075;&#1088;&#1077;&#1089;&#1089; <span id="sb-pct">0%</span></div>
         <div class="sb-bar"><div class="sb-fill" id="sb-fill" style="width:0%"></div></div>
       </div>
     </div>
@@ -352,452 +211,150 @@ ALTER TABLE student_data DISABLE ROW LEVEL SECURITY;</div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     ADMIN
-══════════════════════════════════════ -->
 <div id="pg-admin" class="hide">
   <div class="hdr">
-    <div class="logo"><div class="logo-sq">🎓</div>Go<span>&</span>Study</div>
+    <div class="logo"><div class="logo-sq">&#127979;</div>Go<span>&amp;</span>Study</div>
     <div class="hdr-right">
-      <span class="hdr-user">Павел — куратор</span>
-      <button class="hdr-btn" onclick="doLogout()">Выйти</button>
+      <span class="hdr-user">&#1055;&#1072;&#1074;&#1077;&#1083; &mdash; &#1072;&#1076;&#1084;&#1080;&#1085;</span>
+      <button class="hdr-btn" onclick="doLogout()">&#1042;&#1099;&#1081;&#1090;&#1080;</button>
     </div>
   </div>
   <div class="adm-wrap" id="adm-main">
-    <div class="connecting"><div class="spin" style="font-size:20px">⟳</div><div class="connecting-txt">Загрузка...</div></div>
+    <div class="connecting"><span>&#1047;&#1072;&#1075;&#1088;&#1091;&#1079;&#1082;&#1072;...</span></div>
   </div>
 </div>
 
 <script>
-// ══════════════════════════════════════
-// CONFIG
-// ══════════════════════════════════════
-const USERS = {
-  nastya:  { pass: 'Nastya2024!',     role: 'student', name: 'Студент' },
-  lera:    { pass: 'Lera2024!',       role: 'student', name: 'Студент' },
-  egor:    { pass: 'Egor2024!',       role: 'student', name: 'Студент' },
-  kiril:   { pass: 'Kiril2024!',      role: 'student', name: 'Студент' },
-  evgeny:  { pass: 'Evgeny2024!',     role: 'student', name: 'Студент' },
-  pavel:   { pass: 'PavelAdmin2024!', role: 'admin',   name: 'Павел' }
+
+// ── CONFIG ──
+var SB_URL = 'https://ufhsmwsbwntxcebfbsgv.supabase.co';
+var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmaHNtd3Nid250eGNlYmZic2d2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwOTgwMzQsImV4cCI6MjA5MTY3NDAzNH0.mj1Ebia6SmHY4WdbhG-SLm6ZW-2i0eZCqneSHTYrv50';
+
+var USERS = {
+  nastya:  {pass:'Nastya2024!',  role:'student'},
+  lera:    {pass:'Lera2024!',    role:'student'},
+  egor:    {pass:'Egor2024!',    role:'student'},
+  kiril:   {pass:'Kiril2024!',   role:'student'},
+  evgeny:  {pass:'Evgeny2024!',  role:'student'},
+  pavel:   {pass:'PavelAdmin2024!', role:'admin'}
 };
-const STUDENTS = ['nastya', 'lera', 'egor', 'kiril', 'evgeny'];
-const STU_NAMES = { nastya: 'nastya', lera: 'lera', egor: 'egor', kiril: 'kiril', evgeny: 'evgeny' };
+var STUDENTS = ['nastya','lera','egor','kiril','evgeny'];
 
-const PAVEL_FIELDS = [
-  { key: 'github_repo_url',      label: 'SSH ссылка на репозиторий', placeholder: 'git@github.com:username/project-name.git' },
-  { key: 'supabase_project_url', label: 'Ссылка на Supabase проект', placeholder: 'https://supabase.com/dashboard/project/xxx' },
-  { key: 'vercel_project_url',   label: 'Ссылка на Vercel проект',   placeholder: 'https://vercel.com/team/project-name' },
-  { key: 'vercel_live_url',      label: 'Живой URL проекта',         placeholder: 'https://project-name.vercel.app' },
-  { key: 'first_task',           label: 'Первое задание',            placeholder: 'Описание задачи для студента...' },
+var PAVEL_FIELDS = [
+  {key:'github_repo_url',      label:'GitHub SSH ссылка',       ph:'git@github.com:user/repo.git'},
+  {key:'supabase_url',         label:'Supabase URL',            ph:'https://xxxx.supabase.co'},
+  {key:'supabase_anon',        label:'Supabase Anon Key',       ph:'eyJhbGci...'},
+  {key:'supabase_project_url', label:'Supabase проект (ссылка)',ph:'https://supabase.com/dashboard/project/xxx'},
+  {key:'vercel_project_url',   label:'Vercel проект (ссылка)',  ph:'https://vercel.com/team/project'},
+  {key:'vercel_live_url',      label:'Живой URL (Vercel)',       ph:'https://project.vercel.app'},
+  {key:'first_task',           label:'Первое задание',          ph:'Описание задачи...'}
 ];
-const STU_FIELDS = [
-  { key: 'github_username', label: 'GitHub username' },
-  { key: 'supabase_email',  label: 'Email Supabase' },
-  { key: 'vercel_email',    label: 'Email Vercel' },
+var STU_FIELDS = [
+  {key:'github_username', label:'GitHub username'},
+  {key:'supabase_email',  label:'Email Supabase'},
+  {key:'vercel_email',    label:'Email Vercel'}
 ];
 
-// ══════════════════════════════════════
-// SUPABASE CLIENT
-// ══════════════════════════════════════
-function getSB() {
+var CUR = '', CUR_MOD = 0, OPEN = {};
+var PROG = {}, FROM_STU = {}, FROM_PAV = {};
+
+// ── SUPABASE ──
+function sbHeaders() {
   return {
-    url: 'https://ufhsmwsbwntxcebfbsgv.supabase.co',
-    key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmaHNtd3Nid250eGNlYmZic2d2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwOTgwMzQsImV4cCI6MjA5MTY3NDAzNH0.mj1Ebia6SmHY4WdbhG-SLm6ZW-2i0eZCqneSHTYrv50'
-  };
-}
-
-async function sbRequest(path, method = 'GET', body = null) {
-  const sb = getSB();
-  if (!sb) throw new Error('Supabase не настроен');
-  const headers = {
-    'apikey': sb.key,
-    'Authorization': 'Bearer ' + sb.key,
+    'apikey': SB_KEY,
+    'Authorization': 'Bearer ' + SB_KEY,
     'Content-Type': 'application/json'
   };
-  if (method === 'POST') headers['Prefer'] = 'return=minimal,resolution=merge-duplicates';
-  const opts = { method, headers };
-  if (body) opts.body = JSON.stringify(body);
-  const res = await fetch(sb.url + '/rest/v1/' + path, opts);
-  if (!res.ok && res.status !== 204) {
-    const err = await res.text();
-    throw new Error('HTTP ' + res.status + ': ' + err);
-  }
-  const text = await res.text();
-  return text ? JSON.parse(text) : [];
 }
 
-// ── Прогресс ──
-async function loadProgress(login) {
-  const rows = await sbRequest(`student_progress?student_login=eq.${login}&select=step_key,completed`);
-  const map = {};
-  rows.forEach(r => { map[r.step_key] = r.completed; });
-  return map;
-}
-async function setProgress(login, stepKey, completed) {
-  const sb = getSB();
-  const body = { student_login: login, step_key: stepKey, completed, completed_at: completed ? new Date().toISOString() : null };
-  // Try PATCH first (update existing), if 0 rows then POST (insert)
-  const patchRes = await fetch(
-    sb.url + '/rest/v1/student_progress?student_login=eq.' + login + '&step_key=eq.' + encodeURIComponent(stepKey),
-    { method: 'PATCH', headers: { 'apikey': sb.key, 'Authorization': 'Bearer ' + sb.key, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, body: JSON.stringify({ completed, completed_at: body.completed_at }) }
-  );
-  if (!patchRes.ok) throw new Error('PATCH failed: ' + await patchRes.text());
-  const count = patchRes.headers.get('content-range');
-  if (count === '*/0' || count === null) {
-    const postRes = await fetch(sb.url + '/rest/v1/student_progress',
-      { method: 'POST', headers: { 'apikey': sb.key, 'Authorization': 'Bearer ' + sb.key, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, body: JSON.stringify(body) }
-    );
-    if (!postRes.ok) throw new Error('POST failed: ' + await postRes.text());
-  }
+async function sbGet(table, filter) {
+  var url = SB_URL + '/rest/v1/' + table + '?' + filter + '&select=*';
+  var res = await fetch(url, {method:'GET', headers: sbHeaders()});
+  if (!res.ok) throw new Error('GET ' + table + ' failed: ' + res.status);
+  return res.json();
 }
 
-// ── Данные ──
-async function loadData(login, direction) {
-  const rows = await sbRequest(`student_data?student_login=eq.${login}&direction=eq.${direction}&select=field_key,field_value`);
-  const map = {};
-  rows.forEach(r => { map[r.field_key] = r.field_value; });
-  return map;
-}
-async function saveDataField(login, fieldKey, value, direction) {
-  const sb = getSB();
-  const patchRes = await fetch(
-    sb.url + '/rest/v1/student_data?student_login=eq.' + login + '&field_key=eq.' + encodeURIComponent(fieldKey) + '&direction=eq.' + direction,
-    { method: 'PATCH', headers: { 'apikey': sb.key, 'Authorization': 'Bearer ' + sb.key, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, body: JSON.stringify({ field_value: value, updated_at: new Date().toISOString() }) }
-  );
-  if (!patchRes.ok) throw new Error('PATCH failed: ' + await patchRes.text());
-  const range = patchRes.headers.get('content-range');
-  if (range === '*/0' || range === null) {
-    const postRes = await fetch(sb.url + '/rest/v1/student_data',
-      { method: 'POST', headers: { 'apikey': sb.key, 'Authorization': 'Bearer ' + sb.key, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, body: JSON.stringify({ student_login: login, field_key: fieldKey, field_value: value, direction, updated_at: new Date().toISOString() }) }
-    );
-    if (!postRes.ok) throw new Error('POST failed: ' + await postRes.text());
-  }
-}
-async function deleteDataField(login, fieldKey, direction) {
-  await sbRequest(`student_data?student_login=eq.${login}&field_key=eq.${fieldKey}&direction=eq.${direction}`, 'DELETE');
-}
-
-// ── Все данные всех студентов для адмнки ──
-async function loadAllStudentsData() {
-  const [progressAll, dataAll] = await Promise.all([
-    sbRequest('student_progress?select=student_login,step_key,completed'),
-    sbRequest('student_data?select=student_login,field_key,field_value,direction')
-  ]);
-  const result = {};
-  STUDENTS.forEach(u => { result[u] = { progress: {}, from_student: {}, from_pavel: {} }; });
-  progressAll.forEach(r => {
-    if (result[r.student_login]) result[r.student_login].progress[r.step_key] = r.completed;
+async function sbPost(table, body) {
+  var res = await fetch(SB_URL + '/rest/v1/' + table, {
+    method: 'POST',
+    headers: Object.assign({}, sbHeaders(), {'Prefer': 'return=minimal'}),
+    body: JSON.stringify(body)
   });
-  dataAll.forEach(r => {
-    if (result[r.student_login] && result[r.student_login][r.direction] !== undefined)
-      result[r.student_login][r.direction][r.field_key] = r.field_value;
+  if (!res.ok) throw new Error('POST ' + table + ' failed: ' + res.status + ' ' + await res.text());
+}
+
+async function sbPatch(table, filter, body) {
+  var res = await fetch(SB_URL + '/rest/v1/' + table + '?' + filter, {
+    method: 'PATCH',
+    headers: Object.assign({}, sbHeaders(), {'Prefer': 'return=minimal'}),
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) throw new Error('PATCH ' + table + ' failed: ' + res.status + ' ' + await res.text());
+  return res;
+}
+
+async function sbDelete(table, filter) {
+  var res = await fetch(SB_URL + '/rest/v1/' + table + '?' + filter, {
+    method: 'DELETE',
+    headers: sbHeaders()
+  });
+  if (!res.ok) throw new Error('DELETE failed: ' + res.status);
+}
+
+async function upsertProgress(login, stepKey, completed) {
+  var rows = await sbGet('student_progress', 'student_login=eq.' + login + '&step_key=eq.' + encodeURIComponent(stepKey));
+  if (rows.length > 0) {
+    await sbPatch('student_progress', 'student_login=eq.' + login + '&step_key=eq.' + encodeURIComponent(stepKey),
+      {completed: completed, completed_at: completed ? new Date().toISOString() : null});
+  } else {
+    await sbPost('student_progress', {student_login: login, step_key: stepKey, completed: completed, completed_at: completed ? new Date().toISOString() : null});
+  }
+}
+
+async function upsertData(login, fieldKey, value, dir) {
+  var rows = await sbGet('student_data', 'student_login=eq.' + login + '&field_key=eq.' + encodeURIComponent(fieldKey) + '&direction=eq.' + dir);
+  if (rows.length > 0) {
+    await sbPatch('student_data', 'student_login=eq.' + login + '&field_key=eq.' + encodeURIComponent(fieldKey) + '&direction=eq.' + dir,
+      {field_value: value, updated_at: new Date().toISOString()});
+  } else {
+    await sbPost('student_data', {student_login: login, field_key: fieldKey, field_value: value, direction: dir, updated_at: new Date().toISOString()});
+  }
+}
+
+async function loadStudentData(login) {
+  var prog = await sbGet('student_progress', 'student_login=eq.' + login);
+  var data = await sbGet('student_data', 'student_login=eq.' + login);
+  PROG = {};
+  prog.forEach(function(r){ PROG[r.step_key] = r.completed; });
+  FROM_STU = {};
+  FROM_PAV = {};
+  data.forEach(function(r){
+    if (r.direction === 'from_student') FROM_STU[r.field_key] = r.field_value;
+    else FROM_PAV[r.field_key] = r.field_value;
+  });
+}
+
+async function loadAllData() {
+  var prog = await sbGet('student_progress', 'select=student_login,step_key,completed');
+  var data = await sbGet('student_data', 'select=student_login,field_key,field_value,direction');
+  var result = {};
+  STUDENTS.forEach(function(u){ result[u] = {prog:{}, fs:{}, fp:{}}; });
+  prog.forEach(function(r){ if(result[r.student_login]) result[r.student_login].prog[r.step_key] = r.completed; });
+  data.forEach(function(r){
+    if (!result[r.student_login]) return;
+    if (r.direction === 'from_student') result[r.student_login].fs[r.field_key] = r.field_value;
+    else result[r.student_login].fp[r.field_key] = r.field_value;
   });
   return result;
 }
 
-// ══════════════════════════════════════
-// STATE
-// ══════════════════════════════════════
-let CUR = '', CUR_MOD = 0, OPEN = {};
-let PROG = {}, FROM_STUDENT = {}, FROM_PAVEL = {};
-
-// ══════════════════════════════════════
-// MODULES
-// ══════════════════════════════════════
-const MODS = [
-  {
-    id:0, icon:'⚙️', title:'Инструменты', short:'Инструменты',
-    desc:'Устанавливаем всё что нужно для работы. Делается один раз на твоём компьютере — потом просто работаешь.',
-    steps:[
-      {
-        title:'Claude Pro — главный инструмент',
-        sub:'Купить подписку $20/мес на claude.ai',
-        txt:'Без Claude Pro не будет Claude Code — основного инструмента с которым ты будешь работать. Это первое что нужно сделать.',
-        link:{ url:'https://claude.ai', label:'claude.ai — Sign Up → выбери Pro план' },
-        info:'После оплаты у тебя появится доступ к Claude Code. Без подписки Pro он работает с жёсткими лимитами.',
-        note:'$20/мес — это инвестиция в скорость работы. Claude Code будет писать код вместе с тобой.'
-      },
-      {
-        title:'VS Code — редактор кода',
-        sub:'Скачать и установить расширения',
-        txt:'VS Code — здесь ты будешь писать весь код. Бесплатный, самый популярный редактор в мире.',
-        link:{ url:'https://code.visualstudio.com', label:'code.visualstudio.com — скачай' },
-        pills:['Prettier — Code formatter','ESLint','GitLens','Tailwind CSS IntelliSense','ES7+ React snippets'],
-        info:'Ctrl+Shift+X (Win) или Cmd+Shift+X (Mac) — открывает магазин расширений. Установи все пять.',
-        note:'Включи "Format on Save" в настройках — код будет форматироваться автоматически при сохранении.'
-      },
-      {
-        title:'Node.js',
-        sub:'Установить LTS версию',
-        txt:'Node.js нужен чтобы запускать JavaScript локально и устанавливать пакеты через npm.',
-        link:{ url:'https://nodejs.org', label:'nodejs.org — скачай LTS (не Current!)' },
-        cmd_mac:'node -v\n# должно показать v20.x.x или выше\nnpm -v\n# должно показать 10.x.x или выше',
-        cmd_win:'node -v\n# должно показать v20.x.x или выше\nnpm -v\n# должно показать 10.x.x или выше',
-        note:'Только LTS — стабильная версия для работы.'
-      },
-      {
-        title:'Git',
-        sub:'Установить и настроить имя/email',
-        txt:'Git следит за всеми изменениями в коде. Через него твой код попадает на GitHub и дальше на сервер.',
-        os:{
-          mac:'Git уже встроен в Mac. Проверь в терминале: git --version',
-          win:'Скачай и установи Git for Windows — оставь все настройки по умолчанию.'
-        },
-        link_win:{ url:'https://git-scm.com/download/win', label:'git-scm.com — скачай для Windows' },
-        cmd_both:'# Настрой своё имя и email (один раз):\ngit config --global user.name "Твоё Имя"\ngit config --global user.email "твой@email.com"\n\n# Проверь:\ngit config --global --list',
-        note:'Email должен совпадать с тем что используешь на GitHub.'
-      },
-      {
-        title:'Claude Pro + Claude Code',
-        sub:'Подписка $20/мес + установка CLI',
-        txt:'Claude Code — ИИ прямо в твоём терминале. Видит весь проект, пишет код, объясняет ошибки. Это главный инструмент работы.',
-        link:{ url:'https://claude.ai', label:'claude.ai — оформи подписку Pro' },
-        cmd_both:'# Установи Claude Code глобально:\nnpm install -g @anthropic-ai/claude-code\n\n# Проверь версию:\nclaude --version',
-        info:'При первом запуске команды claude откроется браузер — войди через свой аккаунт claude.ai.',
-        note:'Без подписки Pro Claude Code работает с жёсткими лимитами. Лучше сразу оформить.'
-      },
-      {
-        title:'Проверка — всё установлено',
-        sub:'Открой терминал VS Code и запусти три команды',
-        txt:'Открой VS Code → нажми Ctrl+` (Win) или Cmd+` (Mac) — это встроенный терминал. Выполни проверку:',
-        cmd_both:'node -v\ngit --version\nclaude --version\n\n# Все три команды должны показать версии.\n# Если хоть одна выдаёт ошибку — вернись к нужному шагу.',
-        note:'Этот терминал — твоё основное рабочее место. Не закрывай его во время работы.'
-      }
-    ]
-  },
-  {
-    id:1, icon:'🐙', title:'GitHub', short:'GitHub',
-    desc:'GitHub хранит твой код. Павел даёт тебе доступ к репозиторию проекта — ты клонируешь его себе и начинаешь работать.',
-    steps:[
-      {
-        title:'Создай аккаунт GitHub',
-        sub:'Регистрация + отправить username Павлу',
-        txt:'Зарегистрируйся на GitHub. Username будет виден везде — выбирай нормальный, например nastya-dev или своё имя латиницей.',
-        link:{ url:'https://github.com', label:'github.com — зарегистрируйся' },
-        studentInput:{ fields:[{ key:'github_username', label:'Твой GitHub username', placeholder:'например: nastya-dev' }] }
-      },
-      {
-        title:'Настрой SSH ключ',
-        sub:'Один раз — и больше никаких паролей',
-        txt:'SSH ключ — постоянный пропуск твоего компьютера на GitHub. Генерируется один раз.',
-        cmd_mac:'# Генерируй ключ:\nssh-keygen -t ed25519 -C "твой@email.com"\n# На все вопросы жми Enter\n\n# Скопируй публичный ключ:\ncat ~/.ssh/id_ed25519.pub',
-        cmd_win:'# Генерируй ключ в терминале VS Code:\nssh-keygen -t ed25519 -C "твой@email.com"\n# На все вопросы жми Enter\n\n# Скопируй публичный ключ:\ntype $env:USERPROFILE\\.ssh\\id_ed25519.pub',
-        os:{
-          mac:'Скопированный ключ добавь на GitHub:\nSettings → SSH and GPG keys → New SSH key → вставь → Save',
-          win:'Скопированный ключ добавь на GitHub:\nSettings → SSH and GPG keys → New SSH key → вставь → Save'
-        },
-        note:'После этого git push/pull работают без пароля навсегда на этом компьютере.'
-      },
-      {
-        title:'Получи доступ к репозиторию',
-        sub:'Павел добавит тебя — жди инвайт на email',
-        txt:'После того как отправишь username — Павел добавит тебя в репозиторий проекта. Прими приглашение в письме.',
-        pavelData:{ fields:[{ key:'github_repo_url', label:'SSH ссылка на репозиторий', placeholder:'git@github.com:username/project-name.git' }] }
-      },
-      {
-        title:'Создай папку проекта и клонируй репо',
-        sub:'mkdir → git clone → code .',
-        txt:'Когда получишь ссылку — создай рабочую папку через терминал и клонируй репозиторий. Это и есть твой проект.',
-        cmd_both:'# Создай папку для проектов и перейди в неё:\ncd ~\nmkdir projects\ncd projects\n\n# Клонируй репозиторий (git сам создаст папку проекта):\ngit clone [ссылка_от_Павла]\n\n# git clone создал папку автоматически — зайди в неё:\n# (название папки = название репозитория)\ncd [название_папки]\n\n# Открой проект в VS Code:\ncode .',
-        info:'git clone автоматически создаёт папку с именем репозитория и скачивает туда весь код. Отдельно mkdir для проекта не нужен.',
-        note:'~/projects/[название] — это твой проект. Всегда работай из этой папки.'
-      }
-    ]
-  },
-  {
-    id:2, icon:'🗄️', title:'Supabase', short:'Supabase',
-    desc:'Supabase — база данных проекта в облаке. Павел даёт тебе доступ к своему проекту — ты получаешь ключи и подключаешься.',
-    steps:[
-      {
-        title:'Создай аккаунт Supabase',
-        sub:'Регистрация через GitHub + email Павлу',
-        txt:'Зарегистрируйся через GitHub — это быстрее. Потом отправь email от аккаунта Павлу.',
-        link:{ url:'https://supabase.com', label:'supabase.com — Sign Up with GitHub' },
-        studentInput:{ fields:[{ key:'supabase_email', label:'Email аккаунта Supabase', placeholder:'твой@email.com' }] }
-      },
-      {
-        title:'Получи доступ к проекту',
-        sub:'Павел добавит тебя — прими инвайт',
-        txt:'После того как пришлёшь email — Павел добавит тебя в Supabase проект. Прими приглашение в письме.',
-        pavelData:{ fields:[{ key:'supabase_project_url', label:'Ссылка на Supabase проект', placeholder:'https://supabase.com/dashboard/project/xxx' }] }
-      },
-      {
-        title:'Получи ключи и создай .env.local',
-        sub:'Settings → API → два ключа в файл',
-        txt:'В Supabase проекте зайди в Settings → API. Скопируй Project URL и anon public key. Создай файл .env.local в корне проекта:',
-        cmd_both:'# В терминале VS Code, находясь в папке проекта:\n# (Mac/Linux)\ntouch .env.local\n\n# (Windows)\nni .env.local\n\n# Открой файл и вставь свои ключи:\nNEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co\nNEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGci...',
-        info:'Project URL и anon public — оба нужны. Service role key НЕ копируй никуда — он секретный.',
-        note:'.env.local прописан в .gitignore — он никогда не попадёт на GitHub. Это правильно и нужно.'
-      },
-      {
-        title:'Изучи интерфейс Supabase',
-        sub:'Table Editor, SQL Editor — здесь живут данные',
-        txt:'Потрать 10 минут и посмотри что где. Это база данных твоего проекта.',
-        pills:['Table Editor — смотреть и редактировать записи','SQL Editor — писать SQL запросы','Authentication — пользователи системы','Settings → API — ключи подключения'],
-        cmd_both:"-- SQL Editor (Ctrl+Enter чтобы выполнить):\nSELECT table_name\nFROM information_schema.tables\nWHERE table_schema = 'public';\n\n-- Должен увидеть таблицы проекта",
-        note:'Большинство времени будешь работать в Table Editor (смотреть данные) и SQL Editor (отлаживать запросы).'
-      }
-    ]
-  },
-  {
-    id:3, icon:'⚡', title:'Next.js', short:'Next.js',
-    desc:'Next.js — фреймворк на котором написан проект. Устанавливаем зависимости и запускаем локально.',
-    steps:[
-      {
-        title:'Установи зависимости',
-        sub:'npm install в папке проекта',
-        txt:'В проекте есть файл package.json со списком всех библиотек. npm install скачает их все.',
-        cmd_both:'# Убедись что ты в папке проекта:\npwd\n# должно показать ~/projects/[название]\n\n# Установи зависимости:\nnpm install\n\n# Займёт 1-2 минуты. В конце:\n# added XXX packages in Xs',
-        note:'Папка node_modules не попадает на GitHub — она каждый раз создаётся заново через npm install.'
-      },
-      {
-        title:'Запусти проект локально',
-        sub:'npm run dev → localhost:3000',
-        txt:'Dev-сервер запустит проект на твоём компьютере. Открой браузер и посмотри как выглядит.',
-        cmd_both:'npm run dev\n\n# Должно появиться:\n# ▲ Next.js 14.x.x\n# - Local: http://localhost:3000\n# - Ready in XXXms',
-        info:'Открой браузер → http://localhost:3000 — это живой проект на твоём компьютере.',
-        note:'Если ошибка про переменные окружения — проверь .env.local (шаг 3 Supabase).'
-      },
-      {
-        title:'Разберись со структурой проекта',
-        sub:'Где что лежит — важно знать',
-        txt:'Открой проект в VS Code и посмотри на папки. Спроси Claude Code если что-то непонятно.',
-        pills:['app/ — все страницы и API маршруты','components/ — переиспользуемые компоненты','lib/ — подключение к Supabase и утилиты','public/ — картинки и статичные файлы','package.json — список всех библиотек','.env.local — секретные ключи (только у тебя)'],
-        note:'app/page.tsx — это главная страница. Именно её ты видишь на localhost:3000.'
-      }
-    ]
-  },
-  {
-    id:4, icon:'▲', title:'Vercel', short:'Vercel',
-    desc:'Vercel — хостинг. Каждый push на GitHub автоматически деплоит новую версию проекта в интернет.',
-    steps:[
-      {
-        title:'Создай аккаунт Vercel',
-        sub:'Sign up через GitHub + email Павлу',
-        txt:'Регистрируйся через GitHub — Vercel сразу видит твои репозитории.',
-        link:{ url:'https://vercel.com', label:'vercel.com → Sign Up → Continue with GitHub' },
-        studentInput:{ fields:[{ key:'vercel_email', label:'Email аккаунта Vercel', placeholder:'твой@email.com' }] },
-        info:'Бесплатный план Vercel позволяет деплоить неограниченное количество проектов.'
-      },
-      {
-        title:'Получи доступ к проекту на Vercel',
-        sub:'Павел добавит тебя — прими инвайт',
-        txt:'После того как пришлёшь email — Павел добавит тебя в Vercel проект. Прими приглашение в письме. Ниже появятся ссылки.',
-        pavelData:{ fields:[
-          { key:'vercel_project_url', label:'Ссылка на Vercel проект', placeholder:'https://vercel.com/team/project-name' },
-          { key:'vercel_live_url', label:'Живой URL твоего проекта', placeholder:'https://project-name.vercel.app' }
-        ]}
-      },
-      {
-        title:'Добавь переменные окружения в Vercel',
-        sub:'Settings → Environment Variables',
-        txt:'На сервере нет твоего .env.local — нужно добавить те же ключи Supabase в настройках Vercel.',
-        cmd_both:'# В Vercel проекте:\n# Settings → Environment Variables → Add New\n\n# Добавь две переменные:\n# Name: NEXT_PUBLIC_SUPABASE_URL\n# Value: [твой Supabase URL]\n\n# Name: NEXT_PUBLIC_SUPABASE_ANON_KEY\n# Value: [твой Anon Key]\n\n# После добавления нажми Deployments → Redeploy',
-        note:'Без этого проект задеплоится но не сможет подключиться к базе данных.'
-      },
-      {
-        title:'Скачай index.html и сделай первый push',
-        sub:'Положи файл в проект → push → Vercel задеплоит',
-        txt:'Скачай файл ниже — это стартовая страница твоего проекта. Положи его в папку public/ и запушь.',
-        download:true,
-        cmd_both:'# Скопируй скачанный index.html в папку public/ проекта\n# Потом в терминале:\n\ngit add .\ngit commit -m "feat: add welcome page"\ngit push origin main\n\n# Vercel автоматически задеплоит за ~30 секунд',
-        note:'После push зайди на vercel.com/dashboard — увидишь что деплой запустился.'
-      },
-      {
-        title:'Открой свой URL 🎉',
-        sub:'Вводи адрес в браузер — это твой проект',
-        txt:'Возьми живой URL который прислал Павел (шаг 2) и открой в браузере. Это твой проект — он живёт в интернете и доступен всему миру.',
-        info:'Первый этап пройден — рабочее пространство настроено полностью. Инструменты установлены, код на GitHub, проект деплоится автоматически, база данных подключена.',
-        note:'Следующий модуль — Claude Code. Там научишься работать с ИИ и получишь первое задание.'
-      }
-    ]
-  },
-  {
-    id:5, icon:'🤖', title:'Claude Code', short:'Claude Code',
-    desc:'Claude Code — ИИ прямо в терминале. Видит весь проект, пишет код, исправляет ошибки. Это главный инструмент работы.',
-    steps:[
-      {
-        title:'Как запускать',
-        sub:'Всегда из папки проекта',
-        txt:'Запускай claude только когда находишься в папке проекта — тогда он видит все файлы и понимает контекст.',
-        cmd_both:'# Зайди в папку проекта:\ncd ~/projects/[название]\n\n# Запусти:\nclaude',
-        note:'Никогда не запускай claude из домашней папки ~ — он не знает о твоём проекте и даёт общие бесполезные ответы.'
-      },
-      {
-        title:'Основные команды',
-        sub:'/help, /clear, /compact, /cost',
-        txt:'Команды начинаются с /. Самые важные:',
-        cmd_both:'/help      # список всех команд\n/clear     # очистить экран\n/compact   # сжать историю (если стало медленно)\n/cost      # сколько токенов потрачено\n/exit      # выйти\n\nCtrl+C     # остановить текущее действие\nCtrl+D     # выйти из Claude Code'
-      },
-      {
-        title:'Как правильно ставить задачи',
-        sub:'Конкретно + контекст = хороший результат',
-        txt:'Качество ответа напрямую зависит от того как ты описываешь задачу:',
-        os:{
-          mac:'❌  Плохо:\n"сделай страницу"\n\n✅  Хорошо:\n"создай страницу /clients которая показывает список клиентов из таблицы clients в Supabase. Каждая запись — карточка с полями: имя, email, дата создания. Добавь кнопку удалить."\n\n──────────────────\n\n❌  Плохо:\n"не работает"\n\n✅  Хорошо:\n"при открытии /clients ошибка:\nTypeError: Cannot read properties of undefined (reading \'map\')\nat ClientList (app/clients/page.tsx:24)\nВот код: [вставь код]"',
-          win:'❌  Плохо:\n"сделай страницу"\n\n✅  Хорошо:\n"создай страницу /clients которая показывает список клиентов из таблицы clients в Supabase. Каждая запись — карточка с полями: имя, email, дата создания. Добавь кнопку удалить."\n\n──────────────────\n\n❌  Плохо:\n"не работает"\n\n✅  Хорошо:\n"при открытии /clients ошибка:\nTypeError: Cannot read properties of undefined (reading \'map\')\nat ClientList (app/clients/page.tsx:24)\nВот код: [вставь код]"'
-        },
-        note:'Не бойся писать много деталей — чем точнее, тем лучше результат.'
-      },
-      {
-        title:'Как Claude Code работает с файлами',
-        sub:'Читает, пишет, редактирует — сам',
-        txt:'Не нужно копировать код руками. Claude Code сам открывает нужные файлы и вносит изменения.',
-        cmd_both:'"прочитай файл app/clients/page.tsx и объясни что он делает"\n\n"добавь поле телефон в компонент ClientCard"\n\n"найди все места где используется supabase клиент"\n\n"посмотри на ошибку в терминале и исправь"',
-        info:'Каждое изменение файла показывается тебе перед применением. y — принять, n — отклонить.',
-        note:'Если что-то пошло не так — git позволяет откатить любые изменения. Не бойся экспериментировать.'
-      },
-      {
-        title:'Первое задание от Павла',
-        sub:'Получи задачу и приступай',
-        txt:'Рабочее пространство готово. Павел выдаст первое реальное задание по проекту.',
-        pavelData:{ fields:[{ key:'first_task', label:'Первое задание', placeholder:'Описание задачи появится здесь...' }] },
-        note:'Используй Claude Code. Если застрял — опиши проблему максимально подробно, приложи код и ошибку.'
-      }
-    ]
-  },
-  {
-    id:6, icon:'🚀', title:'Мой проект', short:'Проект',
-    desc:'Твоё индивидуальное задание от Павла',
-    locked:true, steps:[]
-  }
-];
-
-// ══════════════════════════════════════
-// SETUP
-// ══════════════════════════════════════
-async function saveSetup() {
-  const url = document.getElementById('setup-url').value.trim().replace(/\/$/, '');
-  const key = document.getElementById('setup-key').value.trim();
-  const err = document.getElementById('setup-err');
-  const btn = document.getElementById('setup-btn');
-  if (!url || !key) { err.textContent = 'Заполни оба поля'; err.style.display = 'block'; return; }
-  btn.disabled = true; btn.textContent = 'Проверяем...';
-  try {
-    const res = await fetch(url + '/rest/v1/student_progress?limit=1', {
-      headers: { 'apikey': key, 'Authorization': 'Bearer ' + key }
-    });
-    if (!res.ok) throw new Error('Ошибка ' + res.status + '. Проверь ключи.');
-    localStorage.setItem('sb_url', url);
-    localStorage.setItem('sb_key', key);
-    err.style.display = 'none';
-    showPage('pg-login');
-  } catch(e) {
-    err.textContent = e.message || 'Не удалось подключиться к Supabase';
-    err.style.display = 'block';
-  }
-  btn.disabled = false; btn.textContent = 'Сохранить и продолжить →';
-}
-
-// ══════════════════════════════════════
-// AUTH
-// ══════════════════════════════════════
+// ── AUTH ──
 async function doLogin() {
-  const login = document.getElementById('li').value.trim().toLowerCase();
-  const pass = document.getElementById('lp').value;
-  const u = USERS[login];
-  const err = document.getElementById('lerr');
-  const btn = document.getElementById('login-btn');
+  var login = document.getElementById('li').value.trim().toLowerCase();
+  var pass  = document.getElementById('lp').value;
+  var u = USERS[login];
+  var err = document.getElementById('lerr');
+  var btn = document.getElementById('login-btn');
   if (!u || u.pass !== pass) { err.textContent = 'Неверный логин или пароль'; err.style.display = 'block'; return; }
   err.style.display = 'none';
   btn.disabled = true; btn.textContent = 'Входим...';
@@ -807,16 +364,14 @@ async function doLogin() {
       showPage('pg-admin');
       await renderAdmin();
     } else {
-      PROG = await loadProgress(login);
-      FROM_STUDENT = await loadData(login, 'from_student');
-      FROM_PAVEL = await loadData(login, 'from_pavel');
+      await loadStudentData(login);
       showPage('pg-student');
-      document.getElementById('stu-name-hdr').textContent = u.name;
+      document.getElementById('stu-name-hdr').textContent = login;
       renderSidebar();
       renderMain();
     }
   } catch(e) {
-    err.textContent = 'Ошибка подключения: ' + e.message;
+    err.textContent = 'Ошибка: ' + e.message;
     err.style.display = 'block';
     CUR = '';
   }
@@ -825,358 +380,426 @@ async function doLogin() {
 
 function doLogout() {
   CUR = ''; CUR_MOD = 0; OPEN = {};
-  PROG = {}; FROM_STUDENT = {}; FROM_PAVEL = {};
+  PROG = {}; FROM_STU = {}; FROM_PAV = {};
   showPage('pg-login');
   document.getElementById('li').value = '';
   document.getElementById('lp').value = '';
 }
 
 function showPage(id) {
-  ['pg-login','pg-student','pg-admin'].forEach(p => document.getElementById(p).classList.add('hide'));
+  ['pg-login','pg-student','pg-admin'].forEach(function(p){ document.getElementById(p).classList.add('hide'); });
   document.getElementById(id).classList.remove('hide');
 }
 
-// ══════════════════════════════════════
-// SIDEBAR
-// ══════════════════════════════════════
-function totalSteps() { return MODS.filter(m => !m.locked).reduce((a, m) => a + m.steps.length, 0); }
-function doneCount() { return Object.values(PROG).filter(Boolean).length; }
-function modDone(i) { const m = MODS[i]; return m.steps.length > 0 && m.steps.every((_, si) => PROG[i + '-' + si]); }
-function modProgCount(i) { return MODS[i].steps.filter((_, si) => PROG[i + '-' + si]).length; }
+// ── MODULES DATA ──
+var MODS = [
+  {icon:'⚙️', title:'Инструменты', desc:'Устанавливаем всё что нужно. Делается один раз.', steps:[
+    {title:'Claude Pro', sub:'Купить подписку $20/мес', txt:'Без Claude Pro не будет Claude Code — главного инструмента работы. Это первое что нужно сделать.', link:'https://claude.ai', linkLabel:'claude.ai — купить Pro', info:'После оплаты появится доступ к Claude Code. Без Pro работает с жёсткими лимитами.'},
+    {title:'VS Code', sub:'Скачать + установить расширения', txt:'VS Code — здесь будешь писать весь код. Бесплатный, самый популярный редактор.', link:'https://code.visualstudio.com', linkLabel:'code.visualstudio.com', pills:['Prettier — Code formatter','ESLint','GitLens','Tailwind CSS IntelliSense','ES7+ React snippets'], info:'Ctrl+Shift+X (Win) / Cmd+Shift+X (Mac) — открывает магазин расширений.', note:'Включи Format on Save в настройках.'},
+    {title:'Node.js', sub:'Установить LTS версию', txt:'Node.js нужен чтобы запускать JavaScript и устанавливать пакеты через npm.', link:'https://nodejs.org', linkLabel:'nodejs.org — скачай LTS', cmdBoth:'node -v\n# v20.x.x или выше\nnpm -v\n# 10.x.x или выше', note:'Только LTS — не Current.'},
+    {title:'Git', sub:'Установить и настроить', txt:'Git следит за изменениями в коде. Через него код попадает на GitHub и на сервер.', cmdMac:'# Git уже в Mac, проверь:\ngit --version\n\n# Настрой имя и email:\ngit config --global user.name "Твоё Имя"\ngit config --global user.email "твой@email.com"', cmdWin:'# Скачай Git for Windows, потом:\ngit config --global user.name "Твоё Имя"\ngit config --global user.email "твой@email.com"', linkWin:'https://git-scm.com/download/win', linkWinLabel:'git-scm.com — скачай для Windows', note:'Email должен совпадать с GitHub аккаунтом.'},
+    {title:'Claude Code', sub:'Установить CLI', txt:'Claude Code — ИИ прямо в терминале. Видит весь проект, пишет код, исправляет ошибки.', cmdBoth:'npm install -g @anthropic-ai/claude-code\nclaude --version', info:'При первом запуске claude откроется браузер — войди через аккаунт claude.ai.'},
+    {title:'Проверка', sub:'Все три команды показывают версии', txt:'Открой VS Code, нажми Ctrl+` (Win) или Cmd+` (Mac) — встроенный терминал. Запусти:', cmdBoth:'node -v\ngit --version\nclaude --version\n# Все три должны показать версии', note:'Этот терминал — основное рабочее место.'}
+  ]},
+  {icon:'🐙', title:'GitHub', desc:'GitHub хранит твой код. Павел даёт доступ к репозиторию проекта.', steps:[
+    {title:'Создай аккаунт GitHub', sub:'Регистрация + username Павлу', txt:'Зарегистрируйся. Username будет виден везде — выбирай нормальный, например nastya-dev.', link:'https://github.com', linkLabel:'github.com', stuInput:[{key:'github_username', label:'Твой GitHub username', ph:'nastya-dev'}]},
+    {title:'SSH ключ', sub:'Один раз — и без паролей навсегда', txt:'SSH ключ — постоянный пропуск твоего компьютера на GitHub.', cmdMac:'ssh-keygen -t ed25519 -C "твой@email.com"\n# Enter на все вопросы\ncat ~/.ssh/id_ed25519.pub\n# Скопируй вывод\n\n# Добавь на GitHub:\n# Settings → SSH keys → New SSH key → вставь → Save', cmdWin:'ssh-keygen -t ed25519 -C "твой@email.com"\n# Enter на все вопросы\ntype $env:USERPROFILE\\.ssh\\id_ed25519.pub\n# Скопируй вывод\n\n# Добавь на GitHub:\n# Settings → SSH keys → New SSH key → вставь → Save', note:'После этого git push/pull без пароля навсегда.'},
+    {title:'Получи доступ к репозиторию', sub:'Павел добавит тебя — жди инвайт', txt:'После того как отправишь username — Павел добавит тебя в репо. Прими инвайт на email.', pavData:[{key:'github_repo_url', label:'SSH ссылка на репозиторий', ph:'git@github.com:user/repo.git'}]},
+    {title:'Клонируй репозиторий', sub:'mkdir → git clone → code .', txt:'Когда получишь ссылку — создай рабочую папку и клонируй репо. git clone сам создаст папку проекта.', cmdBoth:'cd ~\nmkdir projects\ncd projects\n\n# Клонируй (вставь ссылку от Павла):\ngit clone [ссылка_от_Павла]\n\n# Зайди в папку проекта:\ncd [название_папки]\n\n# Открой в VS Code:\ncode .', info:'git clone автоматически создаёт папку с именем репозитория.', note:'~/projects/[название] — твой проект. Всегда работай отсюда.'}
+  ]},
+  {icon:'🗄️', title:'Supabase', desc:'Supabase — база данных проекта. Павел даёт тебе доступ к своему проекту.', steps:[
+    {title:'Создай аккаунт Supabase', sub:'Через GitHub + email Павлу', txt:'Зарегистрируйся через GitHub. Отправь email аккаунта Павлу.', link:'https://supabase.com', linkLabel:'supabase.com — Sign Up with GitHub', stuInput:[{key:'supabase_email', label:'Email аккаунта Supabase', ph:'твой@email.com'}]},
+    {title:'Получи доступ к проекту', sub:'Прими инвайт от Павла', txt:'Павел добавит тебя в проект. Прими инвайт в письме.', pavData:[{key:'supabase_project_url', label:'Ссылка на Supabase проект', ph:'https://supabase.com/dashboard/project/xxx'}]},
+    {title:'Получи ключи → .env.local', sub:'Settings → API → два ключа в файл', txt:'В Supabase зайди Settings → API. Скопируй Project URL и anon public key. Создай .env.local в корне проекта:', cmdBoth:'# В терминале VS Code (в папке проекта):\n# Mac: touch .env.local\n# Windows: ni .env.local\n\n# Вставь в файл:\nNEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co\nNEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGci...', info:'Project URL и anon public — оба нужны. Service role key НЕ копируй.', note:'.env.local в .gitignore — никогда не попадёт на GitHub.'},
+    {title:'Изучи интерфейс', sub:'Table Editor, SQL Editor', txt:'Потрать 10 минут — посмотри что где.', pills:['Table Editor — смотреть записи','SQL Editor — писать запросы','Authentication — пользователи','Settings → API — ключи']}
+  ]},
+  {icon:'⚡', title:'Next.js', desc:'Next.js — фреймворк на котором написан проект. Запускаем локально.', steps:[
+    {title:'npm install', sub:'Установить зависимости', txt:'В папке проекта выполни — установит все библиотеки из package.json.', cmdBoth:'cd ~/projects/[название]\nnpm install\n# added XXX packages in Xs', note:'node_modules не идёт на GitHub — создаётся заново через npm install.'},
+    {title:'npm run dev', sub:'Запустить локально → localhost:3000', txt:'Запусти dev-сервер и открой браузер.', cmdBoth:'npm run dev\n# ▲ Next.js 14.x.x\n# Local: http://localhost:3000', info:'http://localhost:3000 — живой проект на твоём компьютере.', note:'Если ошибка про переменные — проверь .env.local.'},
+    {title:'Структура проекта', sub:'Где что лежит', txt:'Открой проект в VS Code и посмотри папки.', pills:['app/ — страницы и API','components/ — компоненты','lib/ — Supabase и утилиты','public/ — картинки','.env.local — ключи (только у тебя)']}
+  ]},
+  {icon:'▲', title:'Vercel', desc:'Vercel — хостинг. Каждый push на GitHub = автодеплой.', steps:[
+    {title:'Создай аккаунт Vercel', sub:'Через GitHub + email Павлу', txt:'Регистрируйся через GitHub.', link:'https://vercel.com', linkLabel:'vercel.com → Sign Up → Continue with GitHub', stuInput:[{key:'vercel_email', label:'Email аккаунта Vercel', ph:'твой@email.com'}]},
+    {title:'Получи доступ к проекту', sub:'Павел добавит — прими инвайт', txt:'Павел добавит тебя в Vercel проект. Прими инвайт. Ниже появятся ссылки.', pavData:[{key:'vercel_project_url', label:'Vercel проект', ph:'https://vercel.com/team/project'},{key:'vercel_live_url', label:'Живой URL', ph:'https://project.vercel.app'}]},
+    {title:'Добавь переменные окружения', sub:'Settings → Environment Variables', txt:'На сервере нет твоего .env.local — добавь те же ключи в Vercel.', cmdBoth:'# Vercel проект → Settings → Environment Variables\n# Добавь:\nNEXT_PUBLIC_SUPABASE_URL = [твой URL]\nNEXT_PUBLIC_SUPABASE_ANON_KEY = [твой ключ]\n\n# После → Deployments → Redeploy', note:'Без этого проект не подключится к базе данных.'},
+    {title:'Скачай index.html и сделай push', sub:'Положи в public/ → push → деплой', txt:'Скачай файл ниже. Положи в папку public/ проекта и запушь.', download:true, cmdBoth:'git add .\ngit commit -m "feat: add welcome page"\ngit push origin main\n# Vercel задеплоит за ~30 секунд'},
+    {title:'Открой свой URL', sub:'Введи адрес — это твой проект', txt:'Возьми живой URL от Павла (шаг 2) и открой в браузере. Твой проект живёт в интернете.', info:'Первый этап пройден — рабочее пространство настроено. Следующий модуль — Claude Code.'}
+  ]},
+  {icon:'🤖', title:'Claude Code', desc:'Claude Code — ИИ в терминале. Пишет код, исправляет ошибки.', steps:[
+    {title:'Как запускать', sub:'Всегда из папки проекта', txt:'Запускай claude только из папки проекта — иначе не видит контекст.', cmdBoth:'cd ~/projects/[название]\nclaude', note:'Никогда не запускай из домашней папки ~.'},
+    {title:'Основные команды', sub:'/help /clear /compact /cost', cmdBoth:'/help      # список команд\n/clear     # очистить экран\n/compact   # сжать историю\n/cost      # токены\n/exit      # выйти\n\nCtrl+C     # остановить\nCtrl+D     # выйти'},
+    {title:'Как ставить задачи', sub:'Конкретно + контекст = результат', txt:'Качество ответа = качество задачи.', cmdBoth:'# Плохо:\n"сделай страницу"\n\n# Хорошо:\n"создай страницу /clients показывающую список\nклиентов из таблицы clients в Supabase.\nКаждая запись — карточка: имя, email, дата."\n\n# Плохо:\n"не работает"\n\n# Хорошо:\n"ошибка TypeError: Cannot read properties\nof undefined (reading map)\nat ClientList app/clients/page.tsx:24\nВот код: [вставь код]"', note:'Не бойся писать много деталей.'},
+    {title:'Работа с файлами', txt:'Claude Code сам читает и редактирует файлы.', cmdBoth:'"прочитай app/clients/page.tsx и объясни"\n"добавь поле телефон в ClientCard"\n"найди все места где используется supabase"', info:'Каждое изменение показывается перед применением. y — принять, n — отклонить.'},
+    {title:'Первое задание от Павла', sub:'Получи задачу и приступай', txt:'Рабочее пространство готово. Павел выдаст первое реальное задание.', pavData:[{key:'first_task', label:'Первое задание', ph:'Описание задачи появится здесь...'}]}
+  ]},
+  {icon:'🚀', title:'Мой проект', desc:'Твоё индивидуальное задание', locked:true, steps:[]}
+];
+
+// ── SIDEBAR ──
+function totalSteps() { return MODS.filter(function(m){return !m.locked;}).reduce(function(a,m){return a+m.steps.length;},0); }
+function doneCount()  { return Object.values(PROG).filter(Boolean).length; }
+function modDone(i)   { var m=MODS[i]; return m.steps.length>0 && m.steps.every(function(_,si){return PROG[i+'-'+si];}); }
+function modProgN(i)  { return MODS[i].steps.filter(function(_,si){return PROG[i+'-'+si];}).length; }
 
 function renderSidebar() {
-  let html = '';
-  MODS.forEach((m, i) => {
-    const lk = m.locked, done = modDone(i), cur = CUR_MOD === i, p = modProgCount(i);
-    const ic = done ? 'done' : cur ? 'cur' : '';
-    const st = lk ? 'Заблокировано' : done ? 'Выполнено ✓' : cur ? `${p}/${m.steps.length} шагов` : m.steps.length ? `${m.steps.length} шагов` : '';
-    const sc = done ? 'done' : cur ? 'cur' : '';
-    html += `<div class="mb${cur?' on':''}${lk?' lk':''}" onclick="${lk?'':('goMod('+i+')')}">
-      <div class="mb-icon ${ic}">${done?'✓':m.icon}<\/div>
-      <div class="mb-meta"><div class="mb-name">${m.title}<\/div><div class="mb-sub ${sc}">${st}<\/div><\/div>
-      ${lk?'<span style="font-size:11px;color:var(--t3)">🔒<\/span>':''}
-    <\/div>`;
+  var html = '';
+  MODS.forEach(function(m, i) {
+    var lk=m.locked, done=modDone(i), cur=CUR_MOD===i, p=modProgN(i);
+    var ic = done?'done':cur?'cur':'';
+    var st = lk?'Заблокировано':done?'Выполнено ✓':cur?(p+'/'+m.steps.length+' шагов'):(m.steps.length?m.steps.length+' шагов':'');
+    var sc = done?'done':cur?'cur':'';
+    var iconTxt = done?'✓':m.icon;
+    var onclick = lk?'':('goMod('+i+')');
+    html += '<div class="mb'+(cur?' on':'')+(lk?' lk':'')+'"'+(onclick?' onclick="'+onclick+'"':'')+' style="cursor:'+(lk?'not-allowed':'pointer')+'">';
+    html += '<div class="mb-icon '+ic+'">'+iconTxt+'</div>';
+    html += '<div class="mb-meta"><div class="mb-name">'+m.title+'</div><div class="mb-sub '+sc+'">'+st+'</div></div>';
+    if(lk) html += '<span style="font-size:11px;color:var(--t3)">🔒</span>';
+    html += '</div>';
   });
   document.getElementById('sb-nav').innerHTML = html;
-  const pct = totalSteps() > 0 ? Math.round(doneCount() / totalSteps() * 100) : 0;
-  document.getElementById('sb-fill').style.width = pct + '%';
-  document.getElementById('sb-pct').textContent = pct + '%';
+  var pct = totalSteps()>0 ? Math.round(doneCount()/totalSteps()*100) : 0;
+  document.getElementById('sb-fill').style.width = pct+'%';
+  document.getElementById('sb-pct').textContent = pct+'%';
 }
+function goMod(i) { CUR_MOD=i; OPEN={}; renderSidebar(); renderMain(); window.scrollTo(0,0); }
 
-function goMod(i) { CUR_MOD = i; OPEN = {}; renderSidebar(); renderMain(); window.scrollTo(0, 0); }
-
-// ══════════════════════════════════════
-// STUDENT MAIN
-// ══════════════════════════════════════
+// ── STUDENT MAIN ──
 function renderMain() {
-  const mi = CUR_MOD, m = MODS[mi], el = document.getElementById('stu-main');
+  var mi=CUR_MOD, m=MODS[mi], el=document.getElementById('stu-main');
   if (m.locked) {
-    el.innerHTML = `<div class="locked-screen"><div class="locked-icon">🔒<\/div><div class="locked-h">Модуль заблокирован<\/div><div class="locked-p">Выполни все предыдущие модули. Павел откроет доступ и выдаст индивидуальное задание.<\/div><\/div>`;
+    el.innerHTML = '<div class="locked-screen"><div class="locked-icon">🔒</div><div class="locked-h">Модуль заблокирован</div><div class="locked-p">Выполни предыдущие модули. Павел откроет доступ.</div></div>';
     return;
   }
-  const p = modProgCount(mi), t = m.steps.length, pct = t > 0 ? Math.round(p / t * 100) : 0;
-  let sh = '';
-  m.steps.forEach((s, si) => { sh += buildStep(s, si, mi + '-' + si, !!PROG[mi + '-' + si], !!OPEN[mi + '-' + si]); });
-  el.innerHTML = `<div class="mod-hero"><div class="mod-badge">МОДУЛЬ ${mi+1}<\/div><div class="mod-h1">${m.title}<\/div><div class="mod-p">${m.desc}<\/div>${t>0?`<div class="prog-row"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%"><\/div><\/div><div class="prog-lbl">${p} / ${t}<\/div><\/div>`:''}<\/div><div class="steps">${sh}<\/div>`;
+  var p=modProgN(mi), t=m.steps.length, pct=t>0?Math.round(p/t*100):0;
+  var html = '';
+  html += '<div class="mod-hero">';
+  html += '<div class="mod-badge">МОДУЛЬ '+(mi+1)+'</div>';
+  html += '<div class="mod-h1">'+m.title+'</div>';
+  html += '<div class="mod-p">'+m.desc+'</div>';
+  if(t>0) html += '<div class="prog-row"><div class="prog-bar"><div class="prog-fill" style="width:'+pct+'%"></div></div><div class="prog-lbl">'+p+' / '+t+'</div></div>';
+  html += '</div>';
+  html += '<div class="steps">';
+  m.steps.forEach(function(s,si){ html += buildStep(s, si, mi+'-'+si, !!PROG[mi+'-'+si], !!OPEN[mi+'-'+si]); });
+  html += '</div>';
+  el.innerHTML = html;
 }
 
 function buildStep(s, si, key, done, open) {
-  let b = '';
-  if (s.txt) b += `<div class="step-txt">${s.txt}<\/div>`;
-  if (s.os) {
-    const e = 'os-' + key;
-    b += `<div class="os-tabs"><div class="os-tab on" onclick="swOs(this,'${e}-m','${e}-w')">Mac<\/div><div class="os-tab" onclick="swOs(this,'${e}-w','${e}-m')">Windows<\/div><\/div><div class="os-cnt on" id="${e}-m">${s.os.mac}<\/div><div class="os-cnt" id="${e}-w">${s.os.win}<\/div>`;
-  }
-  if (s.link) b += `<a href="${s.link.url}" target="_blank" class="link-btn">${s.link.label} ↗<\/a>`;
-  if (s.link_win) b += `<a href="${s.link_win.url}" target="_blank" class="link-btn" style="margin-left:6px">${s.link_win.label} ↗<\/a>`;
-  if (s.pills) b += `<div class="pills">${s.pills.map(p=>`<div class="pill"><div class="pill-dot"><\/div>${p}<\/div>`).join('')}<\/div>`;
-  if (s.cmd_mac && s.cmd_win) {
-    const c = 'cmd-' + key;
-    b += `<div class="os-tabs" style="margin-top:12px"><div class="os-tab on" onclick="swOs(this,'${c}-m','${c}-w')">Mac / Linux<\/div><div class="os-tab" onclick="swOs(this,'${c}-w','${c}-m')">Windows<\/div><\/div><div class="os-cnt on" id="${c}-m">${mkCode(s.cmd_mac,'cm-'+key)}<\/div><div class="os-cnt" id="${c}-w">${mkCode(s.cmd_win,'cw-'+key)}<\/div>`;
-  } else if (s.cmd_both) b += mkCode(s.cmd_both, 'cb-' + key);
-  if (s.download) b += `<div style="margin:12px 0"><button class="btn-complete" style="background:var(--gold);color:#18181f" onclick="downloadWelcome()">⬇ Скачать index.html<\/button><\/div>`;
-  if (s.info) b += `<div class="info-box">💡 ${s.info}<\/div>`;
-  if (s.note) b += `<div class="note-box">⚡ ${s.note}<\/div>`;
+  var b = '';
+  if(s.txt) b += '<div class="step-txt">'+s.txt+'</div>';
 
-  // Student input
-  if (s.studentInput) {
-    const sent = s.studentInput.fields.every(f => FROM_STUDENT[f.key]);
-    b += `<div class="stu-form"><div class="sf-title">📤 Отправь Павлу<\/div>`;
-    s.studentInput.fields.forEach(f => {
-      b += `<label class="sf-label">${f.label}<\/label><input class="sf-input" id="sfi-${key}-${f.key}" value="${FROM_STUDENT[f.key]||''}" placeholder="${f.placeholder}" ${sent?'disabled':''}/>`;
+  if(s.link) b += '<a href="'+s.link+'" target="_blank" class="link-btn">'+s.linkLabel+' ↗</a>';
+  if(s.linkWin) b += '<a href="'+s.linkWin+'" target="_blank" class="link-btn" style="margin-left:6px">'+s.linkWinLabel+' ↗</a>';
+  if(s.pills) {
+    b += '<div class="pills">';
+    s.pills.forEach(function(p){ b += '<div class="pill"><div class="pill-dot"></div>'+p+'</div>'; });
+    b += '</div>';
+  }
+
+  if(s.cmdMac && s.cmdWin) {
+    var cid = 'c-'+key;
+    b += '<div class="os-tabs" style="margin-top:10px">';
+    b += '<div class="os-tab on" onclick="swOs(this,\''+cid+'-m\',\''+cid+'-w\')">Mac / Linux</div>';
+    b += '<div class="os-tab" onclick="swOs(this,\''+cid+'-w\',\''+cid+'-m\')">Windows</div>';
+    b += '</div>';
+    b += '<div class="os-cnt on" id="'+cid+'-m">'+mkCode(s.cmdMac,'cm-'+key)+'</div>';
+    b += '<div class="os-cnt" id="'+cid+'-w">'+mkCode(s.cmdWin,'cw-'+key)+'</div>';
+  } else if(s.cmdBoth) {
+    b += mkCode(s.cmdBoth, 'cb-'+key);
+  }
+
+  if(s.info) b += '<div class="info-box">💡 '+s.info+'</div>';
+  if(s.note) b += '<div class="note-box">⚡ '+s.note+'</div>';
+
+  if(s.download) {
+    b += '<div style="margin:12px 0"><button class="btn-done" style="background:var(--gold);color:#18181f" onclick="downloadWelcome()">⬇ Скачать index.html</button></div>';
+  }
+
+  if(s.stuInput) {
+    var sent = s.stuInput.every(function(f){ return FROM_STU[f.key]; });
+    b += '<div class="stu-form"><div class="sf-title">📤 Отправь Павлу</div>';
+    s.stuInput.forEach(function(f){
+      b += '<label class="sf-label">'+f.label+'</label>';
+      b += '<input class="sf-input" id="sfi-'+key+'-'+f.key+'" value="'+(FROM_STU[f.key]||'')+'" placeholder="'+f.ph+'"'+(sent?' disabled':'')+' />';
     });
-    if (sent) {
-      b += `<div class="sf-sent">✓ Отправлено Павлу<\/div><button class="sf-edit" onclick="clearStuInput('${key}',${JSON.stringify(s.studentInput.fields.map(f=>f.key))})">Изменить<\/button>`;
+    if(sent) {
+      b += '<div class="sf-sent">✓ Отправлено</div>';
+      b += '<button class="sf-edit" onclick="clearStuInput(\''+key+'\','+JSON.stringify(s.stuInput.map(function(f){return f.key;}))+')">Изменить</button>';
     } else {
-      b += `<button class="sf-btn" id="sfbtn-${key}" onclick="sendStuInput('${key}',${JSON.stringify(s.studentInput.fields.map(f=>f.key))})">Отправить Павлу →<\/button>`;
+      b += '<button class="sf-btn" id="sfbtn-'+key+'" onclick="sendStuInput(\''+key+'\','+JSON.stringify(s.stuInput.map(function(f){return f.key;}))+')">Отправить Павлу →</button>';
     }
-    b += `<\/div>`;
+    b += '</div>';
   }
 
-  // Pavel data
-  if (s.pavelData) {
-    const has = s.pavelData.fields.some(f => FROM_PAVEL[f.key]);
-    b += `<div class="from-pavel"><div class="fp-title">📩 От Павла<\/div>`;
-    if (has) {
-      s.pavelData.fields.forEach(f => {
-        if (FROM_PAVEL[f.key]) b += `<div class="fp-row"><div class="fp-lbl">${f.label}<\/div><div class="fp-val"><span>${FROM_PAVEL[f.key]}<\/span><button class="fp-copy" onclick="cpText(this,'${FROM_PAVEL[f.key].replace(/'/g,"\\'")}')">Копировать<\/button><\/div><\/div>`;
+  if(s.pavData) {
+    var hasData = s.pavData.some(function(f){ return FROM_PAV[f.key]; });
+    b += '<div class="fp-box"><div class="fp-title">📩 От Павла</div>';
+    if(hasData) {
+      s.pavData.forEach(function(f){
+        if(!FROM_PAV[f.key]) return;
+        b += '<div class="fp-row"><div class="fp-lbl">'+f.label+'</div>';
+        b += '<div class="fp-val"><span>'+FROM_PAV[f.key]+'</span>';
+        b += '<button class="fp-copy" onclick="cpText(this,\''+FROM_PAV[f.key].replace(/'/g,"\\'").replace(/\\/g,'\\\\')+'\')">Копировать</button>';
+        b += '</div></div>';
       });
     } else {
-      b += `<div class="fp-waiting">Ожидай — Павел скоро пришлёт данные...<\/div>`;
+      b += '<div class="fp-wait">Ожидай — Павел скоро пришлёт данные...</div>';
     }
-    b += `<\/div>`;
+    b += '</div>';
   }
 
-  b += `<div class="step-acts">${done
-    ? `<div class="done-tag">✓ Выполнено<\/div><button class="btn-undo" onclick="togProg('${key}',false)">Отменить<\/button>`
-    : `<button class="btn-complete" id="btn-prog-${key}" onclick="togProg('${key}',true)">✓ Выполнено<\/button>`
-  }<\/div>`;
+  b += '<div class="step-acts">';
+  if(done) {
+    b += '<div class="done-tag">✓ Выполнено</div>';
+    b += '<button class="btn-undo" onclick="togProg(\''+key+'\',false)">Отменить</button>';
+  } else {
+    b += '<button class="btn-done" id="bp-'+key+'" onclick="togProg(\''+key+'\',true)">✓ Выполнено</button>';
+  }
+  b += '</div>';
 
-  return `<div class="step${done?' done':''}${open?' open':''}" id="st-${key}">
-    <div class="step-hd" onclick="togOpen('${key}')">
-      <div class="step-n${done?' done':''}">${done?'✓':(si+1)}<\/div>
-      <div class="step-hd-meta"><div class="step-hd-title">${s.title}<\/div><div class="step-hd-sub">${s.sub}<\/div><\/div>
-      <div class="step-chev">▼<\/div>
-    <\/div>
-    <div class="step-body">${b}<\/div>
-  <\/div>`;
+  var stepHtml = '<div class="step'+(done?' done':'')+(open?' open':'')+'" id="st-'+key+'">';
+  stepHtml += '<div class="step-hd" onclick="togOpen(\''+key+'\')"><div class="step-n'+(done?' done':'')+'">'+( done?'✓':(si+1) )+'</div>';
+  stepHtml += '<div class="step-hd-meta"><div class="step-hd-title">'+s.title+'</div><div class="step-hd-sub">'+(s.sub||'')+'</div></div>';
+  stepHtml += '<div class="step-chev">▼</div></div>';
+  stepHtml += '<div class="step-body">'+b+'</div>';
+  stepHtml += '</div>';
+  return stepHtml;
+}
+
+function mkCode(cmd, id) {
+  var h = '<div class="code-wrap">';
+  h += '<div class="code-top"><span class="code-lang">TERMINAL</span>';
+  h += '<button class="code-copy" onclick="cpCode(\''+id+'\')">Копировать</button></div>';
+  h += '<div class="code-pre" id="cp-'+id+'">'+cmd+'</div>';
+  h += '</div>';
+  return h;
+}
+
+// ── STUDENT ACTIONS ──
+async function togProg(key, val) {
+  var btn = document.getElementById('bp-'+key);
+  if(btn) { btn.disabled=true; btn.textContent='...'; }
+  try {
+    await upsertProgress(CUR, key, val);
+    PROG[key] = val;
+    renderSidebar(); renderMain();
+  } catch(e) {
+    alert('Ошибка: '+e.message);
+    if(btn) { btn.disabled=false; btn.textContent='✓ Выполнено'; }
+  }
 }
 
 async function sendStuInput(key, keys) {
-  const btn = document.getElementById('sfbtn-' + key);
-  const vals = {};
-  let ok = true;
-  keys.forEach(k => {
-    const el = document.getElementById('sfi-' + key + '-' + k);
-    if (el && el.value.trim()) vals[k] = el.value.trim();
+  var btn = document.getElementById('sfbtn-'+key);
+  if(btn) { btn.disabled=true; btn.textContent='...'; }
+  var vals = {};
+  var ok = true;
+  keys.forEach(function(k){
+    var el = document.getElementById('sfi-'+key+'-'+k);
+    if(el && el.value.trim()) vals[k] = el.value.trim();
     else ok = false;
   });
-  if (!ok) { alert('Заполни все поля'); return; }
-  if (btn) { btn.disabled = true; btn.textContent = 'Отправляем...'; }
+  if(!ok) { alert('Заполни все поля'); if(btn){btn.disabled=false;btn.textContent='Отправить Павлу →';} return; }
   try {
-    for (const [k, v] of Object.entries(vals)) {
-      await saveDataField(CUR, k, v, 'from_student');
-      FROM_STUDENT[k] = v;
+    for(var k in vals) {
+      await upsertData(CUR, k, vals[k], 'from_student');
+      FROM_STU[k] = vals[k];
     }
     renderMain();
   } catch(e) {
-    alert('Ошибка: ' + e.message);
-    if (btn) { btn.disabled = false; btn.textContent = 'Отправить Павлу →'; }
+    alert('Ошибка: '+e.message);
+    if(btn) { btn.disabled=false; btn.textContent='Отправить Павлу →'; }
   }
 }
 
 async function clearStuInput(key, keys) {
   try {
-    for (const k of keys) {
-      await deleteDataField(CUR, k, 'from_student');
-      delete FROM_STUDENT[k];
+    for(var i=0;i<keys.length;i++) {
+      await sbDelete('student_data', 'student_login=eq.'+CUR+'&field_key=eq.'+encodeURIComponent(keys[i])+'&direction=eq.from_student');
+      delete FROM_STU[keys[i]];
     }
     renderMain();
-  } catch(e) { alert('Ошибка: ' + e.message); }
+  } catch(e) { alert('Ошибка: '+e.message); }
 }
 
-async function togProg(key, val) {
-  const btn = document.getElementById(val ? 'btn-prog-' + key : null);
-  if (btn) { btn.disabled = true; btn.textContent = '...'; }
-  try {
-    await setProgress(CUR, key, val);
-    PROG[key] = val;
-    renderSidebar();
-    renderMain();
-  } catch(e) {
-    alert('Ошибка: ' + e.message);
-    if (btn) { btn.disabled = false; btn.textContent = '✓ Выполнено'; }
-  }
-}
+function togOpen(key) { OPEN[key]=!OPEN[key]; renderMain(); }
 
-// ══════════════════════════════════════
-// ADMIN
-// ══════════════════════════════════════
+// ── ADMIN ──
 async function renderAdmin() {
-  const el = document.getElementById('adm-main');
-  el.innerHTML = `<div class="connecting"><div class="spin" style="font-size:20px">⟳<\/div><div class="connecting-txt">Загружаем данные студентов...<\/div><\/div>`;
+  var el = document.getElementById('adm-main');
+  el.innerHTML = '<div class="connecting"><span>Загружаем данные...</span></div>';
   try {
-    const data = await loadAllStudentsData();
+    var data = await loadAllData();
     buildAdminUI(data);
   } catch(e) {
-    el.innerHTML = `<div class="connecting"><div style="font-size:13px;color:var(--red)">Ошибка: ${e.message}<\/div><\/div>`;
+    el.innerHTML = '<div class="connecting"><span style="color:var(--red)">Ошибка: '+e.message+'</span></div>';
   }
 }
 
 function buildAdminUI(data) {
-  const total = MODS.filter(m => !m.locked).reduce((a, m) => a + m.steps.length, 0);
-  const totalDone = STUDENTS.reduce((a, u) => a + Object.values(data[u].progress).filter(Boolean).length, 0);
-  const avgPct = STUDENTS.length > 0 ? Math.round(totalDone / (STUDENTS.length * total) * 100) : 0;
-  const fullDone = STUDENTS.filter(u => Object.values(data[u].progress).filter(Boolean).length === total).length;
+  var total = MODS.filter(function(m){return !m.locked;}).reduce(function(a,m){return a+m.steps.length;},0);
+  var totalDone = STUDENTS.reduce(function(a,u){return a+Object.values(data[u].prog).filter(Boolean).length;},0);
+  var avgPct = Math.round(totalDone/(STUDENTS.length*total)*100)||0;
+  var finished = STUDENTS.filter(function(u){return Object.values(data[u].prog).filter(Boolean).length===total;}).length;
 
-  let cards = '';
-  STUDENTS.forEach(u => {
-    const done = Object.values(data[u].progress).filter(Boolean).length;
-    const pct = total > 0 ? Math.round(done / total * 100) : 0;
-    const fs = data[u].from_student, fp = data[u].from_pavel;
-    const vercelUrl = fp['vercel_live_url'] || '';
-    const initial = STU_NAMES[u][0];
+  var html = '<div class="adm-h">Панель куратора</div>';
+  html += '<div class="adm-sub">Прогресс студентов и обмен данными</div>';
+  html += '<div class="adm-stats">';
+  html += '<div class="adm-stat"><div class="adm-stat-n">'+STUDENTS.length+'</div><div class="adm-stat-l">Студентов</div></div>';
+  html += '<div class="adm-stat"><div class="adm-stat-n">'+avgPct+'%</div><div class="adm-stat-l">Средний прогресс</div></div>';
+  html += '<div class="adm-stat"><div class="adm-stat-n">'+finished+'</div><div class="adm-stat-l">Завершили курс</div></div>';
+  html += '<div class="adm-stat"><div class="adm-stat-n">'+total+'</div><div class="adm-stat-l">Шагов в курсе</div></div>';
+  html += '</div>';
+  html += '<button class="adm-refresh" onclick="renderAdmin()">↻ Обновить</button>';
+  html += '<div class="sec-h">СТУДЕНТЫ</div>';
+  html += '<div class="stu-grid">';
 
-    const fromRows = STU_FIELDS.map(f => `<div class="ex-row">
-      <div class="ex-lbl"><span class="tag tag-from">ОТ СТУДЕНТА<\/span>${f.label}<\/div>
-      <div class="ex-val${fs[f.key]?'':' empty'}">${fs[f.key]||'Ещё не заполнено'}<\/div>
-    <\/div>`).join('');
+  STUDENTS.forEach(function(u) {
+    var done = Object.values(data[u].prog).filter(Boolean).length;
+    var pct = Math.round(done/total*100)||0;
+    var fp = data[u].fp;
+    var fs = data[u].fs;
+    var vurl = fp['vercel_live_url']||'';
 
-    const toRows = PAVEL_FIELDS.map(f => {
-      const val = fp[f.key] || '';
-      const sid = `pf-${u}-${f.key}`;
-      return `<div class="ex-row">
-        <div class="ex-lbl"><span class="tag tag-to">СТУДЕНТУ<\/span>${f.label}<\/div>
-        ${val
-          ? `<div class="ex-val-row"><div class="ex-val" style="flex:1">${val}<\/div><button class="fp-copy" onclick="cpText(this,${JSON.stringify(val)})">Копировать<\/button><button class="ex-edit" onclick="delPF(${JSON.stringify(u)},${JSON.stringify(f.key)})">Изменить<\/button><\/div>`
-          : `<div class="ex-inp-row"><input class="ex-inp" id="${sid}" placeholder="${f.placeholder}"/><button class="ex-save" onclick="savePF(${JSON.stringify(u)},${JSON.stringify(f.key)},'${sid}')">Сохранить<\/button><\/div>`
-        }
-      <\/div>`;
-    }).join('');
+    html += '<div class="stu-card">';
+    html += '<div class="stu-card-hd">';
+    html += '<div style="display:flex;align-items:center;gap:10px">';
+    html += '<div class="stu-avatar">'+u[0].toUpperCase()+'</div>';
+    html += '<div><div class="stu-name">'+u+'</div><div class="stu-prog-txt">'+done+' / '+total+' шагов · '+pct+'%</div></div>';
+    html += '</div>';
+    if(vurl) {
+      html += '<a href="'+vurl+'" target="_blank" class="open-url has-url">▲ Открыть проект</a>';
+    } else {
+      html += '<span class="open-url no-url">▲ Нет URL</span>';
+    }
+    html += '</div>';
+    html += '<div class="stu-prog-bar"><div class="stu-prog-fill" style="width:'+pct+'%"></div></div>';
+    html += '<div class="stu-body">';
 
-    cards += `<div class="stu-card">
-      <div class="stu-card-hd">
-        <div class="stu-card-hd-left">
-          <div class="stu-avatar">${initial}<\/div>
-          <div><div class="stu-name">${STU_NAMES[u]}<\/div><div class="stu-prog-txt">${done} / ${total} шагов · ${pct}%<\/div><\/div>
-        <\/div>
-        <div class="stu-card-actions">
-          <a href="${vercelUrl||'#'}" target="_blank" class="btn-open-vercel ${vercelUrl?'active':'no-url'}">
-            ${vercelUrl ? '▲ Открыть проект' : '▲ Нет URL'}
-          <\/a>
-        <\/div>
-      <\/div>
-      <div class="stu-prog-bar"><div class="stu-prog-fill" style="width:${pct}%"><\/div><\/div>
-      <div class="stu-body">${fromRows}<div class="divider"><\/div>${toRows}<\/div>
-    <\/div>`;
+    STU_FIELDS.forEach(function(f) {
+      html += '<div class="ex-row">';
+      html += '<div class="ex-lbl"><span class="tag tag-from">ОТ СТУДЕНТА</span>'+f.label+'</div>';
+      html += '<div class="ex-val'+(fs[f.key]?'':' empty')+'">'+(fs[f.key]||'Не заполнено')+'</div>';
+      html += '</div>';
+    });
+
+    html += '<div class="divider"></div>';
+
+    PAVEL_FIELDS.forEach(function(f) {
+      var val = fp[f.key]||'';
+      var sid = 'pf-'+u+'-'+f.key;
+      html += '<div class="ex-row">';
+      html += '<div class="ex-lbl"><span class="tag tag-to">СТУДЕНТУ</span>'+f.label+'</div>';
+      if(val) {
+        html += '<div class="ex-val-row">';
+        html += '<div class="ex-val" style="flex:1">'+val+'</div>';
+        html += '<button class="fp-copy" onclick="cpText(this,\''+val.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')">Копировать</button>';
+        html += '<button class="ex-edit" onclick="delPF(\''+u+'\',\''+f.key+'\')">Изменить</button>';
+        html += '</div>';
+      } else {
+        html += '<div class="ex-inp-row">';
+        html += '<input class="ex-inp" id="'+sid+'" placeholder="'+f.ph+'" />';
+        html += '<button class="ex-save" onclick="savePF(\''+u+'\',\''+f.key+'\',\''+sid+'\')">Сохранить</button>';
+        html += '</div>';
+      }
+      html += '</div>';
+    });
+
+    html += '</div></div>';
   });
 
-  document.getElementById('adm-main').innerHTML = `
-    <div class="adm-h">Панель куратора<\/div>
-    <div class="adm-sub">Прогресс студентов и обмен данными<\/div>
-    <div class="adm-summary">
-      <div class="adm-stat"><div class="adm-stat-n">${STUDENTS.length}<\/div><div class="adm-stat-l">Студентов<\/div><\/div>
-      <div class="adm-stat"><div class="adm-stat-n">${avgPct}%<\/div><div class="adm-stat-l">Средний прогресс<\/div><\/div>
-      <div class="adm-stat"><div class="adm-stat-n">${fullDone}<\/div><div class="adm-stat-l">Завершили курс<\/div><\/div>
-      <div class="adm-stat"><div class="adm-stat-n">${total}<\/div><div class="adm-stat-l">Шагов в курсе<\/div><\/div>
-    <\/div>
-    <button class="adm-refresh" onclick="renderAdmin()">↻ Обновить данные<\/button>
-    <div class="sec-h">СТУДЕНТЫ<\/div>
-    <div class="stu-grid">${cards}<\/div>`;
+  html += '</div>';
+  document.getElementById('adm-main').innerHTML = html;
 }
 
 async function savePF(user, fk, sid) {
-  const inp = document.getElementById(sid);
-  const val = inp?.value.trim();
-  if (!val) { alert('Введи значение'); return; }
-  const btn = inp.nextElementSibling;
-  if (btn) { btn.disabled = true; btn.textContent = '...'; }
+  var inp = document.getElementById(sid);
+  var val = inp ? inp.value.trim() : '';
+  if(!val) { alert('Введи значение'); return; }
+  var btn = inp.nextElementSibling;
+  if(btn) { btn.disabled=true; btn.textContent='...'; }
   try {
-    await saveDataField(user, fk, val, 'from_pavel');
+    await upsertData(user, fk, val, 'from_pavel');
     await renderAdmin();
   } catch(e) {
-    alert('Ошибка: ' + e.message);
-    if (btn) { btn.disabled = false; btn.textContent = 'Сохранить'; }
+    alert('Ошибка: '+e.message);
+    if(btn) { btn.disabled=false; btn.textContent='Сохранить'; }
   }
 }
 
 async function delPF(user, fk) {
   try {
-    await deleteDataField(user, fk, 'from_pavel');
+    await sbDelete('student_data', 'student_login=eq.'+user+'&field_key=eq.'+encodeURIComponent(fk)+'&direction=eq.from_pavel');
     await renderAdmin();
-  } catch(e) { alert('Ошибка: ' + e.message); }
+  } catch(e) { alert('Ошибка: '+e.message); }
 }
 
-// ══════════════════════════════════════
-// UTILS
-// ══════════════════════════════════════
-function togOpen(key) { OPEN[key] = !OPEN[key]; renderMain(); }
-function mkCode(cmd, id) {
-  return `<div class="code-wrap"><div class="code-top"><span class="code-lang">TERMINAL<\/span><button class="code-copy" onclick="cpCode('${id}')">Копировать<\/button><\/div><div class="code-pre" id="cp-${id}">${cmd}<\/div><\/div>`;
-}
+// ── UTILS ──
 function cpCode(id) {
-  const el = document.getElementById('cp-' + id); if (!el) return;
-  navigator.clipboard.writeText(el.textContent).then(() => {
-    const b = el.closest('.code-wrap').querySelector('.code-copy');
-    b.textContent = 'Скопировано ✓'; b.style.color = 'var(--green)';
-    setTimeout(() => { b.textContent = 'Копировать'; b.style.color = ''; }, 2000);
-  });
-}
-function cpEl(id) {
-  const el = document.getElementById(id); if (!el) return;
-  navigator.clipboard.writeText(el.textContent).then(() => {
-    const b = el.closest('.code-wrap').querySelector('.code-copy');
-    b.textContent = 'Скопировано ✓'; b.style.color = 'var(--green)';
-    setTimeout(() => { b.textContent = 'Копировать'; b.style.color = ''; }, 2000);
+  var el = document.getElementById('cp-'+id);
+  if(!el) return;
+  navigator.clipboard.writeText(el.textContent).then(function(){
+    var b = el.closest('.code-wrap').querySelector('.code-copy');
+    b.textContent='Скопировано ✓'; b.style.color='var(--green)';
+    setTimeout(function(){ b.textContent='Копировать'; b.style.color=''; }, 2000);
   });
 }
 function cpText(btn, val) {
-  navigator.clipboard.writeText(val).then(() => {
-    const o = btn.textContent; btn.textContent = '✓'; btn.style.color = 'var(--green)';
-    setTimeout(() => { btn.textContent = o; btn.style.color = ''; }, 2000);
+  navigator.clipboard.writeText(val).then(function(){
+    var o=btn.textContent; btn.textContent='✓'; btn.style.color='var(--green)';
+    setTimeout(function(){ btn.textContent=o; btn.style.color=''; }, 2000);
   });
 }
 function swOs(btn, showId, hideId) {
-  btn.parentElement.querySelectorAll('.os-tab').forEach(t => t.classList.remove('on'));
+  btn.parentElement.querySelectorAll('.os-tab').forEach(function(t){ t.classList.remove('on'); });
   btn.classList.add('on');
-  document.getElementById(showId)?.classList.add('on');
-  document.getElementById(hideId)?.classList.remove('on');
+  var s=document.getElementById(showId), h=document.getElementById(hideId);
+  if(s) s.classList.add('on');
+  if(h) h.classList.remove('on');
 }
-
-// ══════════════════════════════════════
-// DOWNLOAD WELCOME PAGE
-// ══════════════════════════════════════
 function downloadWelcome() {
-  const parts = [
-    '<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">',
-    '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
-    '<title>\u041f\u0435\u0440\u0432\u044b\u0439 \u044d\u0442\u0430\u043f \u043f\u0440\u043e\u0439\u0434\u0435\u043d \uD83C\uDF89<\/title>',
-    '<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700&family=Mulish:wght@400;600&display=swap" rel="stylesheet">',
-    '<style>',
-    '*{box-sizing:border-box;margin:0;padding:0}',
+  var lines = [
+    '<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8">',
+    '<title>&#1069;&#1090;&#1072;&#1087; 1 &#1087;&#1088;&#1086;&#1081;&#1076;&#1077;&#1085;</title>',
+    '<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Mulish:wght@400;600&display=swap" rel="stylesheet">',
+    '<style>*{box-sizing:border-box;margin:0;padding:0}',
     'body{font-family:Mulish,sans-serif;background:#18181f;color:#eeeef0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}',
-    '.card{max-width:560px;width:100%;text-align:center}',
-    '.badge{display:inline-block;font-size:10px;color:#B15ECC;background:#B15ECC22;border:1px solid #B15ECC40;padding:4px 14px;border-radius:20px;font-family:Unbounded,sans-serif;letter-spacing:.5px;margin-bottom:24px}',
-    '.emoji{font-size:64px;margin-bottom:24px;display:block}',
-    'h1{font-family:Unbounded,sans-serif;font-size:28px;font-weight:700;line-height:1.3;margin-bottom:16px}',
-    'h1 span{color:#B15ECC}',
-    'p{font-size:15px;color:#9898b0;line-height:1.75;margin-bottom:32px}',
-    '.checks{display:flex;flex-direction:column;gap:10px;margin-bottom:40px;text-align:left}',
-    '.check{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#1e1e27;border:1px solid #ffffff0f;border-radius:10px;font-size:13px}',
-    '.check-icon{width:28px;height:28px;border-radius:7px;background:#22c55e15;border:1px solid #22c55e40;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}',
-    '.footer{font-size:12px;color:#55556a}.footer span{color:#B15ECC;font-weight:600}',
-    '<\/style><\/head><body>',
-    '<div class="card">',
-    '<div class="badge">\u042d\u0422\u0410\u041f 1 \u0417\u0410\u0412\u0415\u0420\u0428\u0401\u041d<\/div>',
-    '<span class="emoji">\uD83C\uDF89<\/span>',
-    '<h1>\u0420\u0430\u0431\u043e\u0447\u0435\u0435 \u043f\u0440\u043e\u0441\u0442\u0440\u0430\u043d\u0441\u0442\u0432\u043e<br><span>\u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043d\u043e<\/span><\/h1>',
-    '<p>\u0422\u044b \u043f\u0440\u043e\u0448\u0451\u043b \u043f\u0435\u0440\u0432\u044b\u0439 \u044d\u0442\u0430\u043f. \u0418\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u044b \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d\u044b, \u043a\u043e\u0434 \u043d\u0430 GitHub \u2014 \u0432\u0441\u0451 \u0433\u043e\u0442\u043e\u0432\u043e.<\/p>',
+    '.card{max-width:520px;width:100%;text-align:center}',
+    '.badge{display:inline-block;font-size:10px;color:#B15ECC;background:#B15ECC22;border:1px solid #B15ECC40;padding:4px 14px;border-radius:20px;font-family:Unbounded,sans-serif;margin-bottom:24px}',
+    '.emoji{font-size:64px;margin-bottom:20px;display:block}',
+    'h1{font-family:Unbounded,sans-serif;font-size:26px;font-weight:700;line-height:1.3;margin-bottom:14px}',
+    'h1 span{color:#B15ECC}p{font-size:14px;color:#9898b0;line-height:1.75;margin-bottom:28px}',
+    '.checks{display:flex;flex-direction:column;gap:8px;margin-bottom:32px;text-align:left}',
+    '.check{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#1e1e27;border:1px solid #ffffff0f;border-radius:10px;font-size:13px}',
+    '.ci{width:26px;height:26px;border-radius:7px;background:#22c55e15;border:1px solid #22c55e40;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}',
+    '.foot{font-size:12px;color:#55556a}.foot span{color:#B15ECC;font-weight:600}</style></head><body>',
+    '<div class="card"><div class="badge">&#1069;&#1058;&#1040;&#1055; 1 &#1047;&#1040;&#1042;&#1045;&#1056;&#1064;&#0201;&#1053;</div>',
+    '<span class="emoji">&#127881;</span>',
+    '<h1>&#1056;&#1072;&#1073;&#1086;&#1095;&#1077;&#1077; &#1087;&#1088;&#1086;&#1089;&#1090;&#1088;&#1072;&#1085;&#1089;&#1090;&#1074;&#1086;<br><span>&#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1077;&#1085;&#1086;</span></h1>',
+    '<p>&#1058;&#1099; &#1087;&#1088;&#1086;&#1096;&#1105;&#1083; &#1087;&#1077;&#1088;&#1074;&#1099;&#1081; &#1101;&#1090;&#1072;&#1087;. &#1048;&#1085;&#1089;&#1090;&#1088;&#1091;&#1084;&#1077;&#1085;&#1090;&#1099; &#1091;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1099;, &#1082;&#1086;&#1076; &#1085;&#1072; GitHub &#8212; &#1074;&#1089;&#1105; &#1075;&#1086;&#1090;&#1086;&#1074;&#1086;.</p>',
     '<div class="checks">',
-    '<div class="check"><div class="check-icon">\u2713<\/div>VS Code + \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043d\u0438\u044f \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d\u044b<\/div>',
-    '<div class="check"><div class="check-icon">\u2713<\/div>Node.js, Git, Claude Code \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043d\u044b<\/div>',
-    '<div class="check"><div class="check-icon">\u2713<\/div>GitHub \u0440\u0435\u043f\u043e\u0437\u0438\u0442\u043e\u0440\u0438\u0439 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0451\u043d<\/div>',
-    '<div class="check"><div class="check-icon">\u2713<\/div>Supabase \u2014 \u0434\u043e\u0441\u0442\u0443\u043f \u043a \u0431\u0430\u0437\u0435 \u0434\u0430\u043d\u043d\u044b\u0445 \u0435\u0441\u0442\u044c<\/div>',
-    '<div class="check"><div class="check-icon">\u2713<\/div>Vercel \u2014 \u0430\u0432\u0442\u043e\u0434\u0435\u043f\u043b\u043e\u0439 \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442<\/div>',
-    '<div class="check"><div class="check-icon">\u2713<\/div>\u042d\u0442\u043e\u0442 \u0444\u0430\u0439\u043b \u0437\u0430\u0434\u0435\u043f\u043b\u043e\u0435\u043d \u2014 \u0437\u043d\u0430\u0447\u0438\u0442 \u0432\u0441\u0451 \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442<\/div>',
-    '<\/div>',
-    '<div class="footer">GoAndStudy · <span>\u0421\u043b\u0435\u0434\u0443\u044e\u0449\u0438\u0439 \u044d\u0442\u0430\u043f \u2014 Claude Code<\/span><\/div>',
-    '<\/div><\/body><\/html>'
+    '<div class="check"><div class="ci">&#10003;</div>VS Code + &#1088;&#1072;&#1089;&#1096;&#1080;&#1088;&#1077;&#1085;&#1080;&#1103; &#1091;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1099;</div>',
+    '<div class="check"><div class="ci">&#10003;</div>Node.js, Git, Claude Code &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1077;&#1085;&#1099;</div>',
+    '<div class="check"><div class="ci">&#10003;</div>GitHub &#1088;&#1077;&#1087;&#1086;&#1079;&#1080;&#1090;&#1086;&#1088;&#1080;&#1081; &#1087;&#1086;&#1076;&#1082;&#1083;&#1102;&#1095;&#1105;&#1085;</div>',
+    '<div class="check"><div class="ci">&#10003;</div>Supabase &#8212; &#1073;&#1072;&#1079;&#1072; &#1076;&#1072;&#1085;&#1085;&#1099;&#1093; &#1076;&#1086;&#1089;&#1090;&#1091;&#1087;&#1085;&#1072;</div>',
+    '<div class="check"><div class="ci">&#10003;</div>Vercel &#8212; &#1072;&#1074;&#1090;&#1086;&#1076;&#1077;&#1087;&#1083;&#1086;&#1081; &#1088;&#1072;&#1073;&#1086;&#1090;&#1072;&#1077;&#1090;</div>',
+    '<div class="check"><div class="ci">&#10003;</div>&#1069;&#1090;&#1086;&#1090; &#1092;&#1072;&#1081;&#1083; &#1079;&#1072;&#1076;&#1077;&#1087;&#1083;&#1086;&#1077;&#1085; &#8212; &#1079;&#1085;&#1072;&#1095;&#1080;&#1090; &#1074;&#1089;&#1105; &#1088;&#1072;&#1073;&#1086;&#1090;&#1072;&#1077;&#1090;</div>',
+    '</div>',
+    '<div class="foot">GoAndStudy &middot; <span>&#1057;&#1083;&#1077;&#1076;&#1091;&#1102;&#1097;&#1080;&#1081; &#1101;&#1090;&#1072;&#1087; &#8212; Claude Code</span></div>',
+    '</div></body></html>'
   ];
-  const html = parts.join('');
-  const blob = new Blob([html], { type: 'text/html' });
-  const a = document.createElement('a');
+  var blob = new Blob([lines.join('')], {type:'text/html'});
+  var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'index.html';
   a.click();
 }
 
-// ══════════════════════════════════════
-// INIT
-// ══════════════════════════════════════
+// ── INIT ──
+document.getElementById('li').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+document.getElementById('lp').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
 showPage('pg-login');
+
 </script>
 </body>
 </html>
