@@ -524,9 +524,9 @@ function buildStep(s, si, key, done, open) {
     });
     if(sent) {
       b += '<div class="sf-sent">✓ Отправлено</div>';
-      b += '<button class="sf-edit" onclick="clearStuInput(\''+key+'\','+JSON.stringify(s.stuInput.map(function(f){return f.key;}))+')">Изменить</button>';
+      b += '<button class="sf-edit" onclick="clearStuInput(\''+key+'\',\''+s.stuInput.map(function(f){return f.key;}).join(',')+'\')">Изменить</button>';
     } else {
-      b += '<button class="sf-btn" id="sfbtn-'+key+'" onclick="sendStuInput(\''+key+'\','+JSON.stringify(s.stuInput.map(function(f){return f.key;}))+')">Отправить Павлу →</button>';
+      b += '<button class="sf-btn" id="sfbtn-'+key+'" onclick="sendStuInput(\''+key+'\',\''+s.stuInput.map(function(f){return f.key;}).join(',')+'\')">Отправить Павлу →</button>';
     }
     b += '</div>';
   }
@@ -589,7 +589,8 @@ async function togProg(key, val) {
   }
 }
 
-async function sendStuInput(key, keys) {
+async function sendStuInput(key, keysStr) {
+  var keys = keysStr.split(',');
   var btn = document.getElementById('sfbtn-'+key);
   if(btn) { btn.disabled=true; btn.textContent='...'; }
   var vals = {};
@@ -612,7 +613,8 @@ async function sendStuInput(key, keys) {
   }
 }
 
-async function clearStuInput(key, keys) {
+async function clearStuInput(key, keysStr) {
+  var keys = keysStr.split(',');
   try {
     for(var i=0;i<keys.length;i++) {
       await sbDelete('student_data', 'student_login=eq.'+CUR+'&field_key=eq.'+encodeURIComponent(keys[i])+'&direction=eq.from_student');
