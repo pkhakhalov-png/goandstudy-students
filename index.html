@@ -167,6 +167,7 @@ a{color:inherit;text-decoration:none}
 .open-url.has-url{background:var(--grd);border-color:var(--grb);color:var(--green)}
 .open-url.no-url{opacity:.3;pointer-events:none}
 .connecting{display:flex;align-items:center;justify-content:center;min-height:300px;flex-direction:column;gap:12px}
+textarea.ex-inp{min-height:100px;line-height:1.6;font-family:'Mulish',sans-serif}
 .connecting span{font-size:13px;color:var(--t2)}
 @media(max-width:720px){.layout{grid-template-columns:1fr}.sidebar{display:none}.main,.adm-wrap{padding:1.25rem}.stu-grid{grid-template-columns:1fr}.adm-stats{grid-template-columns:repeat(2,1fr)}}
 </style>
@@ -236,9 +237,10 @@ var USERS = {
   egor:    {pass:'Egor2024!',    role:'student'},
   kiril:   {pass:'Kiril2024!',   role:'student'},
   evgeny:  {pass:'Evgeny2024!',  role:'student'},
+  test:    {pass:'Test2024!',    role:'student'},
   pavel:   {pass:'PavelAdmin2024!', role:'admin'}
 };
-var STUDENTS = ['nastya','lera','egor','kiril','evgeny'];
+var STUDENTS = ['nastya','lera','egor','kiril','evgeny','test'];
 
 var PAVEL_FIELDS = [
   {key:'github_repo_url',      label:'GitHub SSH ссылка',       ph:'git@github.com:user/repo.git'},
@@ -440,11 +442,23 @@ var MODS = [
     {title:'Работа с файлами', txt:'Claude Code сам читает и редактирует файлы.', cmdBoth:'"прочитай app/clients/page.tsx и объясни"\n"добавь поле телефон в ClientCard"\n"найди все места где используется supabase"', info:'Каждое изменение показывается перед применением. y — принять, n — отклонить.'},
     {title:'Первое задание от Павла', sub:'Получи задачу и приступай', txt:'Рабочее пространство готово. Павел выдаст первое реальное задание.', pavData:[{key:'first_task', label:'Первое задание', ph:'Описание задачи появится здесь...'}]}
   ]},
-  {icon:'🚀', title:'Мой проект', desc:'Твоё индивидуальное задание', locked:true, steps:[]}
+  {icon:'🚀', title:'Мой проект', desc:'Твоё индивидуальное задание. Павел загрузил PRD — пора строить.', locked:'prd', steps:[
+    {title:'Прочитай PRD', sub:'Пойми что нужно построить', txt:'PRD (Product Requirements Document) — документ с полным описанием проекта: что делает приложение, какие страницы, какие данные, как выглядит. Прочитай внимательно — это твоя карта.', pavData:[{key:'project_prd', label:'PRD документ', ph:''}]},
+    {title:'Создай файл PRD в проекте', sub:'Скопируй PRD → docs/PRD.md', txt:'Создай папку docs в корне проекта и положи туда PRD. Claude Code будет использовать его как контекст.', cmdBoth:'# В папке проекта:\nmkdir -p docs\n\n# Создай файл docs/PRD.md\n# Вставь туда полный текст PRD от Павла\n# Можно через VS Code или терминал', note:'Файл PRD.md — основной источник правды. Claude Code будет к нему обращаться.'},
+    {title:'Запусти Claude Code с PRD', sub:'claude → дай ему контекст', txt:'Открой терминал в папке проекта и запусти Claude Code. Первая команда — дай ему прочитать PRD.', cmdBoth:'cd ~/projects/[название]\nclaude\n\n# Первый промпт в Claude Code:\n"Прочитай docs/PRD.md — это описание проекта.\nСделай план реализации: разбей на этапы,\nкакие файлы создать, какие таблицы в Supabase.\nПока ничего не делай — только план."', info:'Всегда начинай с плана. Не проси сразу писать код — сначала пусть покажет что собирается делать.'},
+    {title:'Создай таблицы в Supabase', sub:'По плану из PRD — база данных', txt:'Claude Code предложит SQL для таблиц. Скопируй и выполни в Supabase SQL Editor.', cmdBoth:'# В Claude Code:\n"Сгенерируй SQL для создания всех таблиц\nиз PRD. Включи RLS политики.\nВыведи весь SQL одним блоком — я вставлю\nв Supabase SQL Editor."', note:'Проверь SQL перед выполнением. Спроси Claude если что-то непонятно.'},
+    {title:'Начни строить по этапам', sub:'Один этап = один промпт', txt:'Не проси делать всё сразу. Разбивай на маленькие задачи — страница за страницей, компонент за компонентом.', cmdBoth:'# Пример этапов:\n"Создай layout: header, sidebar, main area"\n"Создай страницу /dashboard с карточками статистики"\n"Добавь форму создания нового клиента"\n"Подключи таблицу clients из Supabase"\n\n# После каждого этапа:\ngit add .\ngit commit -m "feat: описание"\ngit push origin main', info:'После каждого push Vercel автоматически деплоит. Проверяй живой URL.'},
+    {title:'Тестируй и итерируй', sub:'Нашёл баг → опиши → Claude починит', txt:'Открывай localhost:3000 после каждого изменения. Если что-то не так — описывай проблему Claude Code максимально конкретно.', cmdBoth:'# Если ошибка в браузере:\n"Ошибка: [скопируй текст ошибки]\nна странице /dashboard\nОжидал: список клиентов\nВижу: пустая страница"\n\n# Если ошибка в терминале:\n"npm run dev показывает ошибку:\n[вставь ошибку]"', note:'Чем точнее опишешь баг — тем быстрее Claude починит.'}
+  ]}
 ];
 
 // ── SIDEBAR ──
-function totalSteps() { return MODS.filter(function(m){return !m.locked;}).reduce(function(a,m){return a+m.steps.length;},0); }
+function isLocked(m) {
+  if (m.locked === true) return true;
+  if (m.locked === 'prd') return !FROM_PAV['project_prd'];
+  return false;
+}
+function totalSteps() { return MODS.filter(function(m){return !isLocked(m);}).reduce(function(a,m){return a+m.steps.length;},0); }
 function doneCount()  { return Object.values(PROG).filter(Boolean).length; }
 function modDone(i)   { var m=MODS[i]; return m.steps.length>0 && m.steps.every(function(_,si){return PROG[i+'-'+si];}); }
 function modProgN(i)  { return MODS[i].steps.filter(function(_,si){return PROG[i+'-'+si];}).length; }
@@ -452,7 +466,7 @@ function modProgN(i)  { return MODS[i].steps.filter(function(_,si){return PROG[i
 function renderSidebar() {
   var html = '';
   MODS.forEach(function(m, i) {
-    var lk=m.locked, done=modDone(i), cur=CUR_MOD===i, p=modProgN(i);
+    var lk=isLocked(m), done=modDone(i), cur=CUR_MOD===i, p=modProgN(i);
     var ic = done?'done':cur?'cur':'';
     var st = lk?'Заблокировано':done?'Выполнено ✓':cur?(p+'/'+m.steps.length+' шагов'):(m.steps.length?m.steps.length+' шагов':'');
     var sc = done?'done':cur?'cur':'';
@@ -474,7 +488,7 @@ function goMod(i) { CUR_MOD=i; OPEN={}; renderSidebar(); renderMain(); window.sc
 // ── STUDENT MAIN ──
 function renderMain() {
   var mi=CUR_MOD, m=MODS[mi], el=document.getElementById('stu-main');
-  if (m.locked) {
+  if (isLocked(m)) {
     el.innerHTML = '<div class="locked-screen"><div class="locked-icon">🔒</div><div class="locked-h">Модуль заблокирован</div><div class="locked-p">Выполни предыдущие модули. Павел откроет доступ.</div></div>';
     return;
   }
@@ -647,7 +661,7 @@ async function renderAdmin() {
 }
 
 function buildAdminUI(data) {
-  var total = MODS.filter(function(m){return !m.locked;}).reduce(function(a,m){return a+m.steps.length;},0);
+  var total = MODS.filter(function(m){return m.locked!==true;}).reduce(function(a,m){return a+m.steps.length;},0);
   var totalDone = STUDENTS.reduce(function(a,u){return a+Object.values(data[u].prog).filter(Boolean).length;},0);
   var avgPct = Math.round(totalDone/(STUDENTS.length*total)*100)||0;
   var finished = STUDENTS.filter(function(u){return Object.values(data[u].prog).filter(Boolean).length===total;}).length;
@@ -715,6 +729,24 @@ function buildAdminUI(data) {
       html += '</div>';
     });
 
+    // PRD section
+    html += '<div class="divider" style="margin:12px 0"></div>';
+    var prdVal = fp['project_prd']||'';
+    var prdId = 'prd-'+u;
+    html += '<div class="ex-row">';
+    html += '<div class="ex-lbl"><span class="tag tag-to" style="background:#22c55e15;color:#22c55e;border-color:#22c55e40">ПРОЕКТ</span>PRD документ</div>';
+    if(prdVal) {
+      html += '<div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--rx);padding:10px;margin:6px 0;font-size:12px;color:var(--t2);line-height:1.7;white-space:pre-wrap;max-height:200px;overflow-y:auto">'+prdVal.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</div>';
+      html += '<div style="display:flex;gap:8px;margin-top:6px">';
+      html += '<span style="font-size:12px;color:var(--green);font-weight:600">🚀 Проект открыт</span>';
+      html += '<button class="ex-edit" onclick="delPF(\''+u+'\',\'project_prd\')">Изменить PRD</button>';
+      html += '</div>';
+    } else {
+      html += '<textarea class="ex-inp" id="'+prdId+'" rows="6" placeholder="Вставь полный текст PRD для студента..." style="resize:vertical;font-size:12px;line-height:1.6"></textarea>';
+      html += '<button class="ex-save" style="margin-top:6px;background:var(--green)" onclick="savePRD(\''+u+'\',\''+prdId+'\')">🚀 Открыть проект</button>';
+    }
+    html += '</div>';
+
     html += '</div></div>';
   });
 
@@ -734,6 +766,21 @@ async function savePF(user, fk, sid) {
   } catch(e) {
     alert('Ошибка: '+e.message);
     if(btn) { btn.disabled=false; btn.textContent='Сохранить'; }
+  }
+}
+
+async function savePRD(user, tid) {
+  var ta = document.getElementById(tid);
+  var val = ta ? ta.value.trim() : '';
+  if(!val) { alert('Вставь текст PRD'); return; }
+  var btn = ta.nextElementSibling;
+  if(btn) { btn.disabled=true; btn.textContent='Сохраняем...'; }
+  try {
+    await upsertData(user, 'project_prd', val, 'from_pavel');
+    await renderAdmin();
+  } catch(e) {
+    alert('Ошибка: '+e.message);
+    if(btn) { btn.disabled=false; btn.textContent='🚀 Открыть проект'; }
   }
 }
 
