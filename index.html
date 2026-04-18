@@ -786,13 +786,13 @@ async function savePF(user, fk, sid) {
 async function savePRD(user, descId, fileId) {
   var ta = document.getElementById(descId);
   var desc = ta ? ta.value.trim() : '';
-  if(!desc) { alert('Напиши описание проекта'); return; }
   var fileInput = document.getElementById(fileId);
   var file = fileInput && fileInput.files[0];
+  if(!desc && !file) { alert('Напиши описание или загрузи PRD файл'); return; }
   var btn = document.querySelector('#'+descId).closest('.ex-row').querySelector('.ex-save');
   if(btn) { btn.disabled=true; btn.textContent='Сохраняем...'; }
   try {
-    await upsertData(user, 'project_prd', desc, 'from_pavel');
+    await upsertData(user, 'project_prd', desc || '(см. PRD файл)', 'from_pavel');
     if(file) {
       var text = await file.text();
       await upsertData(user, 'project_prd_file', text, 'from_pavel');
