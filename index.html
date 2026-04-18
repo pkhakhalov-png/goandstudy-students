@@ -443,8 +443,8 @@ var MODS = [
     {title:'Первое задание от Павла', sub:'Получи задачу и приступай', txt:'Рабочее пространство готово. Павел выдаст первое реальное задание.', pavData:[{key:'first_task', label:'Первое задание', ph:'Описание задачи появится здесь...'}]}
   ]},
   {icon:'🚀', title:'Мой проект', desc:'Твоё индивидуальное задание. Павел загрузил PRD — пора строить.', locked:'prd', steps:[
-    {title:'Прочитай PRD', sub:'Пойми что нужно построить', txt:'PRD (Product Requirements Document) — документ с полным описанием проекта: что делает приложение, какие страницы, какие данные, как выглядит. Прочитай внимательно — это твоя карта.', pavData:[{key:'project_prd', label:'PRD документ', ph:''}]},
-    {title:'Создай файл PRD в проекте', sub:'Скопируй PRD → docs/PRD.md', txt:'Создай папку docs в корне проекта и положи туда PRD. Claude Code будет использовать его как контекст.', cmdBoth:'# В папке проекта:\nmkdir -p docs\n\n# Создай файл docs/PRD.md\n# Вставь туда полный текст PRD от Павла\n# Можно через VS Code или терминал', note:'Файл PRD.md — основной источник правды. Claude Code будет к нему обращаться.'},
+    {title:'Прочитай описание проекта', sub:'Пойми что нужно построить', txt:'Павел описал твой проект. Прочитай внимательно — пойми что должно получиться. Ниже — описание и PRD файл для скачивания.', pavData:[{key:'project_prd', label:'Описание проекта', ph:''}], prdDownload:true},
+    {title:'Положи PRD в проект', sub:'Скачай файл → docs/PRD.md', txt:'Скачай PRD файл (кнопка выше) и положи его в папку docs/ в корне проекта. Claude Code будет использовать его как главный источник контекста.', cmdBoth:'# В папке проекта:\nmkdir -p docs\n\n# Перемести скачанный файл PRD.md в docs/\n# Или через терминал:\nmv ~/Downloads/PRD.md docs/PRD.md\n\n# Проверь:\ncat docs/PRD.md', note:'docs/PRD.md — главный документ проекта. Claude Code будет к нему обращаться.'},
     {title:'Запусти Claude Code с PRD', sub:'claude → дай ему контекст', txt:'Открой терминал в папке проекта и запусти Claude Code. Первая команда — дай ему прочитать PRD.', cmdBoth:'cd ~/projects/[название]\nclaude\n\n# Первый промпт в Claude Code:\n"Прочитай docs/PRD.md — это описание проекта.\nСделай план реализации: разбей на этапы,\nкакие файлы создать, какие таблицы в Supabase.\nПока ничего не делай — только план."', info:'Всегда начинай с плана. Не проси сразу писать код — сначала пусть покажет что собирается делать.'},
     {title:'Создай таблицы в Supabase', sub:'По плану из PRD — база данных', txt:'Claude Code предложит SQL для таблиц. Скопируй и выполни в Supabase SQL Editor.', cmdBoth:'# В Claude Code:\n"Сгенерируй SQL для создания всех таблиц\nиз PRD. Включи RLS политики.\nВыведи весь SQL одним блоком — я вставлю\nв Supabase SQL Editor."', note:'Проверь SQL перед выполнением. Спроси Claude если что-то непонятно.'},
     {title:'Начни строить по этапам', sub:'Один этап = один промпт', txt:'Не проси делать всё сразу. Разбивай на маленькие задачи — страница за страницей, компонент за компонентом.', cmdBoth:'# Пример этапов:\n"Создай layout: header, sidebar, main area"\n"Создай страницу /dashboard с карточками статистики"\n"Добавь форму создания нового клиента"\n"Подключи таблицу clients из Supabase"\n\n# После каждого этапа:\ngit add .\ngit commit -m "feat: описание"\ngit push origin main', info:'После каждого push Vercel автоматически деплоит. Проверяй живой URL.'},
@@ -535,6 +535,10 @@ function buildStep(s, si, key, done, open) {
 
   if(s.download) {
     b += '<div style="margin:12px 0"><button class="btn-done" style="background:var(--gold);color:#18181f" onclick="downloadWelcome()">⬇ Скачать index.html</button></div>';
+  }
+
+  if(s.prdDownload && FROM_PAV['project_prd_file']) {
+    b += '<div style="margin:12px 0"><button class="btn-done" style="background:var(--purple)" onclick="downloadPRD()">⬇ Скачать PRD.md</button></div>';
   }
 
   if(s.stuInput) {
@@ -731,19 +735,29 @@ function buildAdminUI(data) {
 
     // PRD section
     html += '<div class="divider" style="margin:12px 0"></div>';
-    var prdVal = fp['project_prd']||'';
-    var prdId = 'prd-'+u;
+    var prdDesc = fp['project_prd']||'';
+    var prdFile = fp['project_prd_file']||'';
+    var prdDescId = 'prd-desc-'+u;
+    var prdFileId = 'prd-file-'+u;
     html += '<div class="ex-row">';
-    html += '<div class="ex-lbl"><span class="tag tag-to" style="background:#22c55e15;color:#22c55e;border-color:#22c55e40">ПРОЕКТ</span>PRD документ</div>';
-    if(prdVal) {
-      html += '<div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--rx);padding:10px;margin:6px 0;font-size:12px;color:var(--t2);line-height:1.7;white-space:pre-wrap;max-height:200px;overflow-y:auto">'+prdVal.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</div>';
+    html += '<div class="ex-lbl"><span class="tag tag-to" style="background:#22c55e15;color:#22c55e;border-color:#22c55e40">ПРОЕКТ</span>Открыть проект студенту</div>';
+    if(prdDesc) {
+      html += '<div style="font-size:11px;color:var(--t3);margin:6px 0 4px">Описание проекта:</div>';
+      html += '<div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--rx);padding:10px;margin:0 0 8px;font-size:12px;color:var(--t2);line-height:1.7;white-space:pre-wrap;max-height:200px;overflow-y:auto">'+prdDesc.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</div>';
+      if(prdFile) {
+        html += '<div style="font-size:11px;color:var(--t3);margin:0 0 4px">PRD файл:</div>';
+        html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font-size:12px;color:var(--green)">📄 PRD.md загружен</span></div>';
+      }
       html += '<div style="display:flex;gap:8px;margin-top:6px">';
       html += '<span style="font-size:12px;color:var(--green);font-weight:600">🚀 Проект открыт</span>';
-      html += '<button class="ex-edit" onclick="delPF(\''+u+'\',\'project_prd\')">Изменить PRD</button>';
+      html += '<button class="ex-edit" onclick="resetPRD(\''+u+'\')">Изменить</button>';
       html += '</div>';
     } else {
-      html += '<textarea class="ex-inp" id="'+prdId+'" rows="6" placeholder="Вставь полный текст PRD для студента..." style="resize:vertical;font-size:12px;line-height:1.6"></textarea>';
-      html += '<button class="ex-save" style="margin-top:6px;background:var(--green)" onclick="savePRD(\''+u+'\',\''+prdId+'\')">🚀 Открыть проект</button>';
+      html += '<div style="font-size:11px;color:var(--t3);margin:8px 0 4px">Опиши проект своими словами:</div>';
+      html += '<textarea class="ex-inp" id="'+prdDescId+'" rows="5" placeholder="Что будет делать приложение, какие страницы, основная идея..." style="resize:vertical;font-size:12px;line-height:1.6"></textarea>';
+      html += '<div style="font-size:11px;color:var(--t3);margin:8px 0 4px">Загрузи PRD файл (.md) — студент скачает и положит в docs/PRD.md:</div>';
+      html += '<input type="file" accept=".md,.txt" id="'+prdFileId+'" style="font-size:12px;color:var(--t2);margin-bottom:8px" />';
+      html += '<div><button class="ex-save" style="margin-top:6px;background:var(--green)" onclick="savePRD(\''+u+'\',\''+prdDescId+'\',\''+prdFileId+'\')">🚀 Открыть проект</button></div>';
     }
     html += '</div>';
 
@@ -769,19 +783,33 @@ async function savePF(user, fk, sid) {
   }
 }
 
-async function savePRD(user, tid) {
-  var ta = document.getElementById(tid);
-  var val = ta ? ta.value.trim() : '';
-  if(!val) { alert('Вставь текст PRD'); return; }
-  var btn = ta.nextElementSibling;
+async function savePRD(user, descId, fileId) {
+  var ta = document.getElementById(descId);
+  var desc = ta ? ta.value.trim() : '';
+  if(!desc) { alert('Напиши описание проекта'); return; }
+  var fileInput = document.getElementById(fileId);
+  var file = fileInput && fileInput.files[0];
+  var btn = document.querySelector('#'+descId).closest('.ex-row').querySelector('.ex-save');
   if(btn) { btn.disabled=true; btn.textContent='Сохраняем...'; }
   try {
-    await upsertData(user, 'project_prd', val, 'from_pavel');
+    await upsertData(user, 'project_prd', desc, 'from_pavel');
+    if(file) {
+      var text = await file.text();
+      await upsertData(user, 'project_prd_file', text, 'from_pavel');
+    }
     await renderAdmin();
   } catch(e) {
     alert('Ошибка: '+e.message);
     if(btn) { btn.disabled=false; btn.textContent='🚀 Открыть проект'; }
   }
+}
+
+async function resetPRD(user) {
+  try {
+    await sbDelete('student_data', 'student_login=eq.'+user+'&field_key=eq.project_prd&direction=eq.from_pavel');
+    await sbDelete('student_data', 'student_login=eq.'+user+'&field_key=eq.project_prd_file&direction=eq.from_pavel');
+    await renderAdmin();
+  } catch(e) { alert('Ошибка: '+e.message); }
 }
 
 async function delPF(user, fk) {
@@ -849,6 +877,16 @@ function downloadWelcome() {
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'index.html';
+  a.click();
+}
+
+function downloadPRD() {
+  var content = FROM_PAV['project_prd_file']||'';
+  if(!content) { alert('PRD файл не загружен'); return; }
+  var blob = new Blob([content], {type:'text/markdown'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'PRD.md';
   a.click();
 }
 
